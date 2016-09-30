@@ -35,9 +35,13 @@ project
 app.py - Python Tornado Server
 
 style.css - stylesheet for the main page
+
 index.html - main page
+
 index.js - JavaScript for main page
+
 data\_source.py - retrieve data, process, import to database
+
 db\_init.py - creates empty database 
 
 ## Usage
