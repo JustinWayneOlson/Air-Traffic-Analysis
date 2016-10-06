@@ -44,7 +44,7 @@ def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
         (r"/hello", HelloWorldHandler),
-        #localhost:8888/testpost/(any single digit number)
+        #localhost:8888/testget/(any single digit number)
         (r"/testget/([0-9]*)", TestGetHandler),
         (r"/testpost", TestPostHandler)
     ])
