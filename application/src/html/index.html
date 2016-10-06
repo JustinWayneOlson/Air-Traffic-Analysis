@@ -1,3 +1,47 @@
+<head>
+   <!-- Import jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
 <body>
-   <p>Serving index.html from tornado</p>
+   <!-- Javascript can be inside html -->
+   <script>
+
+      //sample HTTP GET request using ajax
+      var fake_data="12";
+      $.ajax({
+         type:"GET",
+         url:"/testget/" + fake_data,
+         success: function(response){
+            console.log(response);
+            $("body").append(JSON.stringify(response));
+         },
+         error: function(error){
+            console.log(error);
+         }
+      });
+
+      //sample HTTP POST request using ajax
+      var post_data={
+         'my_string':"Hello World!",
+         'my_int':12,
+         'my_arr':[0,2,4,6,8],
+         'my_nested_object':{
+            'name':'Fred',
+            'age':21,
+            'sex':'M'
+         }
+      }
+      $.ajax({
+         type:"POST",
+         url:"/testpost",
+         data: JSON.stringify(post_data),
+         success: function(response){
+            console.log(response);
+         },
+         error: function(error){
+            console.log(error);
+         }
+      });
+
+   </script>
 </body>
