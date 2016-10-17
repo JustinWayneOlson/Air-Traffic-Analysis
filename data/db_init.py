@@ -1,8 +1,8 @@
 import psycopg2
 
-USER='test'
-DBNAME='asdf'
-PASSWORD='pass'
+USER='postgres'
+DBNAME='test_db'
+PASSWORD='postgres'
 print "Opening Database Connection"
 con = psycopg2.connect('host=localhost dbname={} user={} password={}'.format(DBNAME, USER, PASSWORD))
 
