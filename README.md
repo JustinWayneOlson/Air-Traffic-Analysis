@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/JustinWayneOlson/Air-Traffic-Analysis.png?label=ready&title=Ready)](https://waffle.io/JustinWayneOlson/Air-Traffic-Analysis)
 Air Traffic Analysis Project 
 ============================
 University of Colorado and Northrop Grumman
