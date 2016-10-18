@@ -14,7 +14,7 @@ class MainHandler(tornado.web.RequestHandler):
 #Get request takes in one arg via url and sends data back
 class TestGetHandler(tornado.web.RequestHandler):
     def get(self, data):
-        print("Serving JSON response to:" + data)
+        print("Serving JSON response to: " + data)
         #Convert passed in get request into int
         data=int(data)
         #Create dict to store data to return
@@ -43,7 +43,7 @@ class TestPostHandler(tornado.web.RequestHandler):
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
-        #localhost:8888/testget/(any single digit number)
+        #localhost:8888/testget/(any number)
         (r"/testget/([0-9]*)", TestGetHandler),
         (r"/testpost", TestPostHandler)
     ])

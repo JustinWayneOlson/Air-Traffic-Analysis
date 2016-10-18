@@ -7,7 +7,7 @@ import psycopg2
 import sys
 
 #Format: posgtgresql://[username]:[password]@[host]:[port]/[database name]
-POSTGRES_URL = "postgresql://test:pass@localhost:5432/test"
+POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/testing"
 
 def main(argv):
 	csv_files = argv[1:]

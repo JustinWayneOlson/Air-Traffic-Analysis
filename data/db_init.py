@@ -1,7 +1,7 @@
 import psycopg2
 
 USER='postgres'
-DBNAME='test_db'
+DBNAME='testing'
 PASSWORD='postgres'
 print "Opening Database Connection"
 con = psycopg2.connect('host=localhost dbname={} user={} password={}'.format(DBNAME, USER, PASSWORD))
@@ -9,11 +9,11 @@ con = psycopg2.connect('host=localhost dbname={} user={} password={}'.format(DBN
 cursor = con.cursor()
 print("Connected")
 
-# #try:
-# #    cursor.execute("DROP TABLE test_table CASCADE")
-#     con.commit()
-# except:
-#     pass
+try:
+    cursor.execute("DROP TABLE test_table CASCADE")
+    con.commit()
+except:
+     pass
 
 cursor.execute("CREATE TABLE test_table ( id      SERIAL PRIMARY KEY, name    TEXT,age     INTEGER);")
 con.commit()
