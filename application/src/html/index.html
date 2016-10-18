@@ -6,6 +6,7 @@
    Number to get:<br>
    <input type="text" id="numInput" placeholder="Number 1-9">
    <button onclick="getCall()">Run Get</button>
+   <button onclick="postCall()">Post Test</button>
    <br>
    <!-- Javascript can be inside html -->
    <script>
@@ -19,12 +20,14 @@
          success: function(response){
             console.log(response);
             $("body").append(JSON.stringify(response));
+            $("body").append("<br>");
          },
          error: function(error){
             console.log(error);
          }
       });
-
+      }
+   function postCall() {
       //sample HTTP POST request using ajax
       var post_data={
          'my_string':"Hello World!",
@@ -42,6 +45,8 @@
          data: JSON.stringify(post_data),
          success: function(response){
             console.log(response);
+            $("body").append(JSON.stringify(response));
+            $("body").append("<br>");
          },
          error: function(error){
             console.log(error);
