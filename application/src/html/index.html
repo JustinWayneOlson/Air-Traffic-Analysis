@@ -3,12 +3,16 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body id="main">
+   Number to get:<br>
+   <input type="text" id="numInput" placeholder="Number 1-9">
+   <button onclick="getCall()">Run Get</button>
+   <br>
    <!-- Javascript can be inside html -->
    <script>
-
+   function getCall() {
       //sample HTTP GET request using ajax
-      var fake_data="9";
-      document.getElementById("main").innerHTML += fake_data;
+      var fake_data=document.getElementById("numInput").value;
+      
       $.ajax({
          type:"GET",
          url:"/testget/" + fake_data,
@@ -43,6 +47,6 @@
             console.log(error);
          }
       });
-
+   }
    </script>
 </body>
