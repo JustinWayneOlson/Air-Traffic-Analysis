@@ -2,12 +2,13 @@
    <!-- Import jQuery -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
-<body>
+<body id="main">
    <!-- Javascript can be inside html -->
    <script>
 
       //sample HTTP GET request using ajax
-      var fake_data="12";
+      var fake_data="9";
+      document.getElementById("main").innerHTML += fake_data;
       $.ajax({
          type:"GET",
          url:"/testget/" + fake_data,
