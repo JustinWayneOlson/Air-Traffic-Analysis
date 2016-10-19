@@ -24,6 +24,7 @@ class TestGetHandler(tornado.web.RequestHandler):
         for i in range(0,data):
             return_data['response'].append(random.random() * 10)
         #Write dict content to page, like a json response
+        print return_data
         self.write(return_data)
 
 #POST request takes in JSON from body, and returns JSON
@@ -38,6 +39,20 @@ class TestPostHandler(tornado.web.RequestHandler):
         }
         self.write(return_data)
 
+class D3TestHandler(tornado.web.RequestHandler):
+    def get(self, city):
+        #get lats and lons
+        print city
+        return_data={
+                   "KMAE": [-120.12, 36.98 ],
+                    "KSJC": [-121.92, 37.37 ],
+                    "KMCE": [-120.50, 37.28 ],
+                    "KMER": [-120.57, 37.37 ]
+        }
+        self.write(return_data)
+
+
+
 #URL of endpoint, mapped to which class it correlates to
 #URL is matched via regex
 def make_app():
@@ -45,6 +60,7 @@ def make_app():
         (r"/", MainHandler),
         #localhost:8888/testget/(any number)
         (r"/testget/([0-9]*)", TestGetHandler),
+        (r"/testd3/(.*)", D3TestHandler),
         (r"/testpost", TestPostHandler)
     ])
 
