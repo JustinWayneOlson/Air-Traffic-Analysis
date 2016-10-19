@@ -2,35 +2,42 @@
    <!-- Import jQuery -->
 <style>
 
-html, body, #map {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+html, body,
+ #map {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-.stations, .stations svg {
-  position: absolute;
-}
+    .link {
+      stroke: #ccc;
+      stroke-width: 1.5px;
+    }
 
-.stations svg {
-  width: 60px;
-  height: 20px;
-  padding-right: 100px;
-  font: 10px sans-serif;
-}
+    .stations,
+    .stations svg {
+      position: absolute;
+    }
 
-.stations circle {
-  fill: brown;
-  stroke: black;
-  stroke-width: 1.5px;
-}
+    .stations svg {
+      width: 1200px;
+      height: 600px;
+      padding-right: 100px;
+      font: 12px sans-serif;
+    }
+
+    .stations circle {
+      fill: brown;
+      stroke: black;
+      stroke-width: 1.5px;
+    }
 
 </style>
 </head>
 <body id="main">
    <p>Enter a city: </p>
-   <input type="text" id="city-input">
+   <input type="text" id="city-input" value="Denver" >
    <button id='run-get'>Find City Stuff</button>
    <br>
    <div id="map"></div>
@@ -38,114 +45,102 @@ html, body, #map {
    <script src="//maps.google.com/maps/api/js?sensor=true"></script>
    <script src="//d3js.org/d3.v3.min.js"></script>
    <script>
-   /*$('#run-get').click(function(){
-      //sample HTTP GET request using ajax
-      var fake_data=$("#num-input").val();
-
-      $.ajax({
-         type:"GET",
-         url:"/testget/" + fake_data,
-         success: function(response){
-            console.log(response);
-            $("body").append('<p>' + JSON.stringify(response) + '</p>');
-         },
-         error: function(error){
-            console.log(error);
-         }
-      });
-   });
-
-   $('#run-post').click(function(){
-      //sample HTTP POST request using ajax
-      var post_data={
-         'my_string':"Hello World!",
-         'my_int':12,
-         'my_arr':[0,2,4,6,8],
-         'my_nested_object':{
-            'name':'Fred',
-            'age':21,
-            'sex':'M'
-         }
-      }
-      $.ajax({
-         type:"POST",
-         url:"/testpost",
-         data: JSON.stringify(post_data),
-         success: function(response){
-            console.log(response);
-            $("body").append('<p>' + JSON.stringify(response) + '</p>');
-         },
-         error: function(error){
-            console.log(error);
-         }
-      });
-   });*/
    $('#run-get').click(function(){
       var city = $('#city-input').val();
 
+    // Create the Google Map…
+    var map = new google.maps.Map(d3.select("#map").node(), {
+      zoom: 4,
+      center: new google.maps.LatLng(39.8282, -98.5795),
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
 
-   var map = new google.maps.Map(d3.select("#map").node(), {
-     zoom: 8,
-     center: new google.maps.LatLng(37.76487, -122.41948),
-     mapTypeId: google.maps.MapTypeId.TERRAIN
-   });
-   // Create the Google Map…
-   d3.json('/testd3/' + city, function(error, data){
+    //d3.json("stations.json", function(error, data) {
 
-      // Load the station data. When the data comes back, create an overlay.
-        if (error) throw error;
+    $.ajax({
+         type:"GET",
+         url:"/testd3/" + city,
+         success: function(data){
 
-        var overlay = new google.maps.OverlayView();
+          var overlay = new google.maps.OverlayView();
 
-        // Add the container when the overlay is added to the map.
-        overlay.onAdd = function() {
-          var layer = d3.select(this.getPanes().overlayLayer).append("div")
+          overlay.onAdd = function() {
+            var layer = d3.select(this.getPanes().overlayLayer).append("div")
               .attr("class", "stations");
 
-          // Draw each marker as a separate SVG element.
-          // We could use a single SVG, but what size would it have?
-          overlay.draw = function() {
-            var projection = this.getProjection(),
+            overlay.draw = function() {
+
+              layer.select('svg').remove();
+
+              var projection = this.getProjection(),
                 padding = 10;
 
-            var marker = layer.selectAll("svg")
-                .data(d3.entries(data))
-                .each(transform) // update existing markers
-              .enter().append("svg")
+              var svg = layer.append("svg")
+                .attr('width', 1200)
+                .attr('height', 600)
+
+              var node = svg.selectAll(".stations")
+                .data(data.nodes)
+                .enter().append("g")
                 .each(transform)
-                .attr("class", "marker");
+                .attr("class", "node");
 
-            // Add a circle.
-            marker.append("circle")
-                .attr("r", 4.5)
-                .attr("cx", padding)
-                .attr("cy", padding);
+              var link = svg.selectAll(".link")
+                .data(data.links)
+                .enter().append("line")
+                .attr("class", "link")
+                .each(drawlink);
 
-            // Add a label.
-            marker.append("text")
-                .attr("x", padding + 7)
-                .attr("y", padding)
+              node.append("circle")
+                .attr("r", 4.5);
+
+              node.append("text")
+                .attr("x", 7)
+                .attr("y", 0)
                 .attr("dy", ".31em")
-                .text(function(d) { return d.key; });
+                .text(function(d) {
+                  return d.name;
+                });
 
-            function transform(d) {
-              d = new google.maps.LatLng(d.value[1], d.value[0]);
-              d = projection.fromLatLngToDivPixel(d);
-              return d3.select(this)
-                  .style("left", (d.x - padding) + "px")
-                  .style("top", (d.y - padding) + "px");
-            }
+              function latLongToPos(d) {
+                var p = new google.maps.LatLng(d.lat, d.long);
+               console.log(d);
+                p = projection.fromLatLngToDivPixel(p);
+                p.x = p.x - padding;
+                p.y = p.y - padding;
+                return p;
+              }
+
+              function transform(d) {
+                var p = latLongToPos(d);
+                return d3.select(this)
+                  .attr("transform", "translate(" + p.x + "," + p.y + ")");
+              }
+
+              function drawlink(d) {
+                var p1 = latLongToPos(data.nodes[d.source]),
+                  p2 = latLongToPos(data.nodes[d.target]);
+                d3.select(this)
+                  .attr('x1', p1.x)
+                  .attr('y1', p1.y)
+                  .attr('x2', p2.x)
+                  .attr('y2', p2.y)
+                  .style('fill', 'none')
+                  .style('stroke', 'steelblue');
+              }
+            };
           };
-        };
 
-     // Bind our overlay to the map…
-     overlay.setMap(map);
+          overlay.setMap(map);
+
+         },
+         error: function(error){
+            console.log(error);
+         }
       });
    });
+
 
 
    </script>
 </body>
-
-
-

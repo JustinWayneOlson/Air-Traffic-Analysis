@@ -42,14 +42,38 @@ class TestPostHandler(tornado.web.RequestHandler):
 class D3TestHandler(tornado.web.RequestHandler):
     def get(self, city):
         #get lats and lons
-        print city
-        return_data={
-                   "KMAE": [-120.12, 36.98 ],
-                    "KSJC": [-121.92, 37.37 ],
-                    "KMCE": [-120.50, 37.28 ],
-                    "KMER": [-120.57, 37.37 ]
-        }
-        self.write(return_data)
+        if(city=="Denver"):
+            return_data={
+                  "nodes": [{
+                    "name": "ORD",
+                    "lat":  41.9742,
+                    "long": -87.9073
+                  }, {
+                    "name": "DIA",
+                    "lat": 39.8561,
+                    "long": -104.6737
+                  }, {
+                    "name": "JFK",
+                    "lat": 40.6413,
+                    "long": -73.7781
+                  }, {
+                    "name": "LAX",
+                    "lat": 33.9416,
+                    "long": -118.4085
+                  }],
+                  "links": [{
+                    "source": 1,
+                    "target": 0
+                  }, {
+                    "source": 1,
+                    "target": 2
+                  }, {
+                    "source": 1,
+                    "target": 3
+                  }]
+            }
+
+            self.write(return_data)
 
 
 
