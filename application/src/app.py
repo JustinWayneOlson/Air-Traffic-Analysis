@@ -64,17 +64,17 @@ class D3TestHandler(tornado.web.RequestHandler):
             if str(row['OriginCityName']) not in cities:
                 airport = {}
                 lat, lon = coords(str(row['OriginCityName']))
-                airport[name] = str(row['Origin'])
-                airport[lat] = lat
-                airport[lon] = lon
+                airport['name'] = str(row['Origin'])
+                airport['lat'] = lat
+                airport['lon'] = lon
                 nodes.append(airport)
                 cities.append(str(row['OriginCityName']))
             if str(row['DestCityName']) not in cities:
                 airport = {}
                 lat, lon = coords(str(row['DestCityName']))
-                airport[name] = str(row['Dest'])
-                airport[lat] = lat
-                airport[lon] = lon
+                airport['name'] = str(row['Dest'])
+                airport['lat'] = lat
+                airport['lon'] = lon
                 nodes.append(airport)
                 cities.append(str(row['DestCityName']))
 
@@ -105,7 +105,7 @@ class D3TestHandler(tornado.web.RequestHandler):
         return links
 
     def get(self, city):
-        city = city + ", CO"
+        city = city
         return_data = {}
         dataframe = create_dataframe(city)
         nodes = make_nodes(dataframe)
