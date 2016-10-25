@@ -45,65 +45,6 @@ class TestPostHandler(tornado.web.RequestHandler):
         self.write(return_data)
 
 class D3TestHandler(tornado.web.RequestHandler):
-    POSTGRES_URL = "postgresql://test:pass@localhost:5432/vis_test"
-
-    def create_dataframe(city):
-        engine = create_engine(POSTGRES_URL)
-        dataframe = pd.read_sql_query('SELECT "OriginCityName", "Origin", "DestCityName", "Dest" FROM "airplanez" WHERE "OriginCityName" = \'' + city + '\';', con = engine)
-        return dataframe
-
-    def coords(city):
-        geolocator = Nominatim()
-        location = geolocator.geocode(city)
-        return location.latitude, location.longitude
-
-    def make_nodes(dataframe):
-        nodes = []
-        cities = []
-        for index, row in dataframe.iterrows():
-            if str(row['OriginCityName']) not in cities:
-                airport = {}
-                lat, lon = coords(str(row['OriginCityName']))
-                airport['name'] = str(row['Origin'])
-                airport['lat'] = lat
-                airport['lon'] = lon
-                nodes.append(airport)
-                cities.append(str(row['OriginCityName']))
-            if str(row['DestCityName']) not in cities:
-                airport = {}
-                lat, lon = coords(str(row['DestCityName']))
-                airport['name'] = str(row['Dest'])
-                airport['lat'] = lat
-                airport['lon'] = lon
-                nodes.append(airport)
-                cities.append(str(row['DestCityName']))
-
-        return nodes
-
-    def make_links(nodes, city):
-        links = []
-        origin_lat, origin_lon = coords(city)
-        i = 0
-        for node in nodes:
-            if node['lat'] == origin_lat and node['lon'] == origin_lon:
-                origin = i
-                break
-            i += 1
-
-        i = 0
-        for node in nodes:
-            if i == origin:
-                i += 1
-                continue
-            else:
-                link = {}
-                link['source'] = origin
-                link['target'] = i
-                links.append(link)
-                i += 1
-
-        return links
-
     def get(self, city):
         city = city
         return_data = {}
@@ -116,6 +57,63 @@ class D3TestHandler(tornado.web.RequestHandler):
         self.write(return_data)
 
 
+def create_dataframe(city):
+        POSTGRES_URL = "postgresql://test:pass@localhost:5432/vis_test"
+        engine = create_engine(POSTGRES_URL)
+        dataframe = pd.read_sql_query('SELECT "OriginCityName", "Origin", "DestCityName", "Dest" FROM "airplanez" WHERE "OriginCityName" = \'' + city + '\';', con = engine)
+        return dataframe
+
+def coords(city):
+    geolocator = Nominatim()
+    location = geolocator.geocode(city)
+    return location.latitude, location.longitude
+
+def make_nodes(dataframe):
+    nodes = []
+    cities = []
+    for index, row in dataframe.iterrows():
+        if str(row['OriginCityName']) not in cities:
+            airport = {}
+            lat, lon = coords(str(row['OriginCityName']))
+            airport['name'] = str(row['Origin'])
+            airport['lat'] = lat
+            airport['long'] = lon
+            nodes.append(airport)
+            cities.append(str(row['OriginCityName']))
+        if str(row['DestCityName']) not in cities:
+            airport = {}
+            lat, lon = coords(str(row['DestCityName']))
+            airport['name'] = str(row['Dest'])
+            airport['lat'] = lat
+            airport['long'] = lon
+            nodes.append(airport)
+            cities.append(str(row['DestCityName']))
+
+    return nodes
+
+def make_links(nodes, city):
+    links = []
+    origin_lat, origin_lon = coords(city)
+    i = 0
+    for node in nodes:
+        if node['lat'] == origin_lat and node['long'] == origin_lon:
+            origin = i
+            break
+        i += 1
+
+    i = 0
+    for node in nodes:
+        if i == origin:
+            i += 1
+            continue
+        else:
+            link = {}
+            link['source'] = origin
+            link['target'] = i
+            links.append(link)
+            i += 1
+
+    return links
 
 #URL of endpoint, mapped to which class it correlates to
 #URL is matched via regex
