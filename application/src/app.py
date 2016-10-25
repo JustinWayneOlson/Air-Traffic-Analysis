@@ -1,3 +1,8 @@
+from geopy.geocoders import Nominatim
+from sqlalchemy import create_engine
+import pandas as pd
+import psycopg2
+import sys
 import tornado.ioloop
 import tornado.web
 from  tornado.escape import json_decode
@@ -40,40 +45,75 @@ class TestPostHandler(tornado.web.RequestHandler):
         self.write(return_data)
 
 class D3TestHandler(tornado.web.RequestHandler):
-    def get(self, city):
-        #get lats and lons
-        if(city=="Denver"):
-            return_data={
-                  "nodes": [{
-                    "name": "ORD",
-                    "lat":  41.9742,
-                    "long": -87.9073
-                  }, {
-                    "name": "DIA",
-                    "lat": 39.8561,
-                    "long": -104.6737
-                  }, {
-                    "name": "JFK",
-                    "lat": 40.6413,
-                    "long": -73.7781
-                  }, {
-                    "name": "LAX",
-                    "lat": 33.9416,
-                    "long": -118.4085
-                  }],
-                  "links": [{
-                    "source": 1,
-                    "target": 0
-                  }, {
-                    "source": 1,
-                    "target": 2
-                  }, {
-                    "source": 1,
-                    "target": 3
-                  }]
-            }
+    POSTGRES_URL = "postgresql://test:pass@localhost:5432/vis_test"
 
-            self.write(return_data)
+    def create_dataframe(city):
+        engine = create_engine(POSTGRES_URL)
+        dataframe = pd.read_sql_query('SELECT "OriginCityName", "Origin", "DestCityName", "Dest" FROM "airplanez" WHERE "OriginCityName" = \'' + city + '\';', con = engine)
+        return dataframe
+
+    def coords(city):
+        geolocator = Nominatim()
+        location = geolocator.geocode(city)
+        return location.latitude, location.longitude
+
+    def make_nodes(dataframe):
+        nodes = []
+        cities = []
+        for index, row in dataframe.iterrows():
+            if str(row['OriginCityName']) not in cities:
+                airport = {}
+                lat, lon = coords(str(row['OriginCityName']))
+                airport[name] = str(row['Origin'])
+                airport[lat] = lat
+                airport[lon] = lon
+                nodes.append(airport)
+                cities.append(str(row['OriginCityName']))
+            if str(row['DestCityName']) not in cities:
+                airport = {}
+                lat, lon = coords(str(row['DestCityName']))
+                airport[name] = str(row['Dest'])
+                airport[lat] = lat
+                airport[lon] = lon
+                nodes.append(airport)
+                cities.append(str(row['DestCityName']))
+
+        return nodes
+
+    def make_links(nodes, city):
+        links = []
+        origin_lat, origin_lon = coords(city)
+        i = 0
+        for node in nodes:
+            if node['lat'] == origin_lat and node['lon'] == origin_lon:
+                origin = i
+                break
+            i += 1
+
+        i = 0
+        for node in nodes:
+            if i == origin:
+                i += 1
+                continue
+            else:
+                link = {}
+                link['source'] = origin
+                link['target'] = i
+                links.append(link)
+                i += 1
+
+        return links
+
+    def get(self, city):
+        city = city + ", CO"
+        return_data = {}
+        dataframe = create_dataframe(city)
+        nodes = make_nodes(dataframe)
+        links = make_links(nodes, city)
+        return_data['nodes'] = nodes
+        return_data['links'] = links
+
+        self.write(return_data)
 
 
 
