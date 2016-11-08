@@ -42,9 +42,90 @@ html, body,
    <input type="text" id="city-input" value="Chicago, IL" >
    <button id='run-get'>Search Airports</button>
    <br>
+   <button id='display-airports'>Display Airports</button>
+   <br>
    <div id="map"></div>
  
    <script>
+   $('#display-airports').click(function(){
+    var map = new google.maps.Map(d3.select("#map").node(), {
+      zoom: 4,
+      center: new google.maps.LatLng(39.8282, -98.5795),
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "/display-airports",
+      success: function(data){
+        console.log(data);
+
+        var overlay = new google.maps.OverlayView();
+
+        overlay.onAdd = function() {
+          var layer = d3.select(this.getPanes().overlayLayer).append("div")
+            .attr("class", "stations");
+
+          overlay.draw = function() {
+
+            layer.select('svg').remove();
+
+            var projection = this.getProjection(),
+              padding = 10;
+
+            var svg = layer.append("svg")
+              .attr('width', 1200)
+              .attr('height', 600);
+
+            var node = svg.selectAll(".stations")
+              .data(data.nodes)
+              .enter().append("g")
+              .each(transform)
+              .attr("class", "node");
+
+            node.append("circle")
+              .attr("r", 4.5)
+              .each(setColor);
+
+            node.append("text")
+              .attr("x", 7)
+              .attr("y", 0)
+              .attr("dy", ".31em")
+              .text(function(d) {
+                return d.name;
+              });
+
+            function latLongToPos(d) {
+              var p = new google.maps.LatLng(d.lat, d.long);
+              p = projection.fromLatLngToDivPixel(p);
+              p.x = p.x - padding;
+              p.y = p.y - padding;
+              return p;
+            }
+
+            function transform(d) {
+              var p = latLongToPos(d);
+              return d3.select(this)
+                .attr("transform", "translate(" + p.x + "," + p.y + ")");
+            }
+
+            function setColor(d) {
+              return d3.select(this)
+                .style('fill', d.Color)
+            }
+          };
+        };
+
+        overlay.setMap(map);
+        
+      },
+      error: function(error){
+        console.log("no")
+        console.log(error);
+      }
+    });
+   })
+
    $('#run-get').click(function(){
       var city = $('#city-input').val();
 
@@ -54,8 +135,6 @@ html, body,
       center: new google.maps.LatLng(39.8282, -98.5795),
       mapTypeId: google.maps.MapTypeId.TERRAIN
     });
-
-    //d3.json("stations.json", function(error, data) {
 
     $.ajax({
          type:"GET",
@@ -78,7 +157,7 @@ html, body,
 
               var svg = layer.append("svg")
                 .attr('width', 1200)
-                .attr('height', 600)
+                .attr('height', 600);
 
               var node = svg.selectAll(".stations")
                 .data(data.nodes)
