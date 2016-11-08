@@ -7,7 +7,7 @@ import psycopg2
 import sys
 
 #Format: posgtgresql://[username]:[password]@[host]:[port]/[database name]
-POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/testing"
+POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airport_display"
 
 def main(argv):
 	csv_files = argv[1:]
@@ -19,7 +19,7 @@ def main(argv):
 		engine = create_engine(POSTGRES_URL)
 
 		#Create a tabled called "airplanez" at populate with dataframe values
-		dataframe.to_sql('airplanez', engine)
+		dataframe.to_sql('airplanes', engine)
 
 if __name__ == "__main__":
 	main(sys.argv)
