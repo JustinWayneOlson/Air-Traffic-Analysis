@@ -1,0 +1,1460 @@
+City,Airport,Lat,Lon
+"Greencastle, United States",4I7,39.6335556,-86.8138056
+"Dowagiac, United States",C91,41.9929342,-86.1280125
+"Cambridge, United States",CDI,39.9750278,-81.5775833
+"Sturgeon Bay, United States",SUE,44.8436667,-87.4215556
+"Stewartstown, United States",0P2,39.7948244,-76.6471914
+"Pendleton, United States",PDT,45.695,-118.841389
+"Tyonek, United States",TYE,61.076667,-151.138056
+"Riverton WY, United States",RIW,43.064167,-108.459722
+"Montrose CO, United States",MTJ,38.509794,-107.894242
+"Bolingbrook, United States",1CS,41.6959744,-88.1292306
+"Kenosha, United States",ENW,42.5956944,-87.9278056
+"Las Vegas, United States",VGT,36.2106944,-115.1944444
+"Lake Geneva, United States",C02,42.6149167,-88.3895833
+"De Kalb, United States",DKB,41.9338342,-88.7056864
+"Lafayette, United States",LAF,40.4123056,-86.9368889
+"Oxford, United States",OXD,39.5022607,-84.7843814
+"Muncie, United States",MIE,40.2424722,-85.39575
+"Point Roberts, United States",1RL,48.9797222,-123.0788889
+"Macomb, United States",MQB,40.5200833,-90.6523889
+"Wausau, United States",AUW,44.9262845,-89.6270018
+"Portage, United States",C47,43.5603136,-89.4828607
+"Ironwood, United States",IWD,46.5274747,-90.1313967
+"Mackinac Island, United States",MCD,45.8649344,-84.637344
+"Grand Marais, United States",GRM,47.8383333,-90.3829444
+"Valparaiso, United States",NPZ,41.4539722,-87.0070833
+"McCarthy, United States",MXY,61.4370608,-142.90307372
+"Seward, United States",SWD,60.1269383,-149.4188122
+"Michigan City, United States",MGC,41.7033,-86.8211
+"Allakaket, United States",AET,66.5519,-152.6222
+"Yakutat, United States",YAK,59.3012,-139.3937
+"Marquette, United States",MQT,46.353611,-87.395278
+"Iron Mountain, United States",IMT,45.8183611,-88.1145556
+"Escanaba, United States",ESC,45.722778,-87.093611
+"Marion, United States",MWA,37.7549569,-89.0110936
+"Barter Island, United States",BTI,70.133989,-143.581867
+"Fort Wainwright, United States",K03,70.613378,-159.86035
+"Cape Lisburne, United States",LUR,68.875133,-166.110022
+"Point Lay, United States",PIZ,69.732875,-163.005342
+"Hilo, United States",ITO,19.721375,-155.048469
+"Orlando, United States",ORL,28.545464,-81.332936
+"Bettles, United States",BTT,66.913944,-151.529056
+"Clear Mews, United States",Z84,64.301203,-149.120144
+"Indian Mountains, United States",UTO,65.992794,-153.704289
+"Fort Yukon, United States",FYU,66.571492,-145.250417
+"Sparrevohn, United States",SVW,61.097369,-155.574228
+"Fort Richardson, United States",FRN,61.266381,-149.653119
+"Tatalina, United States",TLJ,62.894369,-155.976525
+"Cape Romanzof, United States",CZF,61.780297,-166.038747
+"Bedford, United States",BED,42.469953,-71.289031
+"St. Paul Island, United States",SNP,57.167333,-170.220444
+"Cape Newenham, United States",EHM,58.646428,-162.062778
+"Point Barrow, United States",PBV,56.578344,-169.661611
+"Iliamna, United States",ILI,59.754356,-154.910961
+"Port Moller, United States",PTU,59.011356,-161.819664
+"Big Mountain, United States",BMX,59.361247,-155.258822
+"Oscoda, United States",OSC,44.451558,-83.394053
+"Fort Ord, United States",OAR,36.681878,-121.762347
+"Sacramento, United States",MHR,38.553897,-121.297592
+"Fort Irwin, United States",BYS,35.280531,-116.630031
+"Twenty Nine Palms, United States",NXP,34.296161,-116.162203
+"Fort Smith, United States",FSM,35.336583,-94.367444
+"Anchorage, United States",MRI,61.213544,-149.844447
+"Grants, United States",GNT,35.167286,-107.901989
+"Ponca City, United States",PNC,36.731958,-97.099781
+"Hunter Aaf, United States",SVN,32.01,-81.145683
+"Grand Forks, United States",GFK,47.949256,-97.176111
+"Pine Bluff, United States",PBF,34.173142,-91.935597
+"Milton, United States",NSE,30.724167,-87.021944
+"Hana, United States",HNM,20.795636,-156.014439
+"Prescott, United States",PRC,34.654472,-112.419583
+"Trenton, United States",TTN,40.276692,-74.813469
+"Boston, United States",BOS,42.364347,-71.005181
+"Fairfield, United States",SUU,38.262692,-121.927464
+"Rome, United States",RME,43.2338,-75.407033
+"Wendover, United States",ENV,40.718694,-114.030889
+"Mobile, United States",BFM,30.626783,-88.068092
+"Oakland, United States",OAK,37.721278,-122.220722
+"Omaha, United States",OMA,41.303167,-95.894069
+"Port Angeles, United States",NOW,48.141481,-123.414075
+"Kahului, United States",OGG,20.89865,-156.430458
+"Wichita, United States",ICT,37.649944,-97.433056
+"Kansas City, United States",MCI,39.297606,-94.713905
+"Madison, United States",MSN,43.139858,-89.337514
+"Dillingham, United States",DLG,59.044667,-158.5055
+"Harrison, United States",HRO,36.261519,-93.154728
+"Phoenix, United States",PHX,33.434278,-112.011583
+"Bangor, United States",BGR,44.807444,-68.828139
+"Fort Lauderdale, United States",FXE,26.197281,-80.170706
+"Longview, United States",GGG,32.384014,-94.711486
+"Andersen, United States",AND,34.494583,-82.709389
+"Spokane, United States",GEG,47.619861,-117.533833
+"Hollywood, United States",HWO,26.001222,-80.240722
+"San Francisco, United States",SFO,37.618972,-122.374889
+"Cutbank, United States",CTB,48.608353,-112.376144
+"Louisiana, United States",ARA,30.037758,-91.883896
+"Gainesville, United States",GNV,29.690056,-82.271778
+"Memphis, United States",MEM,35.042417,-89.976667
+"Douglas, United States",DUG,31.469028,-109.603667
+"Delta Junction, United States",BIG,63.994547,-145.721642
+"Waco, United States",CNW,31.637831,-97.074139
+"Annette Island, United States",ANN,55.042436,-131.572233
+"Caribou, United States",CAR,46.8715,-68.017917
+"Jacksonville, United States",LRF,34.916944,-92.149722
+"Redstone, United States",HUA,34.678653,-86.684781
+"Fort Bragg, United States",POB,35.170883,-79.014472
+"Dalhart, United States",DHT,36.022586,-102.547278
+"Del Rio, United States",DLF,29.359486,-100.777975
+"Los Angeles, United States",LAX,33.942536,-118.408075
+"Anniston, United States",ANB,33.588167,-85.858111
+"Cleveland, United States",CLE,41.411689,-81.849794
+"Dover, United States",DOV,39.129539,-75.465958
+"Cincinnati, United States",CVG,39.048836,-84.667822
+"Fort Meade, United States",FME,39.085386,-76.759414
+"China, United States",NID,35.685422,-117.692039
+"Huron, United States",HON,44.3852,-98.228542
+"Juneau, United States",JNU,58.354972,-134.576278
+"Lafayette, United States",LFT,30.205278,-91.987611
+"Newark, United States",EWR,40.6925,-74.168667
+"Boise, United States",BOI,43.564361,-116.222861
+"Indian Springs, United States",INS,36.587183,-115.673353
+"Garden City, United States",GCK,37.927528,-100.724417
+"Minot, United States",MOT,48.259378,-101.280333
+"Wahiawa, United States",HHI,21.4835,-158.039667
+"Montgomery, United States",MXF,32.382944,-86.365778
+"Robinson, United States",RBM,34.850089,-92.300153
+"Dallas, United States",DAL,32.847111,-96.851778
+"Fort Carson, United States",FCS,38.678394,-104.756581
+"Helena, United States",HLN,46.606806,-111.98275
+"Miramar, United States",NKX,32.867694,-117.14175
+"Phoenix, United States",LUF,33.535,-112.38306
+"Mary Esther, United States",HRT,30.427803,-86.689278
+"Hawthorne, United States",HHR,33.922839,-118.335186
+"Houlton, United States",HUL,46.123083,-67.792056
+"Enid, United States",END,36.339167,-97.9165
+"Point Mugu, United States",NTD,34.120285,-119.12094
+"Edwards Afb, United States",EDW,34.905417,-117.883739
+"Lake Charles, United States",LCH,30.126112,-93.223335
+"Kona, United States",KOA,19.738767,-156.045631
+"Myrtle Beach, United States",MYR,33.67975,-78.928333
+"Lemoore, United States",NLC,36.333012,-119.95208
+"Nantucket, United States",ACK,41.253053,-70.060181
+"Fort Eustis, United States",FAF,37.1325,-76.608841
+"Hopkinsville, United States",HOP,36.668567,-87.496183
+"Washington, United States",DCA,38.852083,-77.037722
+"Patuxent River, United States",NHK,38.285981,-76.411781
+"Palacios, United States",PSX,28.727508,-96.250958
+"Blytheville, United States",BYH,35.964347,-89.943956
+"Atlantic City, United States",ACY,39.457583,-74.577167
+"Oklahoma City, United States",TIK,35.414739,-97.386633
+"Elizabeth City, United States",ECG,36.260581,-76.174572
+"Pueblo, United States",PUB,38.289085,-104.496572
+"Presque Isle, United States",PQI,46.688958,-68.044797
+"Kirtland A.f.b., United States",IKR,35.040222,-106.609194
+"Fort Lewis, United States",GRF,47.079217,-122.580783
+"Kodiak, United States",ADQ,57.749967,-152.493856
+"Opolu, United States",UPP,20.265256,-155.859989
+"Fort Lauderdale, United States",FLL,26.072583,-80.15275
+"Muskogee, United States",MKO,35.656489,-95.366656
+"International Falls, United States",INL,48.566186,-93.403067
+"Salt Lake City, United States",SLC,40.788389,-111.977772
+"Childress, United States",CDS,34.433781,-100.287992
+"Biloxi, United States",BIX,30.410425,-88.924433
+"Fort Benning, United States",LSF,32.337322,-84.991283
+"Kingsville, United States",NQI,27.507223,-97.809723
+"Fort Riley, United States",FRI,39.055275,-96.764453
+"Harrisburg, United States",MDT,40.193494,-76.763403
+"Lincoln, United States",LNK,40.850971,-96.75925
+"Lansing, United States",LAN,42.7787,-84.587357
+"Kamuela, United States",MUE,20.001328,-155.668108
+"Massena, United States",MSS,44.935833,-74.845547
+"Hickory, United States",HKY,35.741147,-81.38955
+"St. Petersburg, United States",SPG,27.765111,-82.626972
+"Fort Myers, United States",FMY,26.586611,-81.86325
+"Houston, United States",IAH,29.984433,-95.341442
+"Millinocket, United States",MLT,45.647836,-68.685561
+"Camp Springs, United States",ADW,38.810806,-76.867028
+"Winston-salem, United States",INT,36.133722,-80.222
+"Victorville, United States",VCV,34.597453,-117.382997
+"Crestview, United States",CEW,30.778833,-86.522111
+"Fort Drum, United States",GTB,44.055619,-75.719458
+"Port Huron, United States",PHN,42.910957,-82.528862
+"Bakersfield, United States",BFL,35.433598,-119.05677
+"El Paso, United States",ELP,31.80725,-106.377583
+"Harlingen, United States",HRL,26.2285,-97.654389
+"Columbia, United States",CAE,33.938833,-81.119528
+"Tucson, United States",DMA,32.166467,-110.883144
+"Pensacola, United States",NPA,30.352656,-87.318647
+"Pensacola, United States",PNS,30.473425,-87.186611
+"Red River, United States",RDR,47.961098,-97.401194
+"Houston, United States",HOU,29.645419,-95.278889
+"Buckley, United States",BKF,39.701668,-104.75166
+"Northway, United States",ORT,62.961334,-141.929136
+"Palmer, United States",PAQ,61.594914,-149.088711
+"Pittsburgh, United States",PIT,40.491467,-80.232872
+"Barrow, United States",BRW,71.285446,-156.766003
+"Houston, United States",EFD,29.607333,-95.15875
+"Whidbey Island, United States",NUW,48.351803,-122.655906
+"Alice, United States",ALI,27.740889,-98.026944
+"Valdosta, United States",VAD,30.967833,-83.193
+"Miami, United States",MIA,25.79325,-80.290556
+"Seattle, United States",SEA,47.449,-122.309306
+"Chattanooga, United States",CHA,35.035278,-85.203808
+"Stratford, United States",BDR,41.163472,-73.126167
+"Jackson, United States",JAN,32.311167,-90.075889
+"Galveston, United States",GLS,29.265322,-94.860406
+"Long Beach, United States",LGB,33.817722,-118.151611
+"Dillingham, United States",HDH,21.579475,-158.197281
+"Williamsport, United States",IPT,41.241836,-76.921094
+"Indianapolis, United States",IND,39.717331,-86.294383
+"Knobnoster, United States",SZL,38.730306,-93.547864
+"Akron, United States",AKC,41.0375,-81.466917
+"Greenwood, United States",GWO,33.494328,-90.084706
+"White Plains, United States",HPN,41.066959,-73.707575
+"West Hampton Beach, United States",FOK,40.843656,-72.631789
+"Jonesboro, United States",JBR,35.831708,-90.646417
+"Tonopah, United States",TNX,37.798836,-116.78075
+"West Palm Beach, United States",LNA,26.593,-80.085056
+"San Diego, United States",NZY,32.699219,-117.21531
+"El Paso, United States",BIF,31.849528,-106.380039
+"Yuma, United States",YUM,32.656578,-114.60598
+"Carlsbad, United States",CNM,32.337472,-104.263278
+"Duluth, United States",DLH,46.842091,-92.193649
+"Bethel, United States",BET,60.779778,-161.838
+"Louisville, United States",LOU,38.228,-85.663722
+"Fort Huachuca, United States",FHU,31.588472,-110.344389
+"Lihue, United States",LIH,21.975983,-159.338958
+"Terre Haute, United States",HUF,39.451464,-87.307561
+"Havre, United States",HVR,48.542983,-109.762342
+"Grant County Airport, United States",MWH,47.207708,-119.32019
+"Montpelier, United States",MPV,44.203503,-72.562328
+"Richmond, United States",RIC,37.505167,-77.319667
+"Shreveport, United States",SHV,32.446629,-93.8256
+"Cordova, United States",CDV,60.491778,-145.477556
+"Norfolk, United States",ORF,36.894611,-76.201222
+"Beaumont, United States",BPT,29.950833,-94.020694
+"Savannah, United States",SAV,32.127583,-81.202139
+"Ogden, United States",HIF,41.123939,-111.973039
+"Nome, United States",OME,64.512203,-165.445247
+"San Luis, United States",SPB,45.771028,-122.861833
+"St. Petersburg, United States",PIE,27.910167,-82.687389
+"Macon, United States",MNM,45.12665,-87.638443
+"Conroe, United States",CXO,30.351833,-95.414467
+"Deadhorse, United States",SCC,70.19475,-148.465167
+"San Antonio, United States",SAT,29.533694,-98.469778
+"Rochester, United States",ROC,43.118866,-77.672389
+"Coco Beach, United States",COF,28.234922,-80.610125
+"Teterboro, United States",TEB,40.850103,-74.060837
+"Rapid City, United States",RCA,44.145042,-103.103567
+"Raleigh-durham, United States",RDU,35.877639,-78.787472
+"Dayton, United States",DAY,39.902375,-84.219375
+"Kenai, United States",ENA,60.573111,-151.245
+"Mcalester, United States",MLC,34.882403,-95.783463
+"Niagara Falls, United States",IAG,43.107333,-78.946194
+"Bryan, United States",CFD,30.715694,-96.331361
+"Newport News, United States",PHF,37.131894,-76.492989
+"Alexandria, United States",ESF,31.394903,-92.295772
+"Altus, United States",LTS,34.667067,-99.266681
+"Tucson, United States",TUS,32.116083,-110.941028
+"Minot, United States",MIB,48.415572,-101.357661
+"Marysville, United States",BAB,39.136089,-121.436567
+"Kankakee, United States",IKK,41.071389,-87.846278
+"Goldsboro, United States",GSB,35.339383,-77.960589
+"Providence, United States",PVD,41.732581,-71.420383
+"Salisbury, United States",SBY,38.340525,-75.510289
+"Rancho Murieta, United States",RIU,38.486778,-121.102778
+"Burbank, United States",BUR,34.200667,-118.358667
+"Detroit, United States",DTW,42.212444,-83.353389
+"Tampa, United States",TPA,27.975472,-82.53325
+"Pembina, United States",PMB,48.942501,-97.240833
+"Fort Polk, United States",POE,31.044833,-93.191667
+"Fairbanks, United States",EIL,64.665667,-147.1015
+"Hibbing, United States",HIB,47.3866,-92.838994
+"Lufkin, United States",LFK,31.234014,-94.75
+"Midland, United States",MAF,31.942528,-102.201914
+"Green Bay, United States",GRB,44.485072,-88.129589
+"Ardmore, United States",ADM,34.300833,-97.008889
+"Wrightstown, United States",WRI,40.015556,-74.591667
+"Cherry Point, United States",NKT,34.900872,-76.880733
+"Santa Barbara, United States",SBO,32.609139,-82.369944
+"Bush Field, United States",AGS,33.369944,-81.9645
+"Williston, United States",ISN,48.177939,-103.642347
+"Little Rock, United States",LIT,34.729444,-92.224306
+"Newburgh, United States",SWF,41.504094,-74.104839
+"Baudette, United States",BDE,48.728444,-94.612222
+"Sacramento, United States",SAC,38.512524,-121.49347
+"Homer, United States",HOM,59.645556,-151.476583
+"Fort Leonardwood, United States",TBN,37.741631,-92.140736
+"Marietta, United States",MGE,33.915382,-84.516319
+"Spokane, United States",SKA,47.615058,-117.655772
+"Houghton Lake, United States",HTL,44.359806,-84.671112
+"Panama City, United States",PAM,30.069567,-85.575417
+"Dallas-Fort Worth, United States",DFW,32.896828,-97.037997
+"Melbourne, United States",MLB,28.102753,-80.645258
+"Tacoma, United States",TCM,47.137678,-122.476475
+"Austin, United States",AUS,30.194528,-97.669889
+"Columbus, United States",LCK,39.813786,-82.927822
+"Knoxville, United States",TYS,35.810972,-83.994028
+"Fort Hood, United States",HLR,31.138731,-97.714469
+"St. Louis, United States",STL,38.748697,-90.370028
+"Millville, United States",MIV,39.367806,-75.072222
+"Wichita Falls, United States",SPS,33.988797,-98.491894
+"Cincinnati, United States",LUK,39.103333,-84.418611
+"Atlanta, United States",ATL,33.636719,-84.428067
+"Merced, United States",MER,37.380481,-120.568189
+"Sacramento, United States",MCC,38.667639,-121.400611
+"Grand Rapids, United States",GRR,42.880833,-85.522806
+"Wink, United States",INK,31.779628,-103.201361
+"Fresno, United States",FAT,36.776194,-119.71814
+"Vero Beach, United States",VRB,27.655556,-80.417944
+"Imperial, United States",IPL,32.834219,-115.578744
+"Nashville, United States",BNA,36.124472,-86.678194
+"Laredo, United States",LRD,27.54375,-99.461556
+"Anchorage, United States",EDF,61.250986,-149.806503
+"Kotzebue, United States",OTZ,66.884678,-162.59855
+"Altoona, United States",AOO,40.296372,-78.320022
+"Abilene, United States",DYS,32.420756,-99.8546
+"El Dorado, United States",ELD,33.220972,-92.813278
+"New York, United States",LGA,40.777245,-73.872608
+"Tallahassee, United States",TLH,30.396528,-84.350333
+"West Chicago, United States",DPA,41.907778,-88.248611
+"Waco, United States",ACT,31.611289,-97.230519
+"Augusta, United States",AUG,44.320647,-69.797317
+"Hillsboro, United States",INJ,32.083486,-97.097228
+"Jacksonville, United States",NIP,30.235834,-81.680556
+"Jackson, United States",MKL,35.599889,-88.915611
+"Molokai, United States",MKK,21.152886,-157.096256
+"Fort Knox, United States",FTK,37.907058,-85.972106
+"San Angelo, United States",SJT,31.35775,-100.496306
+"Calexico, United States",CXL,32.669502,-115.51333
+"Chico, United States",CIC,39.795383,-121.858422
+"Burlington, United States",BTV,44.471861,-73.153278
+"Jacksonville, United States",JAX,30.494056,-81.687861
+"Durango, United States",DRO,37.151516,-107.75377
+"Washington, United States",IAD,38.944533,-77.455811
+"College Station, United States",CLL,30.588583,-96.363833
+"Spokane, United States",SFF,47.682819,-117.322558
+"Milwaukee, United States",MKE,42.947222,-87.896583
+"Abilene, United States",ABI,32.411319,-99.681897
+"Columbia, United States",COU,38.818094,-92.219631
+"Portland, United States",PDX,45.588722,-122.5975
+"Miami, United States",TNT,25.861806,-80.897
+"West Palm Beach, United States",PBI,26.683161,-80.095589
+"Fort Worth, United States",FTW,32.819778,-97.362444
+"Ogdensburg, United States",OGS,44.681854,-75.4655
+"Falmouth, United States",FMH,41.658439,-70.521417
+"Seattle, United States",BFI,47.53,-122.301947
+"San Antonio, United States",SKF,29.384228,-98.581108
+"Honolulu, United States",HNL,21.318681,-157.922428
+"Des Moines, United States",DSM,41.533972,-93.663083
+"New Bern, United States",EWN,35.072972,-77.042944
+"San Diego, United States",SAN,32.733556,-117.189667
+"Monroe, United States",MLU,32.510864,-92.037689
+"Sumter, United States",SSC,33.972719,-80.470564
+"Ontario, United States",ONT,34.056,-117.601194
+"Greenvile, United States",GVT,33.067839,-96.065333
+"Roswell, United States",ROW,33.301556,-104.530556
+"Detroit, United States",DET,42.409195,-83.009861
+"Brownsville, United States",BRO,25.906833,-97.425861
+"Dothan, United States",DHN,31.321339,-85.449628
+"Wildwood, United States",WWD,39.008507,-74.908275
+"Fallon, United States",NFL,39.416584,-118.70098
+"Mount Clemens, United States",MTC,42.608333,-82.8355
+"Farmington, United States",FMN,36.74125,-108.229944
+"Corpus Christi, United States",CRP,27.770361,-97.501222
+"Syracuse, United States",SYR,43.111187,-76.106311
+"Key West, United States",NQX,24.575834,-81.688889
+"Chicago, United States",MDW,41.785972,-87.752417
+"San Jose, United States",SJC,37.3626,-121.929022
+"Hobbs, United States",HOB,32.687528,-103.217028
+"Philadelphia, United States",PNE,40.081944,-75.010586
+"Denver, United States",DEN,39.861656,-104.673178
+"Philadelphia, United States",PHL,39.871944,-75.241139
+"Sioux City, United States",SUX,42.402603,-96.384367
+"Macon, United States",MCN,32.69285,-83.649211
+"Truth Or Consequences, United States",TCS,33.236944,-107.27175
+"Palmdale, United States",PMD,34.629391,-118.08456
+"San Antonio, United States",RND,29.529675,-98.2789
+"El Centro, United States",NJK,32.829222,-115.671667
+"Columbus, United States",CMH,39.997972,-82.891889
+"Fayetteville, United States",FYV,36.005094,-94.170059
+"Fort Sill, United States",FSI,34.649833,-98.402167
+"Princeton, United States",PNM,45.559868,-93.608217
+"Dayton, United States",FFO,39.826111,-84.048332
+"Galena, United States",GAL,64.736178,-156.937417
+"Mineral Wells, United States",MWL,32.781606,-98.060175
+"Wichita, United States",IAB,37.621853,-97.268192
+"New Orleans, United States",NBG,29.825333,-90.035
+"Beaufort, United States",BFT,32.477411,-80.723161
+"Texarkana, United States",TXK,33.453722,-93.991028
+"Plattsburgh, United States",PBG,44.650944,-73.468139
+"Aberdeen, United States",APG,39.466219,-76.168808
+"Tucumcari, United States",TCC,35.182777,-103.603186
+"Anchorage, United States",ANC,61.174361,-149.996361
+"Killeen, United States",GRK,31.06725,-97.828917
+"Zuni Pueblo, United States",ZUN,35.083228,-108.791778
+"Bellingham, United States",BLI,48.792694,-122.537528
+"Millington, United States",NQA,35.356667,-89.870278
+"Elkins, United States",EKN,38.889444,-79.857139
+"Hartford, United States",HFD,41.736722,-72.649444
+"Smithfield, United States",SFZ,41.920764,-71.491381
+"Mobile, United States",MOB,30.691231,-88.242814
+"Mountain View, United States",NUQ,37.416142,-122.049139
+"Santa Fe, United States",SAF,35.617108,-106.089422
+"Barking Sands, United States",BKH,22.022833,-159.785
+"Deridder, United States",DRI,30.831722,-93.339917
+"Bradshaw Field, United States",BSF,19.760056,-155.553717
+"Nogales, United States",OLS,31.417722,-110.84789
+"Tampa, United States",MCF,27.849339,-82.521214
+"Belleville, United States",BLV,38.545178,-89.835183
+"Miami, United States",OPF,25.907,-80.278389
+"Del Rio, United States",DRT,29.374208,-100.927158
+"Fort Myers, United States",RSW,26.536167,-81.755167
+"King Salmon, United States",AKN,58.676778,-156.649278
+"Muir, United States",MUI,40.434811,-76.569411
+"Lahania-kapalua, United States",JHM,20.962936,-156.673031
+"New York, United States",JFK,40.639751,-73.778925
+"Homestead, United States",HST,25.48855,-80.383567
+"Riverside, United States",RAL,33.951875,-117.445103
+"Fort Leavenworth, United States",FLV,39.368332,-94.914686
+"Wallops Island, United States",WAL,37.940194,-75.466389
+"Alamogordo, United States",HMN,32.852519,-106.106525
+"Willow Grove, United States",NXX,40.199833,-75.148167
+"Cheyenne, United States",CYS,41.155722,-104.811839
+"Stockton, United States",SCK,37.894167,-121.238306
+"Charleston, United States",CHS,32.898647,-80.040528
+"Reno, United States",RNO,39.499108,-119.768108
+"Ketchikan, United States",KTN,55.355556,-131.71375
+"Detroit, United States",YIP,42.237928,-83.530408
+"Lompoc, United States",VBG,34.737333,-120.584306
+"Birmingham, United States",BHM,33.562942,-86.75355
+"Lakehurst, United States",NEL,40.033333,-74.353333
+"Shemya, United States",SYA,52.712275,174.11362
+"Las Vegas, United States",LSV,36.236197,-115.034253
+"Riverside, United States",RIV,33.880711,-117.259453
+"Modesto, United States",MOD,37.625817,-120.954422
+"Sacramento, United States",SMF,38.695417,-121.590778
+"Chicago, United States",UGN,42.422161,-87.867908
+"Colorado Springs, United States",COS,38.805805,-104.700778
+"Buffalo, United States",BUF,42.940525,-78.732167
+"Sandusky, United States",SKY,41.433361,-82.652333
+"Everett, United States",PAE,47.906342,-122.281564
+"Mountain Home, United States",MUO,43.043603,-115.872431
+"Cedar City, United States",CDC,37.700967,-113.098847
+"Windsor Locks, United States",BDL,41.938889,-72.683222
+"Mcallen, United States",MFE,26.175833,-98.238611
+"Norfolk, United States",NGU,36.937644,-76.289289
+"Chicopee Falls, United States",CEF,42.194014,-72.534783
+"Lubbock, United States",LBB,33.663639,-101.822778
+"Chicago, United States",ORD,41.978603,-87.904842
+"Boca Raton, United States",BCT,26.3785,-80.107694
+"Fairbanks, United States",FAI,64.815114,-147.856267
+"Quantico, United States",NYG,38.501683,-77.305333
+"Clovis, United States",CVS,34.382775,-103.322147
+"Kaneohe Bay, United States",NGF,21.450453,-157.768
+"Omaha, United States",OFF,41.118332,-95.912511
+"Gulkana, United States",GKN,62.154888,-145.456639
+"Watertown, United States",ART,43.991922,-76.021739
+"Palm Springs, United States",PSP,33.829667,-116.506694
+"Amarillo, United States",AMA,35.219369,-101.705931
+"Fort Dodge, United States",FOD,42.5512,-94.191842
+"Shreveport, United States",BAD,32.50182,-93.662674
+"Topeka, United States",FOE,38.950944,-95.663611
+"Cotulla, United States",COT,28.456694,-99.220294
+"Wilmington, United States",ILM,34.270615,-77.902569
+"Baton Rouge, United States",BTR,30.533167,-91.149639
+"Meridian, United States",NMM,32.552083,-88.555557
+"Tyler, United States",TYR,32.354139,-95.402386
+"Baltimore, United States",BWI,39.175361,-76.668333
+"Hobart, United States",HBR,34.991308,-99.051353
+"Lanai, United States",LNY,20.785611,-156.951419
+"Alexandria, United States",AEX,31.3274,-92.549833
+"White Sands, United States",WSD,32.341484,-106.40277
+"Cold Bay, United States",CDB,55.206061,-162.725436
+"Tulsa, United States",TUL,36.198389,-95.888111
+"Sitka, United States",SIT,57.047138,-135.361611
+"Islip, United States",ISP,40.79525,-73.100222
+"Minneapolis, United States",MSP,44.881956,-93.221767
+"Wilmington, United States",ILG,39.678722,-75.606528
+"Unalaska, United States",DUT,53.900139,-166.5435
+"New Orleans, United States",MSY,29.993389,-90.258028
+"Portland, United States",PWM,43.646161,-70.309281
+"Oklahoma City, United States",OKC,35.393089,-97.600733
+"Albany, United States",ALB,42.748267,-73.801692
+"Valdez, United States",VDZ,61.133949,-146.248342
+"Hampton, United States",LFI,37.082881,-76.360547
+"Santa Ana, United States",SNA,33.675667,-117.868222
+"Colombus, United States",CBM,33.643833,-88.443833
+"Kendall-tamiami, United States",TMB,25.647889,-80.432777
+"Oceana, United States",NTU,36.820703,-76.033542
+"Peru, United States",GUS,40.648094,-86.152119
+"Casper, United States",CPR,42.908,-106.464417
+"Valparaiso, United States",VPS,30.48325,-86.5254
+"Selma, United States",SEM,32.343947,-86.987803
+"Key West, United States",EYW,24.556111,-81.759556
+"Charlotte, United States",CLT,35.214,-80.943139
+"Las Vegas, United States",LAS,36.080056,-115.15225
+"Orlando, United States",MCO,28.429394,-81.308994
+"Florence, United States",FLO,34.185361,-79.723889
+"Great Falls, United States",GTF,47.482,-111.370689
+"Youngstown, United States",YNG,41.260736,-80.679097
+"Fort Wainwright, United States",FBK,64.8375,-147.614444
+"Mackminnville, United States",MMV,45.194444,-123.135944
+"Macon, United States",WRB,32.640144,-83.59185
+"Pullman, United States",PUW,46.743861,-117.109583
+"Lewiston, United States",LWS,46.3745,-117.015389
+"Elmira, United States",ELM,42.159889,-76.891611
+"Ithaca, United States",ITH,42.491028,-76.458444
+"Monterey, United States",MRY,36.587,-121.842944
+"Santa Barbara, United States",SBA,34.426211,-119.840372
+"Daytona Beach, United States",DAB,29.179917,-81.058056
+"New York, United States",JRB,40.701214,-74.009028
+"Talkeetna, United States",TKA,62.3205,-150.093694
+"New Haven, United States",HVN,41.26375,-72.886806
+"Asheville, United States",AVL,35.436194,-82.541806
+"Greensboro, United States",GSO,36.09775,-79.937306
+"Sioux Falls, United States",FSD,43.582014,-96.741914
+"Manchester NH, United States",MHT,42.932556,-71.435667
+"Naples, United States",APF,26.152619,-81.775294
+"Louisville, United States",SDF,38.1740858,-85.7364989
+"Charlottesville VA, United States",CHO,38.138639,-78.452861
+"Roanoke VA, United States",ROA,37.325472,-79.975417
+"Lexington KY, United States",LEX,38.0365,-84.605889
+"Evansville, United States",EVV,38.036997,-87.532364
+"Albuquerque, United States",ABQ,35.0402222,-106.6091944
+"Bozeman, United States",BZN,45.777643,-111.160151
+"Billings, United States",BIL,45.80921,-108.537654
+"Butte, United States",BTM,45.954806,-112.497472
+"Traverse City, United States",TVC,44.741445,-85.582235
+"Bar Harbor, United States",BHB,44.4497689,-68.3615653
+"Rockland, United States",RKD,44.0601111,-69.0992303
+"Jacksn Hole, United States",JAC,43.607333333,-110.73775
+"Rockford, United States",RFD,42.1953611,-89.0972222
+"New York, United States",TSS,40.7425,-73.971944
+"Greenville, United States",GSP,34.895556,-82.218889
+"Bloomington, United States",BMI,40.477111,-88.915917
+"Gulfport, United States",GPT,30.407278,-89.070111
+"Kalamazoo, United States",AZO,42.234875,-85.552058
+"Toledo, United States",TOL,41.586806,-83.807833
+"Fort Wayne, United States",FWA,40.978472,-85.195139
+"Decatur, United States",DEC,39.834564,-88.865689
+"Cedar Rapids, United States",CID,41.884694,-91.710806
+"La Crosse, United States",LSE,43.878986,-91.256711
+"Wassau, United States",CWA,44.772726,-89.646635
+"Peoria, United States",PIA,40.664203,-89.693258
+"Appleton, United States",ATW,44.257526,-88.507576
+"Rochester, United States",RST,43.908283,-92.500014
+"Champaign, United States",CMI,40.03925,-88.278056
+"Manhattan, United States",MHK,39.140972,-96.670833
+"Franklin, United States",FKL,41.377874,-79.860362
+"Grand Junction, United States",GJT,39.122413,-108.526735
+"Saint George, United States",SGU,37.090583,-113.593056
+"Houston, United States",DWH,30.063746,-95.554276
+"Port O\\'Connor, United States",S46,28.429977,-96.442859
+"Sarasota, United States",SRQ,27.395444,-82.554389
+"Van Nuys, United States",VNY,34.209811,-118.489972
+"Titusville, United States",X21,28.622552,-80.83541
+"Moline, United States",MLI,41.448528,-90.507539
+"Panama City, United States",PFN,30.212083,-85.682806
+"Orlando, United States",DWS,28.398,-81.57
+"Bismarck, United States",BIS,46.775842,-100.757931
+"Telluride, United States",TEX,37.953759,-107.90848
+"Rapid City, United States",RAP,44.045278,-103.057222
+"Carlsbad, United States",CLD,33.0742,-117.1648
+"Flint, United States",FNT,42.965424,-83.743629
+"Redding, United States",RDD,40.509,-122.293389
+"Eugene, United States",EUG,44.124583,-123.211972
+"Idaho Falls, United States",IDA,43.514556,-112.07075
+"Medford, United States",MFR,42.374228,-122.8735
+"Redmond-Bend, United States",RDM,44.254066,-121.149964
+"Akron, United States",CAK,40.9160833,-81.4421944
+"Huntsville, United States",HSV,34.6371944,-86.7750556
+"PARKERSBURG, United States",PKB,39.3451039,-81.4392031
+"MONTGOMERY, United States",MGM,32.3006389,-86.3939722
+"BRISTOL, United States",TRI,36.4752222,-82.4074167
+"PADUCAH, United States",PAH,37.0602875,-88.7729583
+"Kalispell, United States",FCA,48.310472,-114.256
+"Page, United States",PGA,36.9261,-111.4483
+"Saginaw, United States",MBS,43.532913,-84.079647
+"Binghamton, United States",BGM,42.208689,-75.979839
+"Blythe, United States",BLH,33.619167,-114.716889
+"Petersburg, United States",PSG,56.801667,-132.945278
+"Sanford, United States",SFB,28.777639,-81.237489
+"Johnstown, United States",JST,40.316111,-78.833889
+"Missoula, United States",MSO,46.916306,-114.090556
+"Grand Canyon, United States",GCN,35.9523611,-112.1469722
+"Sugar Land, United States",SGR,29.62225,-95.6565278
+"Denver, United States",APA,39.570129,-104.849294
+"Clovis, United States",CVN,34.425139,-103.079278
+"Fort Stockton, United States",FST,30.915667,-102.916139
+"Las Vegas, United States",LVS,35.654222,-105.142389
+"Houston, United States",IWS,29.818194,-95.672611
+"La Junta, United States",LHX,38.049719,-103.509431
+"Las Cruces, United States",LRU,32.289417,-106.921972
+"Breckenridge, United States",BKD,32.719047,-98.891
+"Temple, United States",TPL,31.1525,-97.407778
+"Ozona, United States",OZA,30.735281,-101.202972
+"Waikoloa Village, United States",WKL,19.9136,-155.864
+"Vail, United States",EGE,39.642556,-106.917694
+"Richmond Heights, United States",CGF,41.565124,-81.4863555
+"Mansfield, United States",MFD,40.8214167,-82.5166389
+"Columbus, United States",CSG,32.5163333,-84.9388611
+"Lawton, United States",LAW,34.5677144,-98.4166367
+"Fort Collins, United States",FNL,40.451828,-105.011336
+"Flagstaff, United States",FLG,35.140318,-111.6692392
+"South Lake Tahoe, United States",TVL,38.893889,-119.995278
+"Twin Falls, United States",TWF,42.481803,-114.487733
+"Vineyard Haven MA, United States",MVY,41.391667,-70.615278
+"Newport RI, United States",UUU,41.533056,-71.282222
+"Springfield VT, United States",VSF,43.343333,-72.517222
+"Concord NH, United States",CON,43.20267,-71.50233
+"Sanford ME, United States",SFM,43.39383,-70.708
+"Groton CT, United States",GON,41.330056,-72.045139
+"Saint Cloud, United States",STC,45.546556,-94.059889
+"Columbus Mississippi, United States",GTR,33.450333,-88.591361
+"Hoquiam, United States",HQM,46.9711944,-123.9365556
+"Erie, United States",ERI,42.082022,-80.176217
+"Barnstable, United States",HYA,41.669336,-70.280356
+"Sedona, United States",SDX,34.848628,-111.788472
+"Morgantown, United States",MGW,39.642908,-79.916314
+"Charleston, United States",CRW,38.373147,-81.593189
+"Scranton, United States",AVP,41.338478,-75.723403
+"Bemidji, United States",BJI,47.510722,-94.934722
+"Fargo, United States",FAR,46.92065,-96.8157639
+"Kansas City, United States",MKC,39.1275,-94.598889
+"Mesa, United States",AZA,33.307833,-111.655
+"Gillette, United States",GCC,44.3489167,-105.5393611
+"Santa Ana, United States",NZJ,33.676132,-117.731164
+"East Tawas, United States",ECA,44.311,-83.422
+"State College Pennsylvania, United States",SCE,40.849278,-77.848694
+"Meridian, United States",MEI,32.332624,-88.751868
+"Springfield, United States",SPI,39.8441,-89.677889
+"Cortez, United States",CEZ,37.303,-108.628056
+"Hayden, United States",HDN,40.481181,-107.21766
+"Gallup, United States",GUP,35.511058,-108.789308
+"Liberal, United States",LBL,37.044222,-100.95986
+"Lamar, United States",LAA,38.069694,-102.6885
+"Goodland, United States",GLD,39.370621,-101.698992
+"Cody, United States",COD,44.520194,-109.023806
+"Springfield, United States",SGF,37.245667,-93.388639
+"Joplin, United States",JLN,37.151814,-94.498269
+"Allentown, United States",ABE,40.652083,-75.440806
+"Bentonville, United States",XNA,36.2818694,-94.3068111
+"South Bend, United States",SBN,41.708661,-86.31725
+"Washington, United States",ZWU,38.89746,-77.00643
+"Fort Wayne IN, United States",SMD,41.143353,-85.152778
+"Arcata CA, United States",ACV,40.978111,-124.108611
+"Austin TX, United States",ATT,30.31666,-97.7666
+"Jacksonville NC, United States",OAJ,34.829164,-77.612139
+"Tuscaloosa AL, United States",TCL,33.220627,-87.611403
+"Dubuque IA, United States",DBQ,42.402,-90.709472
+"Molokai, United States",LUP,21.211,-156.974
+"Wrangell, United States",WRG,56.4843,-132.37
+"Chevak, United States",VAK,61.5338,-165.584
+"Aniak, United States",ANI,61.5816,-159.543
+"Mountain Village, United States",MOU,62.0954,-163.682
+"Mcgrath, United States",MCG,62.9529,-155.606
+"Kalskag, United States",KLG,61.5363,-160.341
+"Haines, United States",HNS,59.2438,-135.524
+"Holy Cross, United States",HCR,62.1883,-159.775
+"Skagway, United States",SGY,59.4601,-135.316
+"Gustavus, United States",GST,58.4253,-135.707
+"Adak Island, United States",ADK,51.878,-176.646
+"Yakima, United States",YKM,46.5682,-120.544
+"Worland, United States",WRL,43.9657,-107.951
+"Valdosta, United States",VLD,30.7825,-83.2767
+"Victoria, United States",VCT,28.8526,-96.9185
+"Quincy, United States",UIN,39.9427,-91.1946
+"Tupelo, United States",TUP,34.2681,-88.7699
+"Santa Maria, United States",SMX,34.8989,-120.457
+"Salina, United States",SLN,38.791,-97.6522
+"Saranac Lake, United States",SLK,44.3853,-74.2062
+"Sheridan, United States",SHR,44.7692,-106.98
+"San Luis Obispo, United States",SBP,35.2368,-120.642
+"Rutland, United States",RUT,43.5294,-72.9496
+"Rock Springs, United States",RKS,41.5942,-109.065
+"Rhinelander, United States",RHI,45.6312,-89.4675
+"Reading, United States",RDG,40.3785,-75.9652
+"Portsmouth, United States",PSM,43.0779,-70.8233
+"Pellston, United States",PLN,45.5709,-84.7967
+"Pierre, United States",PIR,44.3827,-100.286
+"Pocatello, United States",PIH,42.9098,-112.596
+"Hattiesburg/Laurel, United States",PIB,31.4671,-89.3371
+"Owensboro, United States",OWB,37.7401,-87.1668
+"North Bend, United States",OTH,43.4171,-124.246
+"Muscle Shoals, United States",MSL,34.7453,-87.6102
+"Miles City, United States",MLS,46.428,-105.886
+"Muskegon, United States",MKG,43.1695,-86.2382
+"Lynchburg, United States",LYH,37.3267,-79.2004
+"Lewistown, United States",LWT,47.0493,-109.467
+"Lancaster, United States",LNS,40.1217,-76.2961
+"Klamath Falls, United States",LMT,42.1561,-121.733
+"Lebanon, United States",LEB,43.6261,-72.3042
+"North Platte, United States",LBF,41.1262,-100.684
+"Latrobe, United States",LBE,40.2759,-79.4048
+"Laramie, United States",LAR,41.3121,-105.675
+"Jamestown, United States",JMS,46.9297,-98.6782
+"Kirksville, United States",IRK,40.0935,-92.5449
+"Huntington, United States",HTS,38.3667,-82.558
+"Hot Springs, United States",HOT,34.478,-93.0962
+"Grand Island, United States",GRI,40.9675,-98.3096
+"Glasgow, United States",GGW,48.2125,-106.615
+"Fayetteville, United States",FAY,34.9912,-78.8803
+"New Bedford, United States",EWB,41.6761,-70.9569
+"Elko, United States",EKO,40.8249,-115.792
+"Eau Claire, United States",EAU,44.8658,-91.4843
+"Du Bois, United States",DUJ,41.1783,-78.8987
+"Dodge City, United States",DDC,37.7634,-99.9656
+"Hancock, United States",CMX,47.1684,-88.4891
+"Port Angeles, United States",CLM,48.1202,-123.5
+"Clarksburg, United States",CKB,39.2966,-80.2281
+"Sault Ste Marie, United States",CIU,46.2508,-84.4724
+"Cape Girardeau, United States",CGI,37.2253,-89.5708
+"Crescent City, United States",CEC,41.7802,-124.237
+"Burlington, United States",BRL,40.7832,-91.1255
+"Brunswick, United States",BQK,31.2588,-81.4665
+"Beckley, United States",BKW,37.7873,-81.1242
+"Scottsbluff, United States",BFF,41.874,-103.596
+"Bradford, United States",BFD,41.8031,-78.6401
+"Watertown, United States",ATY,44.914,-97.1547
+"Alpena, United States",APN,45.0781,-83.5603
+"Walla Walla, United States",ALW,46.0949,-118.288
+"Waterloo, United States",ALO,42.5571,-92.4003
+"Alamogordo, United States",ALM,32.8399,-105.991
+"Athens, United States",AHN,33.9486,-83.3263
+"Albany, United States",ABY,31.5355,-84.1945
+"Aberdeen, United States",ABR,45.4491,-98.4218
+"Aleknagik, United States",WKK,59.2826,-158.618
+"Brookings, United States",BKX,44.3048,-96.8169
+"Bluefield, United States",BLF,37.2958,-81.2077
+"Kearney, United States",EAR,40.727,-99.0068
+"Greenville, United States",GLH,33.4829,-90.9856
+"Bullhead, United States",IFP,35.1574,-114.56
+"Kingman, United States",IGM,35.2595,-113.938
+"Pasco, United States",PSC,46.2647,-119.119
+"Akutan, United States",KQA,54.1325,-165.785
+"Silver City, United States",SVC,32.6365,-108.156
+"Lopez, United States",LPS,48.4839,-122.938
+"Worcester, United States",ORH,42.2673,-71.8757
+"New Haven, United States",ZVE,41.298669,-72.925992
+"Bremerton, United States",PWT,47.490244,-122.764814
+"Spencer, United States",SPW,43.165527,-95.202805
+"Jefferson City, United States",JEF,38.5912,-92.1561
+"Grand Canyon West, United States",GCW,35.5925,-113.4859
+"Boulder City, United States",BLD,35.5651,-114.514
+"Provincetown, United States",PVC,42.071945,-70.22139
+"Seattle, United States",LKE,47.629,-122.339
+"Fullerton, United States",FUL,33.521925,-117.584722
+"Hailey, United States",SUN,43.504444,-114.296194
+"Mason City, United States",MCW,43.2247,-93.4067
+"St. Marys, United States",1OH,40.5553253,-84.3866186
+"Wenatchee, United States",EAT,47.398,-120.206
+"Oshkosh, United States",OSH,44.024983,-88.551336
+"Benton Harbor, United States",BEH,42.1285833,-86.4285
+"Waukesha, United States",UES,43.0410278,-88.2370556
+"Greenwood, United States",10C,42.4028889,-88.3751111
+"Everglades, United States",X01,25.8488611,-81.3902778
+"Togiak Village, United States",TOG,59.0528,-160.397
+"Port Heiden, United States",PTH,56.9591,-158.633
+"King Cove, United States",KVC,55.1163,-162.266
+"New Stuyahok, United States",KNW,59.4499,-157.328
+"Igiugig, United States",IGG,59.324,-155.902
+"Deering, United States",DRG,66.0696,-162.766
+"Sand Point, United States",SDP,55.315,-160.523
+"Hagerstown, United States",HGR,39.7079,-77.7295
+"Port Clarence, United States",KPC,65.2537,-166.859
+"Arctic Village, United States",ARC,68.1147,-145.579
+"Noatak, United States",WTK,67.5661,-162.975
+"Savoonga, United States",SVA,63.6864,-170.493
+"Shishmaref, United States",SHH,66.2496,-166.089
+"Ruby, United States",RBY,64.7272,-155.47
+"Point Hope, United States",PHO,68.3488,-166.799
+"Mekoryuk, United States",MYU,60.3714,-166.271
+"Kivalina, United States",KVL,67.7362,-164.563
+"St Mary's, United States",KSM,62.0605,-163.302
+"Kaltag, United States",KAL,64.3191,-158.741
+"Hooper Bay, United States",HPB,61.5239,-166.147
+"Gambell, United States",GAM,63.7668,-171.733
+"Atqasuk, United States",ATK,70.4673,-157.436
+"Anvik, United States",ANV,62.6467,-160.191
+"Anaktuvuk Pass, United States",AKP,68.1336,-151.743
+"Gary, United States",GYY,41.6163,-87.4128
+"Brainerd, United States",BRD,46.398308,-94.138078
+"Lewisburg, United States",LWB,37.858333,-80.399444
+"Greenville, United States",PGV,35.635278,-77.385278
+"Chefornak, United States",CYF,60.149167,-164.285556
+"Oxnard, United States",OXR,34.200833,-119.207222
+"Branson, United States",BKG,36.531994,-93.200556
+"Baltimore, United States",ZBP,39.307222,-76.615556
+"New York, United States",ZYP,40.7505,-73.9935
+"Scotia NY, United States",SCH,42.85245555,-73.928866666
+"St. Augustine Airport, United States",UST,29.959167,-81.339722
+"Santa Rosa, United States",STS,38.508978,-122.81288
+"Kissimmee, United States",ISM,28.289806,-81.437083
+"Lake City, United States",LCQ,30.181944,-82.576944
+"Logan, United States",LGU,41.791,-111.852
+"Brigham City, United States",BMC,41.552,-112.062
+"Malad City, United States",MLD,42.17,-112.289
+"Aspen, United States",ASE,39.2232,-106.869
+"Hilton Head, United States",HHH,32.216,-80.752
+"Philadelphia, United States",ZFV,39.9557,-75.182
+"Brownwood, United States",BWD,31.7936111,-98.9565
+"Mexia, United States",LXY,31.6411783,-96.5144594
+"Kerrville, United States",ERV,29.9766667,-99.0854722
+"Georgetown, United States",GED,38.689194,-75.358889
+"Great Bend, United States",GBN,38.344167,-98.859167
+"Hays, United States",HYS,38.8422,-99.2732
+"Null, United States",SUS,38.662119,-90.652044
+"Ely, United States",LYU,47.824444,-91.830833
+"Grand Rapids MN, United States",GPZ,47.211111,-93.509722
+"Thief River Falls, United States",TVF,48.065556,-96.185
+"Eagle River, United States",EGV,45.932333,-89.268283
+"Minocqua - Woodruff, United States",ARV,45.927778,-89.730833
+"Ankeny, United States",IKV,41.691389,-93.566389
+"Corpus Christi, United States",NGP,27.692701,-97.290376
+"Catalina Island, United States",AVX,33.405,-118.415833
+"Mojave, United States",MHV,35.059364,-118.151856
+"Kenmore, United States",KEH,47.7548,-122.259
+"Hutchinson, United States",HUT,38.0655,-97.8606
+"Eagle, United States",EGA,39.6427611,-106.9159347
+"Rosecrans, United States",STJ,39.771944,-94.909706
+"Hartford, United States",ZRT,41.76888,-72.6815
+"Stamford, United States",ZTF,41.046937,-73.541493
+"Newark, United States",ZRP,40.734722,-74.164167
+"Camp Douglas, United States",VOK,43.938956,-90.253433
+"Beauford, United States",BFT,32.41083,-80.635
+"Gunnison, United States",GUC,38.533889,-106.933056
+"Torrance, United States",TOA,33.803392,-118.339611
+"Manistee, United States",MBL,44.2725,-86.246944
+"Punta Gorda, United States",PGD,26.919722,-81.990556
+"Grand Canyon, United States",JGC,35.96666666,-112.13333333
+"Frenchville, United States",WFK,47.285556,-68.312778
+"Jamestown, United States",JHW,42.153333,-79.258056
+"Somerset, United States",SME,37.053611,-84.615556
+"Weyers Cave, United States",SHD,38.263889,-78.896389
+"Devils Lake, United States",DVL,48.114444,-98.908611
+"Dickinson, United States",DIK,46.7975,-102.801944
+"Sidney, United States",SDY,47.706944,-104.1925
+"Chadron, United States",CDR,42.8375,-103.095556
+"Alliance, United States",AIA,42.053333,-102.803889
+"McCook, United States",MCK,40.206389,-100.592222
+"Marathon, United States",MTH,24.726111,-81.051389
+"Glendive, United States",GDV,47.138611,-104.807222
+"Wolf Point, United States",OLF,48.094444,-105.575
+"West Yellowstone, United States",WYS,44.688333,-111.1175
+"Alamosa, United States",ALS,37.435,-105.866667
+"Moab, United States",CNY,38.755,-109.754722
+"Ely, United States",ELY,39.299722,-114.841944
+"Vernal, United States",VEL,40.440833,-109.51
+"Ruidoso, United States",SRR,33.46285,-105.534751
+"Show Low, United States",SOW,34.265556,-110.005556
+"McCall, United States",MYL,44.889722,-116.101389
+"Salmon, United States",SMN,45.123889,-113.881389
+"Mammoth Lakes, United States",MMH,37.624049,-118.837772
+"Friday Harbor, United States",FRD,48.521944,-123.024444
+"Eastsound, United States",ESD,48.708056,-122.910556
+"Anacortes, United States",OTS,48.498889,-122.6625
+"Astoria, United States",AST,46.157972,-123.878694
+"Newport, United States",ONP,44.580361,-124.057917
+"Emmonak, United States",EMK,62.786111,-164.490833
+"Unalakleet, United States",UNK,63.888333,-160.798889
+"Kuparuk, United States",UUK,70.330833,-149.5975
+"Shageluk, United States",SHX,62.692222,-159.569167
+"Chuathbaluk, United States",CHU,61.579167,-159.215556
+"Nuiqsut, United States",NUI,70.21,-151.005556
+"Eek, United States",EEK,60.213611,-162.043889
+"Kasigluk, United States",KUK,60.873333,-162.524444
+"Kwethluk, United States",KWT,60.790278,-161.443611
+"Kwigillingok, United States",KWK,59.876389,-163.168611
+"Marshall, United States",MLL,61.8646418,-162.026111
+"Russian Mission, United States",RSH,61.775,-161.319444
+"Tuntutuliak, United States",WTL,60.335278,-162.666944
+"Ekwok, United States",KEK,59.356944,-157.471111
+"Koliganek, United States",KGK,59.726667,-157.259444
+"Levelock, United States",KLL,59.128056,-156.858611
+"Manokotak, United States",KMO,58.990278,-159.05
+"Twin Hills, United States",TWA,59.074444,-160.275
+"Chalkyitsik, United States",CIK,66.645,-143.74
+"Eagle, United States",EAA,64.778056,-141.149722
+"Hughes, United States",HUS,66.039167,-154.264722
+"Huslia, United States",HSL,65.697778,-156.351389
+"Livingood, United States",LIV,65.531111,-148.541111
+"Minto, United States",MNT,65.143611,-149.37
+"Nulato, United States",NUL,64.729444,-158.074167
+"Rampart, United States",RMP,65.507778,-150.140833
+"Tanana, United States",TAL,65.179556,-152.075833
+"Venetie, United States",VEE,67.008611,-146.366389
+"Beaver, United States",WBQ,66.362222,-147.406667
+"Central, United States",CEM,65.573889,-144.780833
+"Shungnak, United States",SHG,66.888056,-157.1625
+"Brich Creek, United States",KBC,66.256708,-145.815319
+"Coldfoot, United States",CXF,67.251389,-150.176111
+"Inyokern, United States",IYK,35.658889,-117.829444
+"Visalia, United States",VIS,36.318611,-119.392778
+"Merced, United States",MCE,37.284722,-120.513889
+"Angoon, United States",AGN,57.503611,-134.585
+"Elfin Cove, United States",ELV,58.195278,-136.3475
+"Tenakee Springs, United States",TKE,57.779722,-135.218333
+"Pelican, United States",PEC,57.955278,-136.236389
+"Sitka, United States",CYM,57.515,-134.946111
+"Funter Bay, United States",FNR,58.254444,-134.897778
+"Excursion Inlet, United States",EXI,58.420556,-135.449167
+"Hoonah, United States",HNH,58.096111,-135.409722
+"Kake, United States",AFE,56.961389,-133.910278
+"Craig, United States",CGA,55.478889,-133.147778
+"Hollis, United States",HYL,55.481667,-132.646111
+"Metakatla, United States",MTM,55.131111,-131.578056
+"Thorne Bay, United States",KTB,55.688056,-132.536667
+"Hydaburg, United States",HYG,55.206389,-132.828333
+"Hyder, United States",WHD,55.903333,-130.006667
+"Point Baker, United States",KPB,56.351944,-133.6225
+"Port Protection, United States",PPV,56.328889,-133.61
+"North Whale Pass, United States",WWP,56.116389,-133.121667
+"Chignik Lake, United States",KCQ,56.255,-158.775278
+"Egegik, United States",EGX,58.185556,-157.375556
+"Chignik Lagoon, United States",KCL,56.311111,-158.534167
+"Chignik, United States",KBW,56.295556,-158.401398
+"Perryville, United States",KPV,55.906667,-159.160833
+"Pilot Point, United States",PIP,57.585393,-157.571944
+"South Naknek, United States",WSN,58.702222,-157.0025
+"Akhiok, United States",AKK,56.938611,-154.1825
+"Karluk, United States",KYK,57.566944,-154.450278
+"Larsen Bay, United States",KLN,57.535,-153.976667
+"Old Harbor, United States",OLH,57.218056,-153.269722
+"Ouzinkie, United States",KOZ,57.922876,-152.500511
+"Port Lions, United States",ORI,57.885278,-152.846111
+"Lazy Bay, United States",ALZ,56.899444,-154.247778
+"Amook Bay, United States",AOS,57.471389,-153.815278
+"Kitoi Bay, United States",KKB,58.190833,-152.370556
+"Moser Bay, United States",KMY,57.025556,-154.145833
+"Olga Bay, United States",KOY,57.161389,-154.229722
+"Port Bailey, United States",KPY,57.93,-153.040556
+"Port Williams, United States",KPR,58.49,-152.582222
+"Seal Bay, United States",SYB,58.166667,-152.5
+"San Juan, United States",WSJ,57.730278,-153.320556
+"West Point, United States",KWP,57.77,-153.548889
+"Zachar Bay, United States",KZB,57.55,-153.75
+"Ambler, United States",ABL,67.106389,-157.8575
+"Buckland, United States",BKC,65.981667,-161.149167
+"Kiana, United States",IAN,66.975833,-160.436667
+"Kobuk, United States",OBU,66.912222,-156.897222
+"Noorvik, United States",ORV,66.8175,-161.022222
+"Selawik, United States",WLK,66.6,-159.985833
+"Brevig Mission, United States",KTS,65.331389,-166.465833
+"Elim, United States",ELI,64.615,-162.270556
+"Golovin, United States",GLV,64.550556,-163.007222
+"Teller, United States",TLA,65.240278,-166.339444
+"Wales, United States",WAA,65.6225,-168.095
+"White Mountain, United States",WMO,64.689167,-163.412778
+"Council, United States",CIL,64.897778,-163.703333
+"Koyuk, United States",KKA,64.939444,-161.154167
+"St. Michael, United States",SMK,63.49,-162.110278
+"Shaktoolik, United States",SKK,64.371111,-161.223889
+"Stebbins, United States",WBB,63.515833,-162.278056
+"Tin City, United States",TNC,65.563056,-167.921667
+"Atka, United States",AKB,52.220278,-174.206389
+"Nikolski, United States",IKO,52.941667,-168.848889
+"Icy Bay, United States",ICY,59.968889,-141.661667
+"Yakataga, United States",CYT,60.081901,-142.493611
+"Alakanuk, United States",AUK,62.68,-164.66
+"Nunam Iqua, United States",SXP,62.520556,-164.847778
+"Kipnuk, United States",KPN,59.933056,-164.030556
+"False Pass, United States",KFP,54.8475,-163.410278
+"Nelson Lagoon, United States",NLG,56.0075,-161.160278
+"Cold Bay, United States",PML,56.006111,-160.560833
+"Klawock, United States",KLW,55.579167,-133.076111
+"Quinhagak, United States",KWN,59.755,-161.845278
+"Kotlik, United States",KOT,63.030556,-163.532778
+"Koyukuk, United States",KYU,64.875833,-157.730556
+"Scammon Bay, United States",SCM,61.845278,-165.571389
+"Nondalton, United States",NNL,59.966944,-154.851667
+"Pedro Bay, United States",PDB,59.782222,-154.1325
+"Nunapitchuk, United States",NUP,60.905833,-162.439167
+"Kongiganak, United States",KKH,59.960833,-162.881111
+"Nikolai, United States",NIB,63.010833,-154.383889
+"Takotna, United States",TCT,62.971944,-156.082778
+"Pilot Station, United States",PQS,61.934444,-162.899444
+"Akiak, United States",AKI,60.902778,-161.230556
+"Tuluksak, United States",TLT,61.096944,-160.969444
+"Grayling, United States",KGX,62.894444,-160.065
+"Wainwright, United States",AIN,70.638056,-159.994722
+"Chenega, United States",NCN,60.077222,-147.991944
+"Chisana, United States",CZN,62.071111,-142.048333
+"Tok, United States",6K8,63.329444,-142.953611
+"Circle, United States",IRC,65.827778,-144.076111
+"Coffman Cove, United States",KCC,56.014722,-132.833889
+"Crooked Creek, United States",CKD,61.867778,-158.135
+"Red Devil, United States",RDV,61.788056,-157.350278
+"Sleetmute, United States",SLQ,61.700566,-157.165833
+"Stony River, United States",SRV,61.7875,-156.591111
+"Healy, United States",HKB,63.8675,-148.968889
+"Kake, United States",KAE,56.973056,-133.945556
+"Klawock, United States",AQC,55.554658,-133.101693
+"Lake Minchumina, United States",MHM,63.886111,-152.301944
+"Manley Hot Springs, United States",MLY,64.9975,-150.644167
+"St. George, United States",STG,56.577222,-169.663611
+"Tatitlek, United States",TEK,60.8725,-146.691111
+"Ketchikan, United States",WFB,55.344444,-131.663333
+"East St. Louis, United States",CPS,38.5707244,-90.1562211
+"Martinsburg, United States",MRB,39.2407,-77.591
+"Rock Hill, United States",RKH,34.9878,-81.0572
+"Pittsburgh, United States",AGC,40.3544,-79.9302
+"Jacksonville, United States",NZC,30.2187,-81.8767
+"Atlanta, United States",FTY,33.7791,-84.5214
+"Ocean Isle Beach, United States",60J,33.9085056,-78.4366722
+"Columbus, United States",OSU,40.0798,-83.073
+"Addison, United States",ADS,32.9685594,-96.8364478
+"Destin, United States",DTS,30.4000611,-86.4714772
+"Fort Jefferson - Dry Tortugas, United States",RBN,24.61667,-82.86667
+"Kinston, United States",ISO,35.331389,-77.608889
+"Kill Devil Hills, United States",FFA,36.02,-75.67
+"Provo, United States",PVU,40.21805555,-111.72222222
+"Steamboat Springs, United States",SBS,40.51625,-106.8663056
+"Delta, United States",DTA,39.3806386,-112.5077147
+"Richfield, United States",RIF,38.7364361,-112.0989444
+"Price, United States",PUC,39.609722,-110.75278
+"Los Alamos, United States",LAM,35.8798019,-106.2694153
+"Borrego Springs, United States",BXS,33.2590278,-116.3209722
+"Lake Havasu City, United States",HII,34.5711111,-114.3582778
+"Winslow, United States",INW,35.0219167,-110.7225278
+"Douglas, United States",DGL,31.3426028,-109.5064544
+"Bartow, United States",BOW,27.9434,-81.7834
+"Livermore, United States",LVK,37.41362,-121.49133
+"Mariposa, United States",MPI,37.3039,-120.0222
+"Palm Springs, United States",TRM,33.626666,-116.1596667
+"Santa Monica, United States",SMO,34.0158333,-118.4513056
+"Palm Springs, United States",UDD,33.7484375,-116.2748133
+"Scottsdale, United States",ZSY,33.6228889,-111.9105278
+"Olympia, United States",OLM,46.9694044,-122.9025447
+"Davis-Woodland-Winters, United States",DWA,38.5793889,-121.8569444
+"Rifle, United States",RIL,39.5263056,-107.7269444
+"SARATOGA, United States",SAA,41.4448594,-106.8235264
+"Atlanta, United States",PDK,33.8756111,-84.3019722
+"Bloomington, United States",BMG,39.1460208,-86.6166805
+"Stuart, United States",SUA,27.1816996,-80.221294
+"Morristown, United States",MMU,40.79935,-74.4148747
+"Napa, United States",APC,38.2131944,-122.2806944
+"San Diego, United States",SDM,32.5722722,-116.9801611
+"Pahokee, United States",PHK,26.789,-80.692
+"Panama City, United States",ECP,30.3417,-85.7973
+"San Bernardino, United States",SBD,34.0953521,-117.2348722
+"San Carlos, United States",SQL,37.511944,-122.249444
+"Rocky Mount, United States",RWI,35.8563,-77.8919
+"Soldotna, United States",SXQ,60.4749583,-151.0382389
+"El Cajon, United States",SEE,32.8262222,-116.9724444
+"Truckee, United States",TKF,39.3200422,-120.1395628
+"Moultrie, United States",MGR,31.0849167,-83.80325
+"Atlanta, United States",RYY,34.0131569,-84.5970556
+"Oneonta, United States",ONH,42.524722,-75.064444
+"Dell, United States",4U9,44.7357483,-112.7200133
+"Livingston-Montana, United States",LVM,45.6993889,-110.4483056
+"Big Timber, United States",6S0,45.8063889,-109.9811111
+"Holland, United States",BIV,42.7427778,-86.1078333
+"New York, United States",JRA,40.7545,-74.0071
+"Lakeland, United States",LAL,27.9889167,-82.0185556
+"New York, United States",IDL,40.639751,-73.778924
+"Murrieta-Temecula, United States",RBK,33.5741791,-117.1284732
+"Port Clinton, United States",PCW,41.5162703,-82.8694868
+"Dayton, United States",MGY,39.5889722,-84.2248611
+"Richmond, United States",RID,39.7561006,-84.8427175
+"Findley, United States",FDY,41.0120278,-83.6686111
+"Spearfish-South Dakota, United States",SPF,44.4811407,-103.7860053
+"Olive Branch, United States",OLV,34.876944,-89.783333
+"Broomfield-CO, United States",BJC,39.90888888,-105.11722222
+"Salem, United States",SLE,44.9095,-123.003
+"Tunica, United States",UTM,34.681,-90.3467
+"Milwaukee, United States",MWC,43.1103889,-88.0344167
+"Janesville, United States",JVL,42.62025,-89.0415556
+"Arlington, United States",GKY,32.6638611,-97.0942778
+"Lawrenceville, United States",LZU,33.9780761,-83.9623772
+"Bowling Green, United States",BWG,36.9645278,-86.4196667
+"Tulsa, United States",RVS,36.0396111,-95.9846389
+"Bryce Canyon, United States",BCE,37.706444,-112.145806
+"Burlington, United States",BUY,36.0485433,-79.4748892
+"Olathe, United States",JCI,38.8309167,-94.8903056
+"Easton, United States",ESN,38.8041667,-76.069
+"Republic, United States",R49,48.7182058,-118.6564714
+"Yuba City, United States",MYV,39.0553,-121.3411
+"Duncan, United States",DUC,34.4713056,-97.9598611
+"Chinle, United States",E91,36.1108806,-109.5754222
+"Uvalde, United States",UVA,29.215429,-99.748962
+"Lockport, United States",LOT,41.606326,-88.083003
+"Urbana, United States",C16,40.144979,-88.200197
+"Concord, United States",CCR,37.9896667,-122.0568889
+"Ocean Reef Club Airport, United States",OCA,25.325393,-80.274775
+"Springfield, United States",SGH,39.8402778,-83.8401667
+"Miami, United States",MPB,25.7783,-80.1703
+"Topeka, United States",TOP,39.068657,-95.622482
+"Emporia, United States",EMP,38.3321,-96.1912
+"DALLAS, United States",TKI,33.1779444,-96.5905278
+"Chicago-Wheeling, United States",PWK,42.1142897,-87.9015376
+"Kelso, United States",KLS,46.118,-122.898389
+"Put-in-Bay, United States",3W2,41.3521,-82.497
+"Port Townsend, United States",TWD,48.0314,-122.4838
+"Lynden, United States",38W,48.9558961,-122.4581183
+"Port Townsend, United States",0S9,48.0538086,-122.8106436
+"Richmond, United States",ZRD,37.5343,-77.42945
+"Wilmington, United States",ILN,39.42792,-83.792118
+"Tucson, United States",AVW,32.409556,-111.218388
+"Casa Grande, United States",CGZ,32.954889,-111.766832
+"Buckeye, United States",BXK,33.420417,-112.68618
+"Gila Bend, United States",E63,32.960169,-112.673636
+"Athens, United States",MMI,35.39919,-84.56177
+"Sterling, United States",STK,40.6153136,-103.2648454
+"Rawlins, United States",RWL,41.8055975,-107.19994
+"Caldwell, United States",CDW,40.8752222,-74.2813611
+"Kaiser Lake Ozark, United States",AIZ,38.096035,-92.5494875
+"Big Bear, United States",L35,34.2637778,-116.8560278
+"Thomasville, United States",TVI,30.9017921,-83.8811285
+"Henderson, United States",HSH,35.972778,-115.134444
+"Tifton, United States",TMA,31.4289814,-83.488545
+"Phoenix , United States",DVT,33.4117,112.457
+"Hondo, United States",HDO,29.3591,-99.1775
+"McKinley Park, United States",MCL,63.732757,-148.91129
+"Anchorage, United States",LHD,61.1866382,-149.9653918
+"Prospect Creek, United States",PPC,66.814167,-150.643611
+"Hudson NY, United States",HCC,42.2913,-73.7103
+"Wheeling, United States",HLG,40.175,-80.6463
+"Fitzgerald, United States",FZG,31.6839046,-83.2709036
+"Perry, United States",40J,30.0692778,-83.5805833
+"Cairo, United States",70J,30.8879767,-84.1547353
+"Rockport, United States",RKP,28.0862222,-97.0436944
+"Cordele, United States",CKF,31.9888333,-83.7739167
+"Ormond Beach, United States",OMN,29.1804,-81.06497
+"Troutdale, United States",TTD,45.54937,-122.401253
+"Hillsboro, United States",HIO,45.540394,-122.949825
+"Live Oak, United States",24J,30.300125,-83.0246944
+"Gaithersburg, United States",GAI,39.1006,-77.09576
+"Charelvoix, United States",CVX,45.3047778,-85.2753333
+"Quincy, United States",2J9,30.5978708,-84.557425
+"Roche Harbor, United States",RCE,48.608056,-123.159722
+"Blakely Island, United States",BYW,48.56025,-122.80243
+"Rosario, United States",RSJ,48.645556,-122.868056
+"Westsound, United States",WSX,48.617778,-122.952778
+"Friday Harbor, United States",FBS,48.537222,-123.009722
+"Death Valley National Park, United States",L06,36.273,-116.515
+"Flagler, United States",XFL,29.2821,-81.1212
+"Morrisville, United States",MVL,44.535,-72.614
+"Dallas, United States",RBD,32.680833,-96.868333
+"Beaver Island, United States",6Y8,45.721111,-85.520278
+"Washington County, United States",WST,41.349722,-71.803333
+"Block Island, United States",BID,41.168056,-71.577778
+"Atmautluak, United States",369,60.866667,-162.273056
+"Nightmute, United States",NME,60.471111,-164.700833
+"Toksook Bay, United States",OOK,60.541389,-165.087222
+"Tununak, United States",TNK,60.575556,-165.271667
+"Goodnews Bay, United States",GNU,59.1175,-161.5775
+"Newtok, United States",WWT,60.939167,-164.641111
+"Bainbridge, United States",BGE,30.9715981,-84.6369278
+"Silver Springs, United States",SPZ,39.4030278,-119.2511944
+"Los Angeles, United States",WHP,34.2593253,-118.4134331
+"Madera, United States",MAE,36.9886111,-120.1124444
+"Mountain Home, United States",U76,43.1316111,-115.7305671
+"Jefferson, United States",19A,34.1758638,-83.5615972
+"Apalachicola, United States",AAF,29.7276066,-85.0274416
+"St. Augustine, United States",SGJ,29.95925,-81.3397222
+"Douglas, United States",DQH,31.4767385,-82.8605664
+"Fort Pierce, United States",FRP,27.497472,-80.372638
+"Alexandria, United States",ALX,38.806346,-77.0621
+"Taunton, United States",TAN,41.8744017,-71.0166453
+"Plymouth, United States",PYM,41.9090278,-70.7287778
+"North Kingstown, United States",OQU,41.5971389,-71.4121389
+"Mansfield, United States",1B9,42.0001331,-71.1967714
+"Norwood, United States",OWD,42.1905278,-71.1729444
+"Westfield, United States",BAF,42.1579472,-72.715875
+"Willimantic, United States",IJD,41.7440278,-72.1802222
+"Montgomery, United States",MGJ,41.5099884,-74.2646444
+"Harrisburg, United States",CXY,40.2171389,-76.8513611
+"Marshfield, United States",GHG,42.09825,-70.6721389
+"Danbury, United States",DXR,41.3715353,-73.4821906
+"Nashua, United States",ASH,42.78175,-71.5147778
+"Lawrence, United States",LWM,42.7171944,-71.1234167
+"Oxford, United States",OXC,41.4785556,-73.13525
+"Fitchburg, United States",FIT,42.5541111,-71.7589722
+"Cartersville, United States",VPC,34.1231475,-84.8487067
+"Centre, United States",PYP,34.0899167,-85.6100833
+"Rome, United States",RMG,34.3507778,-85.1586667
+"Gadsden, United States",GAD,33.9726489,-86.0890834
+"Knoxville, United States",DKX,35.9638333,-83.8736667
+"Winder, United States",WDR,33.9828611,-83.6674167
+"Sylvania, United States",JYL,32.6452778,-81.5971111
+"Dalton, United States",DNN,34.7229444,-84.87025
+"Carrollton, United States",CTJ,33.6316964,-85.1522641
+"Fort Payne, United States",4A9,34.4736944,-85.7213889
+"LaGrange, United States",LGC,33.0088611,-85.0726111
+"Milledgeville, United States",MLJ,33.154225,-83.2414139
+"Cedartown, United States",4A4,34.0186944,-85.1464722
+"Pine Mountain, United States",PIM,32.8406944,-84.8824444
+"Atlanta, United States",FFC,33.35725,-84.5718333
+"Covington, United States",9A1,33.6323083,-83.8474472
+"Gainesville, United States",GVL,34.272627,-83.8302233
+"DeFuniak Springs, United States",54J,30.7311111,-86.1537778
+"LaFayette, United States",9A5,34.6884792,-85.2903319
+"New Philadelpha, United States",PHD,40.4701667,-81.4199444
+"Darlington, United States",UDG,34.4493845,-79.8900608
+"Hilton Head Island, United States",HXD,32.2243611,-80.6974722
+"Ellijay, United States",49A,34.6282222,-84.5265833
+"Elizabethton, United States",0A9,36.3712222,-82.1734167
+"Tuskegee, United States",06A,32.4605722,-85.6800278
+"Augusta, United States",DNL,33.4665028,-82.0393808
+"Morganton, United States",MRN,35.8202336,-81.6115119
+"Pikeville, United States",PBX,37.5617639,-82.5663889
+"Toccoa, United States",TOC,34.5928117,-83.2963717
+"Tampa, United States",VDF,28.0139772,-82.3452778
+"Fort Worth, United States",AFW,32.987778,-97.318889
+"East Troy, United States",57C,42.7971667,-88.3726111
+"San Diego, United States",MYF,32.4759,117.759
+"Lawrence, United States",LWC,39.009167,-95.2175
+"Wellington, United States",EGT,37.39411,-97.423225
+"Griffin, United States",6A2,33.2269722,-84.2749444
+"Pompano Beach, United States",PMP,26.2471389,-80.1110556
+"Alabaster, United States",EET,33.1777778,-86.7832222
+"Indianapolis, United States",UMP,39.935278,-86.045
+"London, United States",LOZ,37.0868889,-84.0773889
+"Fredericksburg, United States",FBG,38.298416,-77.456875
+"Racine, United States",RAC,42.7605,-87.8152
+"Redlands, United States",REI,34.08525,-117.146388
+"Chemehuevi Valley, United States",49X,34.528889,-114.431971
+"Riverside, United States",RIR,33.988778,-117.409971
+"Tacoma, United States",TIW,47.267944,-122.57811
+"Tampa, United States",X39,28.221278,-82.374555
+"Gulf Shores, United States",JKA,30.2896389,-87.6717778
+"Hazleton, United States",HZL,40.989167,-76.0025
+"Cumberland, United States",CBE,39.615278,-78.760556
+"Lone Rock, United States",LNR,43.211667,-90.181667
+"Joliet, United States",JOT,41.517778,-88.175556
+"Peru, United States",VYS,41.351944,-89.153056
+"Jackson, United States",JXN,42.260556,-84.460556
+"Philadelphia, United States",BBX,40.1375,-75.265
+"Okeechobee, United States",OBE,27.265833,-80.851111
+"Sebring, United States",SEF,27.456389,-81.342222
+"Avon Park, United States",AVO,27.591389,-81.528889
+"Winter Haven, United States",GIF,28.062778,-81.753333
+"Zephyrhills, United States",ZPH,28.228056,-82.155833
+"Ocala, United States",OCF,29.1725,-82.224167
+"Jesup, United States",JES,31.553889,-81.8825
+"Madison, United States",52A,33.612125,-83.4604444
+"Newnan, United States",CCO,33.3115656,-84.7697554
+"Thomson, United States",HQU,33.5297315,-82.5169509
+"Aiken, United States",AIK,33.6493889,-81.6850278
+"Camden, United States",CDN,34.2835833,-80.5648611
+"Lumberton, United States",LBT,34.6098056,-79.0595556
+"Ridgeland, United States",3J1,32.4934167,-80.99175
+"Pinehurst-Southern Pines, United States",SOP,35.2376111,-79.3887958
+"Rockingham, United States",RCZ,34.8913056,-79.7596111
+"Bamberg, United States",99N,33.3045278,-81.1084167
+"Richland Center, United States",93C,43.2833575,-90.2982819
+"Viroqua, United States",Y51,43.5793603,-90.8964742
+"Baraboo, United States",DLL,43.5217843,-89.7709266
+"Apple River, United States",7A4,42.4664444,-90.1693889
+"Statesville, United States",SVH,35.7649958,-80.9538958
+"Sturtevant, United States",C89,42.70325,-87.9589722
+"Burlington, United States",BUU,42.6907171,-88.3046825
+"East Stroudsburg, United States",N53,41.0358717,-75.1606789
+"Sterling, United States",70N,41.3473569,-75.4158972
+"Middletown, United States",06N,41.431912,-74.3915611
+"Lock Haven, United States",LHV,41.1357778,-77.4223056
+"Grove City, United States",29D,41.1460278,-80.16775
+"Youngstown, United States",04G,41.1304722,-80.6195833
+"Wadsworth, United States",3G3,41.0031572,-81.7564401
+"Ashland, United States",3G4,40.9029722,-82.2556389
+"Monroeville, United States",4G0,40.4526389,-79.7749167
+"Somerset, United States",2G9,40.0388708,-79.0149951
+"Youngstown, United States",4G4,40.9617953,-80.6773264
+"Braceville, United States",41N,41.2111675,-80.9692572
+"Lorain-Elyria, United States",LPR,41.3442778,-82.1776389
+"Geneva, United States",7D9,41.7778322,-80.9039797
+"Cleveland, United States",BKL,41.5175,-81.683333
+"Dunkirk, United States",DKK,42.4933353,-79.2720417
+"Hamburg, United States",4G2,42.7008925,-78.9147569
+"Trenton, United States",N87,40.2139444,-74.6017778
+"Mount Holly, United States",VAY,39.9428889,-74.84575
+"Pedricktown, United States",7N7,39.7355633,-75.3977211
+"Linden, United States",LDJ,40.6174472,-74.2445942
+"Morgantown, United States",O03,40.1570414,-75.8704892
+"Churchville, United States",0W3,39.5668378,-76.2024028
+"Angola, United States",ANQ,41.6396983,-85.0834933
+"Plymouth, United States",C65,41.3651307,-86.3002574
+"Van Wert, United States",VNW,40.8638295,-84.606358
+"Bucyrus, United States",17G,40.7815556,-82.9748056
+"Lake Wales, United States",X07,27.8938056,-81.6203889
+"Marshall, United States",RMY,42.2511932,-84.9554443
+"Batavia, United States",GVQ,43.03175,-78.1696667
+"Seneca Falls, United States",0G7,42.8835647,-76.7812318
+"Stormville, United States",N69,41.5769708,-73.7323514
+"Plainville, United States",4B8,41.6893333,-72.8646944
+"Bryan, United States",0G6,41.4673056,-84.5067778
+"Clearwater, United States",CLW,27.9764722,-82.7586667
+"Lakeland, United States",X49,27.9333581,-82.0439739
+"New York, United States",NYC,40.714167,-74.005833
+"Chicago, United States",CHI,41.883611,-87.631667
+"Chicago, United States",CGX,41.860278,-87.609722
+"Washington, United States",WAS,38.889444,-77.035278
+"Jasper, United States",JZP,34.4534722,-84.4572222
+"North Myrtle Beach, United States",CRE,33.81175,-78.7239444
+"Lansing, United States",IGQ,41.5349167,-87.5295278
+"Tomah, United States",Y72,43.9762222,-90.4806111
+"Ramona, United States",RNM,33.0391667,-116.91525
+"Coldwater, United States",OEB,41.9335691,-85.0522935
+"Wilkes-Barre, United States",WBW,41.2973074,-75.8522405
+"Willoughby, United States",LNN,41.6840278,-81.38975
+"Frankfort, United States",FFT,38.1819722,-84.9061389
+"Lewiston, United States",LEW,44.0484728,-70.2835075
+"Florence, United States",6S2,43.9828168,-124.1113687
+"Copperhead, United States",1A3,35.0158056,-84.3468333
+"Glenview, United States",NBU,42.090556,-87.8225
+"Marco Island Airport, United States",MRK,25.9950278,-81.6725278
+"Drummond Island, United States",DRM,46.0093114,-83.7439342
+"Lewiston, United States",8M8,44.8065278,-84.2761944
+"Gladwin, United States",GDW,43.9705893,-84.47502
+"Lowell, United States",24C,42.95392,-85.3439058
+"South Haven, United States",LWA,42.3511944,-86.2556389
+"Schaumburg, United States",06C,41.9893408,-88.1012428
+"Marshfield, United States",MFI,44.6368797,-90.1893267
+"Wisconsin Rapids, United States",ISW,44.3606456,-89.8381412
+"Clinton, United States",CWI,41.83075,-90.3289722
+"Beverly, United States",BVY,42.584141,-70.9161444
+"Oakdale, United States",O27,37.7563333,-120.8001944
+"Poplar Bluff, United States",POF,36.77394444,-90.3248611
+"Eastport, United States",EPM,44.9101111,-67.0126944
+"Keokuk, United States",EOK,40.4599078,-91.4285011
+"Swans Island, United States",ME5,44.1653889,-68.4281667
+"Bagdad, United States",E51,34.5958528,-113.170195
+"Gualala, United States",E55,38.8016111,-123.5306389
+"Kent, United States",1G3,41.1513889,-81.4151111
+"Atlantic City NJ, United States",ZRA,39.3665,-74.442
+"Springfield MA, United States",ZSF,42.106,-72.593054
+"Amherst MA, United States",XZK,42.375,-72.511389
+"Fond du Lac, United States",FLD,43.7711667,-88.4884167
+"Waupaca, United States",PCZ,44.33325,-89.0197778
+"Stevens Point, United States",STE,44.5451356,-89.5302844
+"Newberry, United States",ERY,46.311199,-85.457298
+"Forest Lake, United States",25D,45.2477456,-92.9943853
+"Galion, United States",GQQ,40.7533889,-82.7238056
+"Clarksville, United States",CKV,36.621944,-87.415
+"Lompoc, United States",LPC,34.6656,-120.4675
+"Coatesville, United States",CTH,39.9789,-75.8654
+"Lake Placid, United States",LKP,44.264444,-73.961944
+"Long Lake, United States",NY9,43.9750617,-74.42044
+"Wishram, United States",WIH,45.6576,-120.9664
+"Lima, United States",AOH,40.707478,-84.0270781
+"Brunswick, United States",SSI,31.1519722,-81.3910556
+"Beaver Falls, United States",BFP,40.7724722,-80.3914444
+"Winterhaven, United States",F57,28.0575,-81.7628056
+"Georgetown, United States",GGE,33.3114018,-79.3203139
+"Cleveland, United States",HDI,35.2199994,-84.832369
+"Dayton, United States",2A0,35.48625,-84.9310833
+"Steubenville, United States",2G2,40.3602179,-80.7008742
+"Renton, United States",RNT,47.4931389,-122.21575
+"La Verne, United States",POC,34.0916667,-117.7817778
+"Jekyll Island, United States",09J,31.0744722,-81.4277778
+"Cedar Key, United States",CDK,29.1342222,-83.0504722
+"Cross City, United States",CTY,29.6355278,-83.10475
+"Clemson, United States",CEU,34.6722222,-82.8858889
+"Heber, United States",36U,40.4818056,-111.4288056
+"Wichita, United States",BEC,37.6939167,-97.2149167
+"Canton, United States",47A,34.3122175,-84.4221556
+"Fernandina Beach, United States",55J,30.6118333,-81.4611944
+"Georgetown, United States",GTU,30.678809,-97.6793837
+"Sidney, United States",SNY,41.10167,-102.985
+"Waynesboro, United States",W13,38.076944,-78.944167
+"Leesburg, United States",JYO,39.078,-77.558
+"Williamson, United States",SDC,43.2347904,-77.119444
+"Clear Lake City, United States",CLC,29.5569,-95.137497
+"Boulder, United States",WBU,40.039444,-105.225833
+"Palo Alto, United States",PAO,37.4611111,-122.1150556
+"Mesa, United States",FFZ,33.4608001708984,-111.727996826172
+"Cooldige, United States",P08,32.9359016418457,-111.427001953125
+"Cottonwood, United States",P52,34.7299995422363,-112.035003662109
+"Phoenix, United States",A39,32.99169921875,-111.920997619629
+"Wickenburg, United States",E25,33.96889877,-112.7990036
+"Pontiac, United States",PTK,42.667,-83.35
+"Keene, United States",EEN,72.270833,42.898333
+"Charlotte, United States",EQY,35.01833,-80.62001
+"Iowa City, United States",IOW,41.639244,-91.546503
+"Windom, United States",MWM,43.9134017,-95.1094083
+"Annapolis, United States",ANP,38.942778,-76.568333
+"Pecos, United States",PEQ,31.3823889,-103.5107222
+"Hattiesburg, United States",HBG,31.2649444,-89.2528889
+"Yankton, United States",YKN,42.8711,-97.3969
+"Selma Alabama, United States",SES,32.4404,-86.9522
+"Hollister, United States",1C9,54.013333333333335,-124.76833333333333
+"Hayward, United States",HWD,37.65888888888889,-122.12166666666666
+"Ann Arbor, United States",ARB,42.132274,-83.444418
+"Boston, United States",ZTY,42.3478,-71.075
+"Hampton, United States",4A7,33.389099,-84.332397
+"Alameda, United States",NGZ,37.7861,-122.3186
+"Wilmington, United States",ZWI,39.736667,-75.551667
+"Elkhart, United States",EKI,41.719444,-86.003333
+"Immokalee , United States",IMM,26.433889,-81.401389
+"New Carrollton, United States",ZRZ,38.948,-76.8719
+"Petersburg, United States",PTB,37.18375,-77.507388
+"Sheboygan, United States",SBM,43.7696,-87.851402
+"Ephraim, United States",3D2,45.1354167,-87.1879444
+"Marana, United States",MZJ,32.509722,-111.325278
+"Glendale, United States",GEU,33.5269167,-112.2951389
+"Safford, United States",SAD,32.8533333,-109.6350833
+"Sikeston, United States",SIK,36.8988889,-89.56175
+"Oceano, United States",L52,35.10147222,-120.62236111
+"Queensbury, United States",GFL,43.341222,-73.610305
+"Ballston Spa, United States",5B2,43.050722,-73.861638
+"Mechanicville, United States",K27,42.893133,-73.66845
+"Crystal River, United States",CGC,28.8676111,-82.5741111
+"Baltimore, United States",MTN,39.3256667,-76.4137778
+"Lincoln, United States",LHM,38.9091667,-121.3513333
+"Fostoria, United States",FZI,41.1908333,-83.3930833
+"Fryeburg, United States",IZG,43.9911389,-70.9478889
+"New Orleans, United States",NEW,30.0424167,-90.02825
+"Coeur d'Alene, United States",COE,47.7743056,-116.8195833
+"Beaumont, United States",BMT,30.0702044,-94.2150967
+"Danville, United States",DNV,40.1996944,-87.5955278
+"Cocoa, United States",COI,28.3416111,-80.6854722
+"Valkaria, United States",X59,27.9608611,-80.5583333
+"Titusville, United States",TIX,28.5148,-80.7992278
+"Sebastian, United States",X26,27.81325,-80.4955833
+"Effingham, United States",1H2,39.07,-88.534
+"Houston, United States",AAP,29.43,-95.35
+"Eden Prairie, United States",FCM,44.4938,-93.2726
+"Olathe, United States",OJC,38.5051,-94.4415
+"Orlando, United States",X04,28.707222,-81.581667
+"West Goshen Township, United States",OQN,39.5924,-75.3455
+"Manassas, United States",MNZ,38.721389,-77.515556
+"Hanksville, United States",UT3,37.8916547,-110.3840289
+"Shelbyville, United States",2H0,39.410556,-88.845556
+"Peach Springs, United States",1G4,35.899904,-113.815674
+"Tarentum, United States",9G1,40.6035463,-79.8261189
+"Newburyport, United States",2B2,42.7953611,-70.8394444
+"Kulik Lake, United States",LKK,58.96591,-155.108089
+"Port alsworth, United States",PTA,60.208281,-154.306586
+"Winnsboro, United States",FDW,34.315472,-81.108806
+"Rochester, United States",DAW,43.2840556,-70.9292778
+"Port Oceanic, United States",PRL,60.2083333,-147.8194444
+"Newton, United States",EWK,38.0570785,-97.2752278
+"Columbus, United States",TZR,39.901111,-83.136944
+"Ocean Shores, United States",W04,46.5995,-124.0854
+"Packwood, United States",55S,46.3625,-121.4067
+"Fort Bridger, United States",FBR,41.236,-110.2436
+"Prosser, United States",S40,46.128,-119.4773
+"Chehalis, United States",CLS,46.4062,-122.5897
+"Mattawa, United States",M94,46.4124,-119.5518
+"Lebanon, United States",S30,44.3179,-122.5577
+"Evanston, United States",EVW,41.1649,-111.0208
+"Sabetha, United States",K83,39.5425,-95.4677
+"Mount Pleasant, United States",LRO,32.5387,-79.4697
+"Americus, United States",ACJ,32.0665,-84.1133
+"Eufala, United States",EUF,31.5708,-85.0774
+"Saluda, United States",6J4,33.5561,-81.4768
+"Manteo, United States",MQI,35.5514,-75.4173
+"Auburn, United States",AUO,32.3691,-85.2604
+"Endicott, United States",CZG,42.0471,-76.0578
+"Bessemer, United States",EKY,33.1876,-86.5558
+"Ellicott, United States",A50,38.87,-104.41
+"Crystal, United States",MIC,45.0343,-93.2114
+"Quitman, United States",23M,32.0517,-88.4434
+"Dublin, United States",DBN,32.3388,-82.591
+"Utica, United States",UCA,43.104167,-75.223333
+"Corvallis, United States",CVO,44.5067,-123.2915
+"Chatsworth, United States",CWT,34.256944,-118.598889
+"Deer Harbor, United States",DHB,48.618397,-123.00596
+"San Diego, United States",OLT,32.7552,-117.1995

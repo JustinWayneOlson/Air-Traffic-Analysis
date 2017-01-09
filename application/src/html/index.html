@@ -1,6 +1,6 @@
 <head>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-   <script async defer src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap"></script>
+   <script src="https://maps.google.com/maps/api/js?key=AIzaSyADmBaNROVdyNdfu2gDybR8DWlzZB_mulo"></script>
    <script src="https://d3js.org/d3.v3.min.js"></script>
 <style>
 
@@ -38,17 +38,62 @@ html, body,
 </style>
 </head>
 <body id="main">
+
+   <form>
+    Date Start: <input type = "text" id = "date-start">
+    Date End: <input type = "text" id = "date-end">
+    Airport: <input type = "text" id = "airport">
+    Airline: <input type = "text" id = "airline">
+    Flight Number: <input type = "text" id = "flight-number">
+    <button id = "runajax"> RUN </button>
+   </form>
+
+   <br>
+   <br>
    <p>Enter a city: </p>
-   <input type="text" id="city-input" value="Las Vegas, NV" >
+   <input type="text" id="city-input" value="Chicago, IL" >
    <button id='run-get'>Search Airports</button>
    <br>
    <button id='display-airports'>Display Airports</button>
    <br>
    <div id="map"></div>
-
+ 
    <script>
+   $("#runajax").click(function (event) {
+    
+    var data =
+    {
+      date_start: $("#date-start").val(),
+      date_end: $("#date-end").val(),
+      airline: $("#airline").val(),
+      airport: $("#airport").val(),
+      flight_num: $("#flight-number").val()
+    };
+
+    var form_query = JSON.stringify(data);
+
+    $.ajax(
+    {
+      url: "/test/",
+      type: "POST",
+      data: form_query,
+
+      success: function(data) {
+
+        for (var i = 0; i < data.nodes.length; i++){
+          alert(data.nodes[i].Name);
+        }
+
+        
+
+      },
+      error: function() {
+        alert("Didn't work");
+      }
+    });
+   })
+
    $('#display-airports').click(function(){
-         console.log('clicked');
     var map = new google.maps.Map(d3.select("#map").node(), {
       zoom: 4,
       center: new google.maps.LatLng(39.8282, -98.5795),
@@ -86,7 +131,6 @@ html, body,
 
             node.append("circle")
               .attr("r", 4.5)
-              .each(setColor);
 
             node.append("text")
               .attr("x", 7)
@@ -109,16 +153,11 @@ html, body,
               return d3.select(this)
                 .attr("transform", "translate(" + p.x + "," + p.y + ")");
             }
-
-            function setColor(d) {
-              return d3.select(this)
-                .style('fill', d.Color)
-            }
           };
         };
 
         overlay.setMap(map);
-
+        
       },
       error: function(error){
         console.log("no")
