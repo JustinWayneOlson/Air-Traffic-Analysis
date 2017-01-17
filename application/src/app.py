@@ -10,6 +10,7 @@ import tornado.ioloop
 import tornado.web
 from  tornado.escape import json_decode
 import random
+import os
 
 #API endpoints are defined as classes
 
@@ -19,28 +20,20 @@ class MainHandler(tornado.web.RequestHandler):
         #Patht to the webpage to be served
         self.render("./html/index.html")
 
-#Get request takes in one arg via url and sends data back
-class TestGetHandler(tornado.web.RequestHandler):
-    def get(self, data):
-        print("Serving JSON response to: " + data)
-        #Convert passed in get request into int
-        data=int(data)
-        #Create dict to store data to return
-        return_data={'response':[]}
-        #Create random data
-        '''Get data from database at this point'''
-        for i in range(0,data):
-            return_data['response'].append(random.random() * 10)
-        #Write dict content to page, like a json response
-        print return_data
-        self.write(return_data)
+class DropdownFillHandler(tornado.web.RequestHandler):
+   def get(self, column):
+        POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
+        engine = create_engine(POSTGRES_URL)
+        query  = 'SELECT DISTINCT "{}" FROM flights LIMIT 100000'.format(column)
+        dataframe = pd.read_sql_query(query, con = engine)
+        response = {'response':[j for i in dataframe.values.tolist() for j in i]}
+        self.write(response)
 
 class DisplayInfoHandler(tornado.web.RequestHandler):
     def flights_df(self, query):
         #Create Postgres engine
-        POSTGRES_URL = "postgresql://test:pass@localhost:5432/airport_display"
+        POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
         engine = create_engine(POSTGRES_URL)
-
         #Access vars from user query
         date_start = query['date_start']
         date_end = query['date_end']
@@ -50,14 +43,15 @@ class DisplayInfoHandler(tornado.web.RequestHandler):
 
         #Query Postgres DB
         if flight_num == "N/A":
-            postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "airplanes" WHERE 
-                                "Origin" = '{0}' AND "Carrier" = '{1}' AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{2}', 'MM/DD/YYYY') AND
-                                to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{3}', 'MM/DD/YYYY');'''.format(airport, airline, date_start, date_end)
+            #postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
+            #                    "Origin" = '{0}' AND "Carrier" = '{1}' AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{2}', 'MM/DD/YYYY') AND
+            #                    to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{3}', 'MM/DD/YYYY') LIMIT 10;'''.format(airport, airline, date_start, date_end)
+            postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
+                                "Origin" = '{0}' AND "Carrier" = '{1}'  LIMIT 10;'''.format(airport, airline, date_start, date_end)
         else:
-            postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "airplanes" WHERE 
+            postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
                                 "Origin" = '{0}' AND "Carrier" = '{1}' AND "FlightNum" = {2} AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{3}', 'MM/DD/YYYY') AND
-                                to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{4}', 'MM/DD/YYYY');'''.format(airport, airline, flight_num, date_start, date_end)
-
+                                to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{4}', 'MM/DD/YYYY') LIMIT 10;'''.format(airport, airline, flight_num, date_start, date_end)
         #Create/Return dataframe
         dataframe = pd.read_sql_query(postgres_query, con = engine)
         #MAYBE FIX THIS
@@ -162,87 +156,6 @@ class DisplayInfoHandler(tornado.web.RequestHandler):
         self.write(return_data)
 
 class DisplayAirportsHandler(tornado.web.RequestHandler):
-    def create_flights(self):
-        POSTGRES_URL = "postgresql://test:pass@localhost:5432/airport_display"
-        engine = create_engine(POSTGRES_URL)
-        dataframe = pd.read_sql_query('SELECT "Origin", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "airplanes";', con = engine)
-        return dataframe
-
-    def read_airports(self, filename):
-        dataframe = pd.DataFrame.from_csv(filename)
-        return dataframe
-
-    #Makes dictionary entries for each airport
-    #Each airport has name, lat, long, delays, totals, etc.
-    def create_airports(self, flights_df, airports_df):
-        nodes = []
-        airports = []
-        for index, row in flights_df.iterrows():
-            airport_code = str(row['Origin'])
-            if airport_code == "SJU":
-                airports.append(airport_code)
-                continue
-            if airport_code not in airports:
-                airport = {}
-                airport['Name'] = airport_code
-                for index_, row_ in airports_df.iterrows():
-                    if str(row_['Airport']) == airport_code:
-                        airport['lat'] = float(row_['Lat'])
-                        airport['long'] = float(row_['Lon'])
-                        break
-
-                airport['CarrierDelay'] = 0
-                airport['WeatherDelay'] = 0
-                airport['NASDelay'] = 0
-                airport['SecurityDelay'] = 0
-                airport['LateAircraftDelay'] = 0
-                airport['TotalDelay'] = 0
-                airport['TotalDelayedFlights'] = 0
-                airport['TotalFlights'] = 0
-                nodes.append(airport)
-                airports.append(airport_code)
-
-        return nodes
-
-    def acc_delays(self, nodes, flights_df):
-        flights_df.fillna(0, inplace=True)
-
-        for index, row in flights_df.iterrows():
-            CarrierDelay = int(row['CarrierDelay'])
-            WeatherDelay = int(row['WeatherDelay'])
-            NASDelay = int(row['NASDelay'])
-            SecurityDelay = int(row['SecurityDelay'])
-            LateAircraftDelay = int(row['LateAircraftDelay'])
-
-            for node in nodes:
-                if node['Name'] == str(row['Origin']):
-                    cur_airport = node
-
-            if CarrierDelay != 0 or WeatherDelay != 0 or NASDelay != 0 or SecurityDelay != 0 or LateAircraftDelay != 0:
-                cur_airport['TotalDelayedFlights'] += 1
-
-            cur_airport['CarrierDelay'] += int(row['CarrierDelay'])
-            cur_airport['WeatherDelay'] += int(row['WeatherDelay'])
-            cur_airport['NASDelay'] += int(row['NASDelay'])
-            cur_airport['SecurityDelay'] += int(row['SecurityDelay'])
-            cur_airport['LateAircraftDelay'] += int(row['LateAircraftDelay'])
-            cur_airport['TotalDelay'] += int(row['CarrierDelay']) + int(row['WeatherDelay']) + int(row['NASDelay']) + int(row['SecurityDelay']) + int(row['LateAircraftDelay'])
-            cur_airport['TotalFlights'] += 1
-
-        return nodes
-
-    def color(self, nodes):
-        for node in nodes:
-            avg = node['TotalDelay'] / node['TotalFlights']
-            if avg < 5.0:
-                node['Color'] = "green"
-            elif avg >= 5.0 and avg < 15.0:
-                node['Color'] = "yellow"
-            else:
-                node['Color'] = "red"
-
-        return nodes
-
     def get(self):
         flights_df = self.create_flights()
         airports_df = self.read_airports("data/airport_locs.csv")
@@ -256,33 +169,90 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
         return_data['nodes'] = nodes2
         self.write(return_data)
 
-#POST request takes in JSON from body, and returns JSON
-class TestPostHandler(tornado.web.RequestHandler):
-    def post(self):
-        print(json_decode(self.request.body))
-        return_data={
-                'response':{
-                    'message':'It Worked!!',
-                    'content':random.random()*10
-                }
-        }
-        self.write(return_data)
 
-class D3TestHandler(tornado.web.RequestHandler):
-    def get(self, city):
-        city = city
-        return_data = {}
-        dataframe = create_dataframe(city)
-        nodes = make_nodes(dataframe)
-        links = make_links(nodes, city)
-        return_data['nodes'] = nodes
-        return_data['links'] = links
+def create_flights(self):
+  POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
+  engine = create_engine(POSTGRES_URL)
+  dataframe = pd.read_sql_query('SELECT "Origin", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights";', con = engine)
+  return dataframe
 
-        self.write(return_data)
+def read_airports(self, filename):
+  dataframe = pd.DataFrame.from_csv(filename)
+  return dataframe
 
+#Makes dictionary entries for each airport
+#Each airport has name, lat, long, delays, totals, etc.
+def create_airports(self, flights_df, airports_df):
+  nodes = []
+  airports = []
+  for index, row in flights_df.iterrows():
+      airport_code = str(row['Origin'])
+      if airport_code == "SJU":
+          airports.append(airport_code)
+          continue
+      if airport_code not in airports:
+          airport = {}
+          airport['Name'] = airport_code
+          for index_, row_ in airports_df.iterrows():
+              if str(row_['Airport']) == airport_code:
+                  airport['lat'] = float(row_['Lat'])
+                  airport['long'] = float(row_['Lon'])
+                  break
+
+          airport['CarrierDelay'] = 0
+          airport['WeatherDelay'] = 0
+          airport['NASDelay'] = 0
+          airport['SecurityDelay'] = 0
+          airport['LateAircraftDelay'] = 0
+          airport['TotalDelay'] = 0
+          airport['TotalDelayedFlights'] = 0
+          airport['TotalFlights'] = 0
+          nodes.append(airport)
+          airports.append(airport_code)
+
+  return nodes
+
+def acc_delays(self, nodes, flights_df):
+  flights_df.fillna(0, inplace=True)
+
+  for index, row in flights_df.iterrows():
+      CarrierDelay = int(row['CarrierDelay'])
+      WeatherDelay = int(row['WeatherDelay'])
+      NASDelay = int(row['NASDelay'])
+      SecurityDelay = int(row['SecurityDelay'])
+      LateAircraftDelay = int(row['LateAircraftDelay'])
+
+      for node in nodes:
+          if node['Name'] == str(row['Origin']):
+              cur_airport = node
+
+      if CarrierDelay != 0 or WeatherDelay != 0 or NASDelay != 0 or SecurityDelay != 0 or LateAircraftDelay != 0:
+          cur_airport['TotalDelayedFlights'] += 1
+
+      cur_airport['CarrierDelay'] += int(row['CarrierDelay'])
+      cur_airport['WeatherDelay'] += int(row['WeatherDelay'])
+      cur_airport['NASDelay'] += int(row['NASDelay'])
+      cur_airport['SecurityDelay'] += int(row['SecurityDelay'])
+      cur_airport['LateAircraftDelay'] += int(row['LateAircraftDelay'])
+      cur_airport['TotalDelay'] += int(row['CarrierDelay']) + int(row['WeatherDelay']) + int(row['NASDelay']) + int(row['SecurityDelay']) + int(row['LateAircraftDelay'])
+      cur_airport['TotalFlights'] += 1
+
+  return nodes
+
+def color(self, nodes):
+  for node in nodes:
+      avg = node['TotalDelay'] / node['TotalFlights']
+      if avg < 5.0:
+          node['Color'] = "green"
+      elif avg >= 5.0 and avg < 15.0:
+          node['Color'] = "yellow"
+      else:
+          node['Color'] = "red"
+
+  return nodes
 
 def create_dataframe(city):
-        POSTGRES_URL = "postgresql://test:pass@localhost:5432/vis_test"
+        POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
         engine = create_engine(POSTGRES_URL)
         dataframe = pd.read_sql_query('SELECT "OriginCityName", "Origin", "DestCityName", "Dest" FROM "airplanez" WHERE "OriginCityName" = \'' + city + '\';', con = engine)
         return dataframe
@@ -344,13 +314,18 @@ def make_links(nodes, city):
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
-        #localhost:8888/testget/(any number)
+        (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
+        (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/test/", DisplayInfoHandler),
+        (r"/dropdown-fill/(.*)", DropdownFillHandler),
         (r"/display-airports", DisplayAirportsHandler)
     ])
 
 if __name__ == "__main__":
     app = make_app()
+    settings = {
+      "static_path": os.path.join(os.path.dirname(__file__), "static")
+    }
     app.listen(8888)
     print("serving on port 8888")
     tornado.ioloop.IOLoop.current().start()
