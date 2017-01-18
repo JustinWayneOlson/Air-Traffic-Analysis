@@ -37,6 +37,7 @@ class DisplayInfoHandler(tornado.web.RequestHandler):
         nodes = self.create_nodes(flights, airports)
         return_data = {}
         return_data['nodes'] = nodes
+        nodes = color(nodes)
         print return_data
         self.write(return_data)
 
@@ -218,7 +219,7 @@ def create_airports(self, flights_df, airports_df):
 
   return nodes
 
-def acc_delays(self, nodes, flights_df):
+def acc_delays(nodes, flights_df):
   flights_df.fillna(0, inplace=True)
 
   for index, row in flights_df.iterrows():
@@ -245,7 +246,7 @@ def acc_delays(self, nodes, flights_df):
 
   return nodes
 
-def color(self, nodes):
+def color(nodes):
   for node in nodes:
       avg = node['TotalDelay'] / node['TotalFlights']
       if avg < 5.0:

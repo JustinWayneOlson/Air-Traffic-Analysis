@@ -6,6 +6,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
 <script src="js/jquery.datetimepicker.full.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACUlehJQDDBT85PlM_JzIm_rc8Z0iO4dU&callback=initMap"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
 <link href="css/jquery.datetimepicker.min.css" rel="stylesheet"/>
 
@@ -57,7 +59,7 @@ html, body,
                 <input type="text"  id="date_end">
             </div>
              <div class='row'>
-                <button class='btn btn-success' id="runajax"> RUN </button>
+                <button class='btn btn-success' id="plot-airports">Plot Airports</button>
                 <br>
             </div>
           </div>
@@ -153,7 +155,12 @@ html, body,
          }
       );
    });
-   $("#runajax").click(function (event) {
+   $("#plot-airports").click(function (event) {
+      var map = new google.maps.Map(d3.select("#map").node(), {
+            zoom: 4,
+            center: new google.maps.LatLng(39.8282, -98.5795),
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+       });
       var data = {}
       $('#selections-container').find('input').each(function(index,value){
          if($(value).val())
@@ -171,14 +178,53 @@ html, body,
       data: form_query,
 
       success: function(data) {
-         console.log(data);
 
-        for (var i = 0; i < data.nodes.length; i++){
-          console.log(data.nodes[i].Name);
-        }
-
-
-
+      console.log(data);
+      var overlay = new google.maps.OverlayView();
+        overlay.onAdd = function() {
+          var layer = d3.select(this.getPanes().overlayLayer).append("div")
+            .attr("class", "stations");
+          overlay.draw = function() {
+            layer.select('svg').remove();
+            var projection = this.getProjection(),
+              padding = 10;
+            var svg = layer.append("svg")
+              .attr('width', 1200)
+              .attr('height', 600);
+            var node = svg.selectAll(".stations")
+              .data(data.nodes)
+              .enter().append("g")
+              .each(transform)
+              .attr("class", "node");
+            node.append("circle")
+              .attr("r", 4.5)
+              .each(setColor);
+            node.append("text")
+              .attr("x", 7)
+              .attr("y", 0)
+              .attr("dy", ".31em")
+              .text(function(d) {
+                return d.name;
+              });
+            function latLongToPos(d) {
+              var p = new google.maps.LatLng(d.lat, d.long);
+              p = projection.fromLatLngToDivPixel(p);
+              p.x = p.x - padding;
+              p.y = p.y - padding;
+              return p;
+            }
+            function transform(d) {
+              var p = latLongToPos(d);
+              return d3.select(this)
+                .attr("transform", "translate(" + p.x + "," + p.y + ")");
+            }
+            function setColor(d) {
+              return d3.select(this)
+                .style('fill', d.Color)
+            }
+          };
+        };
+        overlay.setMap(map);
       },
       error: function(error) {
          console.log(error);
