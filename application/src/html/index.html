@@ -45,37 +45,50 @@ html, body,
 </head>
 <body id="main">
    <div class='jumbotron'>
+      <div class='container-fluid' id='selections-container'>
+          <div class='col-xs-4'>
+             <div class='row'>
+                <label for="start-day-picker">Date Start: </label>
+                <input type="text" id="date_start">
+             </div>
 
-    <label for="start-day-picker">Date Start: </label>
-    <input type="text" value="01/01/2013" id="start-day-picker">
+             <div class='row'>
+                <label for="end-day-picker">Date End: </label>
+                <input type="text"  id="date_end">
+            </div>
+             <div class='row'>
+                <button class='btn btn-success' id="runajax"> RUN </button>
+                <br>
+            </div>
+          </div>
 
-    <label for="end-day-picker">Date End: </label>
-    <input type="text" value="01/01/2015" id="end-day-picker">
+          <div class='col-xs-4'>
+             <div class='row'>
+                <label for="airport">Source Airport: </label>
+                <input type="text" value="LAS" id="Origin">
+             </div>
 
-    <label for="airport">Source Airport: </label>
-    <input type="text" value="LAS" id="source-airport">
+             <div class='row'>
+                <label for="airline">Airline: </label>
+                <input type="text" value="NK" id="Carrier">
+             </div>
+          </div>
 
-    <label for="airport">Destination Airport: </label>
-    <input type="text" value="LAS" id="destination-airport">
+          <div class='col-xs-4'>
+             <div class='row'>
+                <label for="airport">Destination Airport: </label>
+                <input type="text" id="Dest">
+             </div>
 
-    <label for="airline">Airline: </label>
-    <input type="text" value="NK" id="airline">
+             <div class='row'>
+                <label for="flight-number">Flight Number: </label>
+                <input type="text" id="FlightNum">
+             </div>
 
+         </div>
+      </div>
+</div>
 
-    <label for="flight-number">Flight Number: </label>
-    <input type="text" value="N/A" id="flight-number">
-
-    <button class='btn btn-success' id="runajax"> RUN </button>
-   </div>
-
-   <br>
-   <br>
-   <p>Enter a city: </p>
-   <input type="text" id="city-input" value="Chicago, IL" >
-   <button id='run-get'>Search Airports</button>
-   <br>
-   <button id='display-airports'>Display Airports</button>
-   <br>
    <div id="map"></div>
 
    <script>
@@ -141,15 +154,13 @@ html, body,
       );
    });
    $("#runajax").click(function (event) {
-
-    var data =
-    {
-      date_start: $("#date-start").val(),
-      date_end: $("#date-end").val(),
-      airline: $("#airline").val(),
-      airport: $("#airport").val(),
-      flight_num: $("#flight-number").val()
-    };
+      var data = {}
+      $('#selections-container').find('input').each(function(index,value){
+         if($(value).val())
+         {
+            data[$(value).attr('id')] = $(value).val();
+         }
+      });
 
     var form_query = JSON.stringify(data);
 

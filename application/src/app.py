@@ -30,33 +30,48 @@ class DropdownFillHandler(tornado.web.RequestHandler):
         self.write(response)
 
 class DisplayInfoHandler(tornado.web.RequestHandler):
+    def post(self):
+        received_query = json_decode(self.request.body)
+        flights = self.flights_df(received_query)
+        airports = self.airports_dict("data/airport_locs.csv")
+        nodes = self.create_nodes(flights, airports)
+        return_data = {}
+        return_data['nodes'] = nodes
+        print return_data
+        self.write(return_data)
+
     def flights_df(self, query):
         #Create Postgres engine
         POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
         engine = create_engine(POSTGRES_URL)
         #Access vars from user query
-        date_start = query['date_start']
-        date_end = query['date_end']
-        airport = query['airport']
-        airline = query['airline']
-        flight_num = query['flight_num']
+        where_string = ""
+        for index,key in enumerate(query.keys()):
+            if index == 0:
+               where_string = " WHERE \"{}\" = '{}'".format(key, query[key])
+               print where_string
+            if index != 0:
+               where_string += " AND \"{}\" = '{}'".format(key, query[key])
+               print where_string
+        limit_string = " LIMIT 100000;"
+        query_string = 'SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
 
+        print query_string
         #Query Postgres DB
-        if flight_num == "N/A":
+       # if flight_num == "N/A":
             #postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
             #                    "Origin" = '{0}' AND "Carrier" = '{1}' AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{2}', 'MM/DD/YYYY') AND
             #                    to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{3}', 'MM/DD/YYYY') LIMIT 10;'''.format(airport, airline, date_start, date_end)
-            postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
-                                "Origin" = '{0}' AND "Carrier" = '{1}'  LIMIT 10;'''.format(airport, airline, date_start, date_end)
-        else:
-            postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
-                                "Origin" = '{0}' AND "Carrier" = '{1}' AND "FlightNum" = {2} AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{3}', 'MM/DD/YYYY') AND
-                                to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{4}', 'MM/DD/YYYY') LIMIT 10;'''.format(airport, airline, flight_num, date_start, date_end)
+           # postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
+           #                     "Origin" b= '{0}' AND "Carrier" = '{1}'  LIMIT 10;'''.format(airport, airline, date_start, date_end)
+        #else:
+         #   postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
+         #                       "Origin" = '{0}' AND "Carrier" = '{1}' AND "FlightNum" = {2} AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{3}', 'MM/DD/YYYY') AND
+          #                      to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{4}', 'MM/DD/YYYY') LIMIT 10;'''.format(airport, airline, flight_num, date_start, date_end)
         #Create/Return dataframe
-        dataframe = pd.read_sql_query(postgres_query, con = engine)
+        dataframe = pd.read_sql_query(query_string, con = engine)
         #MAYBE FIX THIS
         dataframe.fillna(0, inplace=True)
-
         return dataframe
 
     def airports_dict(self, filename):
@@ -145,15 +160,6 @@ class DisplayInfoHandler(tornado.web.RequestHandler):
         return nodes_list
 
 
-    def post(self):
-        received_query = json_decode(self.request.body)
-        flights = self.flights_df(received_query)
-        airports = self.airports_dict("data/airport_locs.csv")
-        nodes = self.create_nodes(flights, airports)
-        return_data = {}
-        return_data['nodes'] = nodes
-        print return_data
-        self.write(return_data)
 
 class DisplayAirportsHandler(tornado.web.RequestHandler):
     def get(self):
@@ -323,9 +329,6 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    settings = {
-      "static_path": os.path.join(os.path.dirname(__file__), "static")
-    }
     app.listen(8888)
     print("serving on port 8888")
     tornado.ioloop.IOLoop.current().start()
