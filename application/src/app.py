@@ -165,13 +165,9 @@ def create_nodes(flights, airports):
       airport['Color'] = ""
 
   nodes_lookup = {}
-  if not any(x['Name'] == origin_airport for x in nodes):
-     nodes_list = [{'Color':'black', 'Name': origin_airport, 'lat': airports[origin_airport]['Lat'], 'long': airports[origin_airport]['Lon']}]
-     nodes_lookup[origin_airport] = 0
-     counter = 0
-  else:
-     nodes_list = []
-     counter = 1
+  nodes_list = [{'Color':'black', 'Name': origin_airport, 'lat': airports[origin_airport]['Lat'], 'long': airports[origin_airport]['Lon']}]
+  nodes_lookup[origin_airport] = 0
+  counter = 1
   for key, val in nodes.iteritems():
       nodes_list.append(val)
       nodes_lookup[val['Name']] = counter
