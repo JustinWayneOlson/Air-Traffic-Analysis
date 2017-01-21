@@ -13,7 +13,7 @@
    html, body,
     #map {
          width: 100%;
-         height: 100%;
+         height: 75%;
          margin: 0;
          padding: 0;
        }
@@ -195,7 +195,7 @@
               .enter().append("g")
               .each(transform)
               .attr("class", "node")
-              .on('mouseover', displaybox);
+              .on('click', moreinfo);
             node.append("circle")
               .attr("r", 4.5)
               .each(setColor);
@@ -213,9 +213,17 @@
               p.y = p.y - padding;
               return p;
             }
-            function displaybox(){
+            function someinfo(){
                var delay_data = $(this)[0].__data__;
                $('body').append("<span>" + JSON.stringify(delay_data) + "</span>");
+            }
+            function moreinfo(){
+              var delay_data = $(this)[0].__data__;
+              $('body').append("<div>\
+                  \t Airport Code: " + delay_data.Name + " <br>\
+                  \t Total Flights: " + delay_data.TotalFlights + " <br>\
+                  \t NAS Delay Percentage: " + delay_data.NASDelayTot / delay_data.TotalFlights + "% <br>\
+                  <div>");
             }
             function transform(d) {
               var p = latLongToPos(d);

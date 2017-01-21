@@ -188,12 +188,6 @@ def color(nodes):
 
   return nodes
 
-def create_dataframe(city):
-        POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
-        engine = create_engine(POSTGRES_URL)
-        dataframe = pd.read_sql_query('SELECT "OriginCityName", "Origin", "DestCityName", "Dest" FROM "airplanez" WHERE "OriginCityName" = \'' + city + '\';', con = engine)
-        return dataframe
-
 def make_links(nodes, flights, node_lookup):
     links = []
     temp_dict = {}
