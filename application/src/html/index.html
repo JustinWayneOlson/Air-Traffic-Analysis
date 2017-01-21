@@ -198,14 +198,10 @@
               .on('click', moreinfo);
             node.append("circle")
               .attr("r", 4.5)
-              .each(setColor);
-            node.append("text")
-              .attr("x", 7)
-              .attr("y", 0)
-              .attr("dy", ".31em")
-              .text(function(d) {
-                return d.name;
-              });
+              .each(setColor)
+              .on('mouseover', someinfo)
+              .on('mouseout', mouseoutofinfo);
+
             function latLongToPos(d) {
               var p = new google.maps.LatLng(d.lat, d.long);
               p = projection.fromLatLngToDivPixel(p);
@@ -213,9 +209,17 @@
               p.y = p.y - padding;
               return p;
             }
+            function mouseoutofinfo(){
+               d3.select(this).transition()
+                              .duration(100)
+                              .attr("r",4.5);
+            }
             function someinfo(){
-               var delay_data = $(this)[0].__data__;
-               $('body').append("<span>" + JSON.stringify(delay_data) + "</span>");
+               d3.select(this).transition()
+                              .duration(1000)
+                              .attr("r",75);
+               console.log($(this));
+               $(this).attr('innerHTML', "<h1>TEEEST</h1>");
             }
             function moreinfo(){
               var delay_data = $(this)[0].__data__;
