@@ -69,17 +69,17 @@
                   </div>
                   <div class='row'>
                       <label for="date_start">Date Start: </label>
-                      <input type="text" id="date_start">
+                      <input type="text" id="date_start" multiple="multiple">
                       <label for="date_end">Date End: </label>
-                      <input type="text"  id="date_end">
+                      <input type="text"  id="date_end" multiple="multiple">
                       <label for="Origin">Source Airport: </label>
-                      <input type="text" value="LAS" id="Origin">
+                      <input type="text" value="LAS" id="Origin" multiple="multiple">
                       <label for="Dest">Destination Airport: </label>
-                      <input type="text" id="Dest">
+                      <input type="text" id="Dest" multiple="multiple">
                       <label for="Carrier">Airline: </label>
-                      <input type="text" value="NK" id="Carrier">
+                      <input type="text" value="NK" id="Carrier" multiple="multiple">
                       <label for="FlightNum">Flight Number: </label>
-                      <input type="text" id="FlightNum">
+                      <input type="text" id="FlightNum" multiple="multiple">
                   </div>
                </div>
             </div>
@@ -157,7 +157,8 @@
       var map = new google.maps.Map(d3.select("#map").node(), {
             zoom: 4,
             center: new google.maps.LatLng(39.8282, -98.5795),
-            mapTypeId: google.maps.MapTypeId.TERRAIN
+            mapTypeId: google.maps.MapTypeId.TERRAIN,
+            disableDefaultUI: true
        });
       var data = {}
       $('#selections-container').find('input').each(function(index,value){
@@ -180,7 +181,7 @@
       console.log(data);
       var overlay = new google.maps.OverlayView();
         overlay.onAdd = function() {
-          var layer = d3.select(this.getPanes().overlayLayer).append("div")
+          var layer = d3.select(this.getPanes().overlayMouseTarget).append("div")
             .attr("class", "stations");
           overlay.draw = function() {
             layer.select('svg').remove();
@@ -193,7 +194,8 @@
               .data(data.nodes)
               .enter().append("g")
               .each(transform)
-              .attr("class", "node");
+              .attr("class", "node")
+              .on('mouseover', displaybox);
             node.append("circle")
               .attr("r", 4.5)
               .each(setColor);
@@ -210,6 +212,10 @@
               p.x = p.x - padding;
               p.y = p.y - padding;
               return p;
+            }
+            function displaybox(){
+               var delay_data = $(this)[0].__data__;
+               $('body').append("<span>" + JSON.stringify(delay_data) + "</span>");
             }
             function transform(d) {
               var p = latLongToPos(d);
