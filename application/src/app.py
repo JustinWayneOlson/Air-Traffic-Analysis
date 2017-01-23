@@ -17,6 +17,10 @@ class MainHandler(tornado.web.RequestHandler):
         #Patht to the webpage to be served
         self.render("./html/index.html")
 
+class AboutHandler(tornado.web.RequestHandler):
+  def get(self):
+      self.render("./html/about.html")
+
 class DropdownFillHandler(tornado.web.RequestHandler):
    def get(self, column):
         POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
@@ -213,6 +217,7 @@ def make_links(nodes, flights, node_lookup):
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
+        (r"/about", AboutHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/display-airports", DisplayAirportsHandler),
