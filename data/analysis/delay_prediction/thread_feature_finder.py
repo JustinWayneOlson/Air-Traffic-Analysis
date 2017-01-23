@@ -46,7 +46,7 @@ from sklearn.metrics import accuracy_score
 #Data file to use
 csv_file = "On_Time_On_Time_Performance_2015_7.csv"
 #Number of iterations to run and average over
-num_iter = 5
+num_iter = 2
 #Number of neighbors to use in KNeighbors classifier
 num_neighbors = 16
 #List of the indices of the columns to use as features
@@ -119,6 +119,7 @@ def worker():
 
 
 if __name__ == "__main__":
+	prog_start = time.time()
 	#Create the Queue to pull feature combinations from
 	work_queue = Queue()
 	#Create the Queue to put results in
@@ -147,18 +148,38 @@ if __name__ == "__main__":
 	csv_data_list = list(csvreader)
 	#List of children processes
 	children = []
-	print("--Spawning children")
+	print("--Spawning", max_process, "children")
 	#Spawn Child processes. Off to the races!
 	for child in range(max_process):
 		#Spawn child with target of worker function. Pass the combination queue, output queue, and list of csv data to worker (Maybe make this shared memory instead?)
 		threading.Thread(target=worker).start()
 
 	work_queue.join()
+	prog_time = time.time()-prog_start
+	print(prog_time, "seconds to test all combinations")
+	output = []
 	#Print contents of the output queue
 	while not output_queue.empty():
-		print(output_queue.get())
+		output.append(output_queue.get())
 
+	#Write results to csv file
+	with open(str(len(combo)) + "_combos_" + str(num_iter) + "_iters.csv", "w", newline='') as fo:
+		writer = csv.writer(fo)
+		writer.writerow(["Features", "Accuracy (%)", "Valid Data", "Time (seconds)"])
+		#Sort list by second index (accuracy), then reverse to get highest at top
+		[writer.writerow(x) for x in sorted(output, key=lambda x: x[1])[::-1]]
+		#Write other data about the process
+		writer.writerow(["KNeighbors", str(num_neighbors)])
+		writer.writerow(["Label Index", str(label)])
+		writer.writerow(["Iterations/Feature set", str(num_iter)])
+		writer.writerow(["Number of combinations", str(len(combo))])
+		writer.writerow(["Feature Pool", str(feature_pool)])
+		writer.writerow(["Max Threads", str(max_process)])
+		writer.writerow(["Min Combo Length", str(min_combo)])
+		writer.writerow(["Max Combo Length", str(max_combo)])
+	
 
+	
 
 
 '''
