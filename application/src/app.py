@@ -59,6 +59,10 @@ def flights_df(query):
   engine = create_engine(POSTGRES_URL)
   #Access vars from user query
   where_string = ""
+  if "date_start" in query.keys():
+      del  query["date_start"]
+  if "date_end" in query.keys():
+      del query["date_end"]
   for index,key in enumerate(query.keys()):
       if index == 0:
          where_string = " WHERE \"{}\" = '{}'".format(key, query[key])
