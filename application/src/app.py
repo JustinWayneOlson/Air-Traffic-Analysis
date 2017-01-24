@@ -187,12 +187,19 @@ def color(nodes):
       if node['Color'] == 'black':
          continue
       avg = node['TotalDelay'] / node['TotalFlights']
-      if avg < 5.0:
-          node['Color'] = "green"
-      elif avg >= 5.0 and avg < 15.0:
-          node['Color'] = "yellow"
-      else:
+
+      #THIS WILL CHANGE
+      #If average >90% --> red
+      if avg > 0.9:
           node['Color'] = "red"
+
+      #Elif average <90% and >80% --> yellow
+      elif avg >= 0.8 and avg < 0.9:
+          node['Color'] = "yellow"
+
+      #Else --> green
+      else:
+          node['Color'] = "green"
 
   return nodes
 
