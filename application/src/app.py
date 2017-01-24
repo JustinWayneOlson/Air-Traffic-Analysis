@@ -23,7 +23,7 @@ class AboutHandler(tornado.web.RequestHandler):
 
 class DropdownFillHandler(tornado.web.RequestHandler):
    def get(self, column):
-        POSTGRES_URL = "postgresql://test:pass@localhost:5432/airport_display"
+        POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
         engine = create_engine(POSTGRES_URL)
         query  = 'SELECT DISTINCT "{}" FROM flights LIMIT 100000'.format(column)
         dataframe = pd.read_sql_query(query, con = engine)
@@ -59,7 +59,7 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
 
 def flights_df(query):
   #Create Postgres engine
-  POSTGRES_URL = "postgresql://test:pass@localhost:5432/airport_display"
+  POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
   engine = create_engine(POSTGRES_URL)
   #Access vars from user query
   where_string = ""
