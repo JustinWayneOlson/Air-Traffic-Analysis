@@ -23,7 +23,7 @@ class AboutHandler(tornado.web.RequestHandler):
 
 class DropdownFillHandler(tornado.web.RequestHandler):
    def get(self, column):
-        POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
+        POSTGRES_URL = "postgresql://test:pass@localhost:5432/airport_display"
         engine = create_engine(POSTGRES_URL)
         query  = 'SELECT DISTINCT "{}" FROM flights LIMIT 100000'.format(column)
         dataframe = pd.read_sql_query(query, con = engine)
@@ -59,7 +59,7 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
 
 def flights_df(query):
   #Create Postgres engine
-  POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
+  POSTGRES_URL = "postgresql://test:pass@localhost:5432/airport_display"
   engine = create_engine(POSTGRES_URL)
   #Access vars from user query
   where_string = ""
@@ -187,12 +187,19 @@ def color(nodes):
       if node['Color'] == 'black':
          continue
       avg = node['TotalDelay'] / node['TotalFlights']
-      if avg < 5.0:
-          node['Color'] = "green"
-      elif avg >= 5.0 and avg < 15.0:
-          node['Color'] = "yellow"
-      else:
+
+      #THIS WILL CHANGE
+      #If average >90% --> red
+      if avg > 0.9:
           node['Color'] = "red"
+
+      #Elif average <90% and >80% --> yellow
+      elif avg >= 0.8 and avg < 0.9:
+          node['Color'] = "yellow"
+
+      #Else --> green
+      else:
+          node['Color'] = "green"
 
   return nodes
 
