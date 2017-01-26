@@ -12,15 +12,19 @@ from  tornado.escape import json_decode
 import random
 import os
 
+#Handler for main (index) page
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        #Patht to the webpage to be served
+        #URL to main (index) page
         self.render("./html/index.html")
 
+#Handler for about page
 class AboutHandler(tornado.web.RequestHandler):
   def get(self):
+      #URL to about page
       self.render("./html/about.html")
 
+#Handler to populate dropdown menus with options from database
 class DropdownFillHandler(tornado.web.RequestHandler):
    def get(self, column):
         POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
@@ -30,6 +34,7 @@ class DropdownFillHandler(tornado.web.RequestHandler):
         response = {'response':[j for i in dataframe.values.tolist() for j in i]}
         self.write(response)
 
+#Handler to display airports (nodes) and flights (links)
 class DisplayFlightsHandler(tornado.web.RequestHandler):
     def post(self):
         received_query = json_decode(self.request.body)
@@ -46,6 +51,7 @@ class DisplayFlightsHandler(tornado.web.RequestHandler):
         nodes = color(nodes)
         self.write(return_data)
 
+#Handler to display airports (nodes)
 class DisplayAirportsHandler(tornado.web.RequestHandler):
     def post(self):
         received_query = json_decode(self.request.body)
@@ -57,11 +63,13 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
         nodes = color(nodes)
         self.write(return_data)
 
+#Method to create Pandas dataframe with flight information
 def flights_df(query):
-  #Create Postgres engine
+  #Connect to the PostgreSQL database
   POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
   engine = create_engine(POSTGRES_URL)
-  #Access vars from user query
+
+  #Construct the PostgreSQL query based upon user-input
   where_string = ""
   if "date_start" in query.keys():
       del  query["date_start"]
@@ -75,23 +83,12 @@ def flights_df(query):
   limit_string = " LIMIT 100000;"
   query_string = 'SELECT DISTINCT "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
 
-  #Query Postgres DB
- # if flight_num == "N/A":
-      #postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
-      #                    "Origin" = '{0}' AND "Carrier" = '{1}' AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{2}', 'MM/DD/YYYY') AND
-      #                    to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{3}', 'MM/DD/YYYY') LIMIT 10;'''.format(airport, airline, date_start, date_end)
-     # postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
-     #                     "Origin" b= '{0}' AND "Carrier" = '{1}'  LIMIT 10;'''.format(airport, airline, date_start, date_end)
-  #else:
-   #   postgres_query = '''SELECT DISTINCT "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" WHERE
-   #                       "Origin" = '{0}' AND "Carrier" = '{1}' AND "FlightNum" = {2} AND to_date("FlightDate", 'MM/DD/YYYY') >= to_date('{3}', 'MM/DD/YYYY') AND
-    #                      to_date("FlightDate", 'MM/DD/YYYY') <= to_date('{4}', 'MM/DD/YYYY') LIMIT 10;'''.format(airport, airline, flight_num, date_start, date_end)
-  #Create/Return dataframe
+  #Create and return dataframe
   dataframe = pd.read_sql_query(query_string, con = engine)
-  #MAYBE FIX THIS
   dataframe.fillna(0, inplace=True)
   return dataframe
 
+#Method to create 'airports' dictionary of dictionaries where key = airport code and values = lat/lon
 def airports_dict(filename):
   dataframe = pd.DataFrame.from_csv(filename)
   airports = {}
@@ -103,13 +100,17 @@ def airports_dict(filename):
 
   return airports
 
+#Method to create 'nodes' dictionary of dictionaries consisting of airport delay information
 def create_nodes(flights, airports):
   nodes = {}
   airports_list = []
+
+  #Iterate through the flights information Pandas dataframe
   for index, row in flights.iterrows():
       dest_airport = str(row.Dest)
       origin_airport = str(row.Origin)
-      #If we haven't encountered this airport before...
+
+      #If we haven't encountered this airport before initialize all the values accordingly
       if dest_airport not in airports_list:
           airport = {}
           airport["Name"] = dest_airport
@@ -149,6 +150,7 @@ def create_nodes(flights, airports):
           nodes[dest_airport] = airport
           airports_list.append(dest_airport)
 
+      #Otherwise accumulate delay information
       else:
           airport = nodes[dest_airport]
           airport["CarrierDelay"] += row.CarrierDelay
@@ -172,6 +174,7 @@ def create_nodes(flights, airports):
           airport["TotalFlights"] += 1
       airport['Color'] = ""
 
+  #Assign unique, numeric values to each airport
   nodes_lookup = {}
   nodes_list = [{'Color':'black', 'Name': origin_airport, 'lat': airports[origin_airport]['Lat'], 'long': airports[origin_airport]['Lon']}]
   nodes_lookup[origin_airport] = 0
@@ -182,13 +185,15 @@ def create_nodes(flights, airports):
       counter += 1
   return nodes_list, nodes_lookup
 
+#Method to assign colors to nodes on the Google map
 def color(nodes):
   for node in nodes:
+
+      #Force origin airport to be colored black
       if node['Color'] == 'black':
          continue
       avg = node['TotalDelay'] / node['TotalFlights']
 
-      #THIS WILL CHANGE
       #If average >90% --> red
       if avg > 0.9:
           node['Color'] = "red"
@@ -203,6 +208,7 @@ def color(nodes):
 
   return nodes
 
+#Method to construct links between airports
 def make_links(nodes, flights, node_lookup):
     links = []
     temp_dict = {}
