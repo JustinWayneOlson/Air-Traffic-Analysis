@@ -41,11 +41,11 @@ start_time = time.time()
 #Data file to use
 csv_file = "On_Time_On_Time_Performance_2015_7.csv"
 #Number of iterations to run and average over
-num_iter = 4
+num_iter = 3
 #Number of neighbors to use in KNeighbors classifier
 num_neighbors = 14
 #List of the indices of the columns to use as features
-feature_list = [2, 4, 31] #Month(2), Day of Week(4), Listed Departure Time(31)
+feature_list = [1,2,4,7,11,31]#[2, 4, 31] #Month(2), Day of Week(4), Listed Departure Time(31)
 #Index of the column to use as a label. 34 for Departure Delay, 45 for Arrival Delay
 label = 34
 
@@ -78,8 +78,8 @@ for num, row in enumerate(csv_data_list[1:]):
 	#This loop also naively trusts that the cell will contain data. This is the lazy way to do this, but if it fails the try, the cell is empty or the wrong data type. It then just excludes this data from the set.
 	try:
 		#Try to get all data first, then append to the lists at the end if ecerythign is valid
-		if float(info[label]) > 0: #39 for Departure, 50 or Arrival
-			y_temp = 1
+		if float(info[label]) > 0: #34 for Departure, 45 or Arrival
+			y_temp = 1 #float(info[label]) This tries to predict the actual amount of delay, instead of just predicting delay or not
 			delay += 1
 		else:
 			y_temp = 0
@@ -118,7 +118,7 @@ for i in range(num_iter):
 	loop_time = time.time()
 	#Split data set into 4 sections, x and y training sets, and x and y testing sets
 	x_train, x_test, y_train, y_test = train_test_split(x, y) #, test_size = 0.33)
-
+	
 	#Initialize empty classifier
 	clf = KNeighborsClassifier(n_neighbors = num_neighbors)
 	#Fit data
@@ -126,6 +126,11 @@ for i in range(num_iter):
 
 	#Test accuracy
 	predictions = clf.predict(x_test)
+	'''
+	#Test using random choices as predictions (Tested over 30 iterations multiple time, average accuracy for random choices is 50% (+- 0.04%))
+	import random
+	predictions = [int(2*random.random()) for i in range(len(x_test))]
+	'''
 	avg_list.append([accuracy_score(y_test, predictions), time.time() - loop_time])
 
 #print(avg_list)
