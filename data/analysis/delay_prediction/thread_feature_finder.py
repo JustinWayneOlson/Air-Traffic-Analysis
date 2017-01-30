@@ -104,6 +104,10 @@ def kneigh(features):
 		#Test accuracy
 		predictions = clf.predict(x_test)
 		avg_list.append(accuracy_score(y_test, predictions))
+		'''
+		#Might be faster to use clf.score(x_test, y_test) instead of predict and accuracy score
+		avg_list.append(clf.score(x_test, y_test))
+		'''
 
 	#Return list of [average accuracy, number of data points, and time to run]
 	output_queue.put([features, sum(avg_list)*100/float(num_iter), len(x), time.time()-start_time])
@@ -177,23 +181,5 @@ if __name__ == "__main__":
 		writer.writerow(["Max Threads", str(max_process)])
 		writer.writerow(["Min Combo Length", str(min_combo)])
 		writer.writerow(["Max Combo Length", str(max_combo)])
-	
-
-	
-
-
-'''
-#Realtime single query of model
-while 1:
-	inp = input("Query:")
-	if (inp == "q"):
-		break
-	q = inp.split(",")
-	q = [float(x) for x in q]
-	print(q)
-	print(clf.predict([q]))
-'''
-
-'''TODO
-Make multithreaded (using multiprocess, as threading module shares memory, multiprocessing does not)
-'''
+		writer.writerow(["Time to Run (Sec)", str(prog_time)])
+		writer.writerow(["CSV Input File Name", csv_file])
