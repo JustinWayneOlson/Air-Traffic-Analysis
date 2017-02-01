@@ -40,7 +40,9 @@
          stroke: black;
          stroke-width: 1.5px;
        }
-
+       .navbar-logo {
+         height: 36px;
+       }
    </style>
 </head>
 <body id="main">
@@ -48,11 +50,14 @@
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="http://www.northropgrumman.com/Pages/default.aspx">NG</a>
-  <a class="navbar-brand" href="http://www.colorado.edu/cs/senior-project">CU</a>
-  <a class="navbar-brand" href="#">Air Traffic Analysis</a>
+  <a href="http://www.northropgrumman.com/Pages/default.aspx">
+     <img class="navbar-brand navbar-logo" src='/img/ng.png'></img>
+  </a>
+  <a href="http://www.colorado.edu/cs/senior-project">
+     <img class="navbar-brand navbar-logo" src='/img/cu.png'></img>
+  </a>
+  <a class="navbar-brand">Air Traffic Analysis</a>
   <a class="navbar-brand" href="about">About</a>
-
 
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
          <div class="container-fluid">
@@ -68,17 +73,24 @@
                          <p>Visualize and view air traffic data through individual flights.</p>
                      </div>
                   </div>
-                  <div class='row'>
+                  <div class='col-xs-4'>
                       <label for="date_start">Date Start: </label>
                       <input type="text" id="date_start">
+                      <br>
                       <label for="date_end">Date End: </label>
                       <input type="text"  id="date_end">
+                  </div>
+                  <div class='col-xs-4'>
                       <label for="Origin">Source Airport: </label>
-                      <input type="text" value="LAS" id="Origin">
+                      <input type="text" value="LAS" id="Origin" multiple='multiple'>
+                      <br>
                       <label for="Dest">Destination Airport: </label>
-                      <input type="text" id="Dest">
+                      <input type="text" id="Dest" multiple='multiple'>
+                  </div>
+                  <div class='col-xs-4'>
                       <label for="Carrier">Airline: </label>
-                      <input type="text" value="NK" id="Carrier">
+                      <input type="text" value="NK" id="Carrier" multiple='multiple'>
+                      <br>
                       <label for="FlightNum">Flight Number: </label>
                       <input type="text" id="FlightNum">
                   </div>
@@ -97,14 +109,14 @@
       $('#date_start').datetimepicker(
          {
             timepicker:false,
-            format: 'd/m/Y'
+            format: 'm/d/Y'
          }
       );
 
       $('#date_end').datetimepicker(
          {
             timepicker:false,
-            format: 'd/m/Y'
+            format: 'm/d/Y'
          }
       );
 
@@ -114,7 +126,8 @@
             url: "/dropdown-fill/Origin",
             success: function(data){
                $('#Origin').select2({
-                  data:data['response']
+                  data:data['response'],
+                  placeholder: "Select an option"
                });
             },
             error: function(error){
@@ -129,7 +142,8 @@
             url: "/dropdown-fill/Dest",
             success: function(data){
                $('#Dest').select2({
-                  data:data['response']
+                  data:data['response'],
+                  placeholder: "Select an option"
                });
             },
             error: function(error){
@@ -144,7 +158,8 @@
             url: "/dropdown-fill/Carrier",
             success: function(data){
                $('#Carrier').select2({
-                  data:data['response']
+                  data:data['response'],
+                  placeholder: "Select an option"
                });
             },
             error: function(error){
@@ -422,10 +437,18 @@
       $('#selections-container').find('input').each(function(index,value){
          if($(value).val())
          {
-            data[$(value).attr('id')] = $(value).val();
+            if($(value).attr('multiple')=='multiple')
+            {
+            console.log("multiple")
+               data[$(value).attr('id')] = $(value).val().split(',');
+            }
+            else
+            {
+               data[$(value).attr('id')] = $(value).val();
+            }
          }
       });
-
+    console.log(data);
     var form_query = JSON.stringify(data);
 
     $.ajax(

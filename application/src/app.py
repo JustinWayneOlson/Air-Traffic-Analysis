@@ -71,17 +71,33 @@ def flights_df(query):
 
   #Construct the PostgreSQL query based upon user-input
   where_string = ""
+  start_date = False
+  end_date = False
   if "date_start" in query.keys():
+      date_start = ' AND to_date("FlightDate", \'YYYY-MM-DD\') >= to_date(\'{}\', \'MM/DD/YYYY\')'.format(query["date_start"])
+      start_date = True
       del  query["date_start"]
   if "date_end" in query.keys():
+      date_end = ' AND to_date("FlightDate", \'YYYY-MM-DD\') <= to_date(\'{}\', \'MM/DD/YYYY\')'.format(query["date_end"])
+      end_date = True
       del query["date_end"]
   for index,key in enumerate(query.keys()):
       if index == 0:
-         where_string = " WHERE \"{}\" = '{}'".format(key, query[key])
+           item = str(query[key]).replace('[','(').replace(']',')').replace("u'","'")
+           print item
+           where_string = " WHERE \"{}\" IN {}".format(key, item)
       if index != 0:
-         where_string += " AND \"{}\" = '{}'".format(key, query[key])
+           item = str(query[key]).replace('[','(').replace(']',')').replace("u'","'")
+           print item
+           where_string += " AND \"{}\" IN {}".format(key, item)
+  if(start_date):
+      where_string += date_start
+  if(end_date):
+    where_string += date_end
   limit_string = " LIMIT 100000;"
   query_string = 'SELECT DISTINCT "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
+  print query_string
+
 
   #Create and return dataframe
   dataframe = pd.read_sql_query(query_string, con = engine)
@@ -193,13 +209,13 @@ def color(nodes):
       if node['Color'] == 'white':
          continue
       avg = node['TotalDelay'] / node['TotalFlights']
-
+      print avg
       #If average >90% --> red
-      if avg > 0.9:
+      if avg > 75:
           node['Color'] = "red"
 
       #Elif average <90% and >80% --> yellow
-      elif avg >= 0.8 and avg < 0.9:
+      elif avg >= 50 and avg < 75:
           node['Color'] = "yellow"
 
       #Else --> green
@@ -233,6 +249,7 @@ def make_app():
         (r"/about", AboutHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
+        (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),
         (r"/display-airports", DisplayAirportsHandler),
         (r"/dropdown-fill/(.*)", DropdownFillHandler),
         (r"/display-flights", DisplayFlightsHandler)
