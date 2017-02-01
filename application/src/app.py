@@ -176,7 +176,7 @@ def create_nodes(flights, airports):
 
   #Assign unique, numeric values to each airport
   nodes_lookup = {}
-  nodes_list = [{'Color':'black', 'Name': origin_airport, 'lat': airports[origin_airport]['Lat'], 'long': airports[origin_airport]['Lon']}]
+  nodes_list = [{'Color':'white', 'Name': origin_airport, 'lat': airports[origin_airport]['Lat'], 'long': airports[origin_airport]['Lon']}]
   nodes_lookup[origin_airport] = 0
   counter = 1
   for key, val in nodes.iteritems():
@@ -190,7 +190,7 @@ def color(nodes):
   for node in nodes:
 
       #Force origin airport to be colored black
-      if node['Color'] == 'black':
+      if node['Color'] == 'white':
          continue
       avg = node['TotalDelay'] / node['TotalFlights']
 
