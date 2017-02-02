@@ -56,7 +56,8 @@
   <a href="http://www.colorado.edu/cs/senior-project">
      <img class="navbar-brand navbar-logo" src='/img/cu.png'></img>
   </a>
-  <a class="navbar-brand">Air Traffic Analysis</a>
+  <a class="navbar-brand" href='/'>Air Traffic Analysis</a>
+  <a class="navbar-brand" href='routing'>Routing</a>
   <a class="navbar-brand" href="about">About</a>
 
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -100,9 +101,11 @@
       </div>
   </div>
 </nav>
-
+   <p>Legend</p>
+   <p>Green less than 50 minutes average delay </p>
+   <p>Yellow less than 75 minutes average delay </p>
+   <p>Red more than 75 minutes average delay </p>
    <div id="map"></div>
-
    <script>
    $(document).ready(function(){
 
@@ -500,6 +503,7 @@
                               .duration(1000)
                               .attr("r",75);
             }
+            var table_data = []
             function moreinfo(){
               var delay_data = $(this)[0].__data__;
               $('body').append("<div>\
@@ -548,7 +552,15 @@
       $('#selections-container').find('input').each(function(index,value){
          if($(value).val())
          {
-            data[$(value).attr('id')] = $(value).val();
+            if($(value).attr('multiple')=='multiple')
+            {
+            console.log("multiple")
+               data[$(value).attr('id')] = $(value).val().split(',');
+            }
+            else
+            {
+               data[$(value).attr('id')] = $(value).val();
+            }
          }
       });
 
