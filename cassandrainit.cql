@@ -1,0 +1,138 @@
+/* ---------------------------------------------------------------------
+Author: Michael Muehlbradt
+Contributor: 
+This script creates keyspace and tables for db setup
+DBSchema: 
+Table naming convention: 
+Usage: run this command in cqlsh: SOURCE 'path-to-/cassandra_setup.cql'
+-------------------------------------------------------------------------
+*/
+
+CREATE KEYSPACE IF NOT EXISTS AirportTrafficAnalytics WITH replication = {'class': 'SimpleStrategy',
+'replication_factor': '2'} AND durable_writes = true;
+
+USE AirportTrafficAnalytics;
+
+
+/* ------------------------------------------------------------
+Tables for Transtats
+------------------------------------------------------------ */
+CREATE TABLE IF NOT EXISTS Transtats (
+"Year" timestamp with time zone,
+"Quarter" bigint,
+"Month" bigint,
+"DayofMonth" bigint,
+"DayOfWeek" bigint,
+"FlightDate" text COLLATE "default".pg_catalog,
+"UniqueCarrier" text COLLATE "default".pg_catalog,
+"AirlineID" bigint,
+"Carrier" text COLLATE "default".pg_catalog,
+"TailNum" text COLLATE "default".pg_catalog,
+"FlightNum" bigint,
+"OriginAirportID" bigint,
+"OriginAirportSeqID" bigint,
+"OriginCityMarketID" bigint,
+"Origin" text COLLATE "default".pg_catalog,
+"OriginCityName" text COLLATE "default".pg_catalog,
+"OriginState" text COLLATE "default".pg_catalog,
+"OriginStateFips" bigint,
+"OriginStateName" text COLLATE "default".pg_catalog,
+"OriginWac" bigint,
+"DestAirportID" bigint,
+"DestAirportSeqID" bigint,
+"DestCityMarketID" bigint,
+"Dest" text COLLATE "default".pg_catalog,
+"DestCityName" text COLLATE "default".pg_catalog,
+"DestState" text COLLATE "default".pg_catalog,
+"DestStateFips" bigint,
+"DestStateName" text COLLATE "default".pg_catalog,
+"DestWac" bigint,
+"CRSDepTime" bigint,
+"DepTime" double precision,
+"DepDelay" double precision,
+"DepDelayMinutes" double precision,
+"DepDel15" double precision,
+"DepartureDelayGroups" double precision,
+"DepTimeBlk" text COLLATE "default".pg_catalog,
+"TaxiOut" double precision,
+"WheelsOff" double precision,
+"WheelsOn" double precision,
+"TaxiIn" double precision,
+"CRSArrTime" bigint,
+"ArrTime" double precision,
+"ArrDelay" double precision,
+"ArrDelayMinutes" double precision,
+"ArrDel15" double precision,
+"ArrivalDelayGroups" double precision,
+"ArrTimeBlk" text COLLATE "default".pg_catalog,
+"Cancelled" double precision,
+"CancellationCode" text COLLATE "default".pg_catalog,
+"Diverted" double precision,
+"CRSElapsedTime" double precision,
+"ActualElapsedTime" double precision,
+"AirTime" double precision,
+"Flights" double precision,
+"Distance" double precision,
+"DistanceGroup" bigint,
+"CarrierDelay" double precision,
+"WeatherDelay" double precision,
+"NASDelay" double precision,
+"SecurityDelay" double precision,
+"LateAircraftDelay" double precision,
+"FirstDepTime" double precision,
+"TotalAddGTime" double precision,
+"LongestAddGTime" double precision,
+"DivAirportLandings" bigint,
+"DivReachedDest" double precision,
+"DivActualElapsedTime" double precision,
+"DivArrDelay" double precision,
+"DivDistance" double precision,
+"Div1Airport" text COLLATE "default".pg_catalog,
+"Div1AirportID" double precision,
+"Div1AirportSeqID" double precision,
+"Div1WheelsOn" double precision,
+"Div1TotalGTime" double precision,
+"Div1LongestGTime" double precision,
+"Div1WheelsOff" double precision,
+"Div1TailNum" text COLLATE "default".pg_catalog,
+"Div2Airport" text COLLATE "default".pg_catalog,
+"Div2AirportID" double precision,
+"Div2AirportSeqID" double precision,
+"Div2WheelsOn" double precision,
+"Div2TotalGTime" double precision,
+"Div2LongestGTime" double precision,
+"Div2WheelsOff" double precision,
+"Div2TailNum" double precision,
+"Div3Airport" double precision,
+"Div3AirportID" double precision,
+"Div3AirportSeqID" double precision,
+"Div3WheelsOn" double precision,
+"Div3TotalGTime" double precision,
+"Div3LongestGTime" double precision,
+"Div3WheelsOff" double precision,
+"Div3TailNum" double precision,
+"Div4Airport" double precision,
+"Div4AirportID" double precision,
+"Div4AirportSeqID" double precision,
+"Div4WheelsOn" double precision,
+"Div4TotalGTime" double precision,
+"Div4LongestGTime" double precision,
+"Div4WheelsOff" double precision,
+"Div4TailNum" double precision,
+"Div5Airport" double precision,
+"Div5AirportID" double precision,
+"Div5AirportSeqID" double precision,
+"Div5WheelsOn" double precision,
+"Div5TotalGTime" double precision,
+"Div5LongestGTime" double precision,
+"Div5WheelsOff" double precision,
+"Div5TailNum" double precision,
+"Unnamed: 109" double precision;
+
+/* --------------------------------------------------------
+Tables for ADSBExchange
+---------------------------------------------------------- */
+
+//CREATE TABLE IF NOT EXISTS ADSBExchange (
+
+
