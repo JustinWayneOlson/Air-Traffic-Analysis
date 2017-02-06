@@ -2,16 +2,27 @@
 
 import numpy
 
+# Specify the dimensions of the entire grid in miles. x,y, and altitude.
 LAT_DIM = 10000
 LON_DIM = 20000
 ALT_DIM = 8000
 
 
+#use to make up fake user data to test functions
 def tester():
     x = [5, 3, 4, 3, 1]
     mean, standard_dev = mean_with_standard_dev(x)
     print("mean: ", mean, "\n")
     print("standard deviation: ", standard_dev, "\n")
+
+    xy_gridsize = 1000
+    use_weather = 1
+    use_noflyzones = 1
+    origin = "LA"
+    destination = "NY"
+
+    find_optimal_path(origin, destination, xy_gridsize, use_weather, use_noflyzones)
+
 
     return
 
@@ -23,19 +34,43 @@ def mean_with_standard_dev(x):
 
     return mean, standard_dev
 
+def getCoords():
+    x = numpy.random.random_integers(low = 0, high = LAT_DIM, size = 5)
+    y = numpy.random.random_integers(low = 0, high = LON_DIM, size = 5)
 
-def add_nofly_zones(graph):
+    coords = x,y
+
+    return coords
+
+
+# could change add nofly zones and add weather data functions into one function and add an additional flag..
+# should take in the coordinates of no fly data and map that to our grid indices
+def add_nofly_zones(graph, xy_gridsize):
     # set the defined regions as numpy.inf
+    x_coord, y_coord = getCoords()
+
+    for i in range(0,len(x_coord)):
+        x = int(numpy.floor(x_coord[i] / xy_gridsize))
+        y = int(numpy.floor(y_coord[i] / xy_gridsize))
+        graph[x, y] = numpy.inf
 
     return graph
 
+# should take in the coordinates of weather data and map that to our grid indices
+def add_weather_data(graph, xy_gridsize):
+    # set the defined regions as numpy.inf
+    x_coord, y_coord= getCoords()
 
-def add_weather_data(graph):
+    for i in range(0,len(x_coord)):
+        x = int(numpy.floor(x_coord[i] / xy_gridsize))
+        y = int(numpy.floor(y_coord[i] / xy_gridsize))
+
+        graph[x, y] = numpy.inf
+
 
     return graph
 
-
-def a_star(graph):
+def a_star(graph, origin, dest):
 
     return graph
 
@@ -47,39 +82,31 @@ def diff_from_direct(path_found):
 
 
 # grid-size in miles
-def generate_graph(x_gridsize, y_gridsize, z_gridsize, use_weather, use_nofly):
+def generate_graph(xy_gridsize, use_weather, use_nofly):
 
-    # create empty 2-D matrix (create altitude later)
-    graph_3d = numpy.zeros(LAT_DIM/x_gridsize, LON_DIM/y_gridsize, ALT_DIM/z_gridsize)
+    # create empty 2-D matrix (create altitude as a later feature)
+    graph_2d = numpy.zeros((int(numpy.floor(LAT_DIM/xy_gridsize)), int(numpy.floor(LON_DIM/xy_gridsize))))
 
     # populate graph with weather data
     if use_weather:
-        graph_3d = add_weather_data(graph_3d)
-
+        graph_2d = add_weather_data(graph_2d, xy_gridsize)
     # populate graph with no-fly zones
     if use_nofly:
-        graph_3d= add_nofly_zones(graph_3d)
+        graph_2d= add_nofly_zones(graph_2d, xy_gridsize)
 
-    return graph_3d
+    return graph_2d
 
 
-def find_optimal_path():
-    # # Temporary fill in for user inputs until that gets figured out # #
-    x_gridsize = 10
+def find_optimal_path(origin, dest, xy_gridsize, use_weather, use_nofly):
 
-    #enforce that x and y are of same length?
-    y_gridsize = x_gridsize
-    z_gridsize = 15
+    gridmap = generate_graph(xy_gridsize, use_weather, use_nofly)
 
-    use_weather = 0
-    use_nofly = 1
-    ################################################################
-
-    gridmap = generate_graph(x_gridsize, y_gridsize, z_gridsize, use_weather, use_nofly)
-
-    generated_optimal_path = a_star(gridmap, x_gridsize, y_gridsize)
+    # x and y grid square side size are same so don't need to pass in those
+    generated_optimal_path = a_star(gridmap, origin, dest)
 
     diff_from_direct(generated_optimal_path)
+    print(gridmap)
+
 
     return
 
