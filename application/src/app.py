@@ -205,7 +205,7 @@ def create_nodes(flights, airports):
 def color(nodes):
   for node in nodes:
 
-      #Force origin airport to be colored black
+      #Force origin airport to be colored white
       if node['Color'] == 'white':
          continue
       avg = node['TotalDelay'] / node['TotalFlights']

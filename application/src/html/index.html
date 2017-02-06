@@ -43,11 +43,49 @@
        .navbar-logo {
          height: 36px;
        }
+     .my-legend .legend-title {
+       text-align: left;
+       margin-bottom: 5px;
+       font-weight: bold;
+       font-size: 90%;
+       }
+     .my-legend .legend-scale ul {
+       margin: 0;
+       margin-bottom: 5px;
+       padding: 0;
+       float: left;
+       list-style: none;
+       }
+     .my-legend .legend-scale ul li {
+       font-size: 80%;
+       list-style: none;
+       margin-left: 0;
+       line-height: 18px;
+       margin-bottom: 2px;
+       }
+     .my-legend ul.legend-labels li span {
+       display: block;
+       float: left;
+       height: 16px;
+       width: 30px;
+       margin-right: 5px;
+       margin-left: 0;
+       border: 1px solid #999;
+       }
+     .my-legend .legend-source {
+       font-size: 70%;
+       color: #999;
+       clear: both;
+       }
+     .my-legend a {
+       color: #777;
+       background: #ECEEEF;
+       }
    </style>
 </head>
 <body id="main">
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button id='navbar-dropdown' class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <a href="http://www.northropgrumman.com/Pages/default.aspx">
@@ -101,14 +139,23 @@
       </div>
   </div>
 </nav>
-   <p>Legend</p>
-   <p>Green less than 50 minutes average delay </p>
-   <p>Yellow less than 75 minutes average delay </p>
-   <p>Red more than 75 minutes average delay </p>
+<div id='legend' class='my-legend'>
+   <div class='legend-title'>Airport Delay Frequency</div>
+   <div class='legend-scale'>
+     <ul class='legend-labels'>
+       <li><span style='background:white;'></span>Source Airport</li>
+       <li><span style='background:green;'></span>< 50% Delay</li>
+       <li><span style='background:yellow;'></span>> 50% Delay</li>
+       <li><span style='background:red;'></span>> 60% Delay</li>
+     </ul>
+   </div>
+   </div>
+
+</div>
    <div id="map"></div>
    <script>
    $(document).ready(function(){
-
+      $('#legend').hide();
       $('#date_start').datetimepicker(
          {
             timepicker:false,
@@ -199,6 +246,8 @@
       data: form_query,
 
       success: function(data) {
+      $('#navbar-dropdown').click();
+      $('#legend').show();
       $('#loading').remove();
       var map = new google.maps.Map(d3.select("#map").node(), {
             zoom: 4,
@@ -572,6 +621,8 @@
       data: form_query,
 
       success: function(data) {
+      $('#navbar-dropdown').click();
+      $('#legend').show();
       $('#loading').remove();
          var map = new google.maps.Map(d3.select("#map").node(), {
                zoom: 4,
