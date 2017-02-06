@@ -173,6 +173,33 @@
    });
 
    $("#plot-airports").click(function (event) {
+      $('#map').append('<img id="loading" src="/img/loading.gif"></img>');
+      var data = {}
+      $('#selections-container').find('input').each(function(index,value){
+         if($(value).val())
+         {
+            if($(value).attr('multiple')=='multiple')
+            {
+            console.log("multiple")
+               data[$(value).attr('id')] = $(value).val().split(',');
+            }
+            else
+            {
+               data[$(value).attr('id')] = $(value).val();
+            }
+         }
+      });
+    console.log(data);
+    var form_query = JSON.stringify(data);
+
+    $.ajax(
+    {
+      url: "/display-airports",
+      type: "POST",
+      data: form_query,
+
+      success: function(data) {
+      $('#loading').remove();
       var map = new google.maps.Map(d3.select("#map").node(), {
             zoom: 4,
             center: new google.maps.LatLng(39.8282, -98.5795),
@@ -436,31 +463,6 @@
                       }
                     ]
        });
-      var data = {}
-      $('#selections-container').find('input').each(function(index,value){
-         if($(value).val())
-         {
-            if($(value).attr('multiple')=='multiple')
-            {
-            console.log("multiple")
-               data[$(value).attr('id')] = $(value).val().split(',');
-            }
-            else
-            {
-               data[$(value).attr('id')] = $(value).val();
-            }
-         }
-      });
-    console.log(data);
-    var form_query = JSON.stringify(data);
-
-    $.ajax(
-    {
-      url: "/display-airports",
-      type: "POST",
-      data: form_query,
-
-      success: function(data) {
 
       console.log(data);
       var overlay = new google.maps.OverlayView();
@@ -536,6 +538,7 @@
         overlay.setMap(map);
       },
       error: function(error) {
+         $('#loading').remove()
          console.log(error);
       }
     });
@@ -543,11 +546,7 @@
 
 
    $("#plot-flights").click(function (event) {
-      var map = new google.maps.Map(d3.select("#map").node(), {
-            zoom: 4,
-            center: new google.maps.LatLng(39.8282, -98.5795),
-            mapTypeId: google.maps.MapTypeId.TERRAIN
-       });
+      $('#map').append('<img id="loading" src="/img/loading.gif"></img>');
       var data = {}
       $('#selections-container').find('input').each(function(index,value){
          if($(value).val())
@@ -573,6 +572,12 @@
       data: form_query,
 
       success: function(data) {
+      $('#loading').remove();
+         var map = new google.maps.Map(d3.select("#map").node(), {
+               zoom: 4,
+               center: new google.maps.LatLng(39.8282, -98.5795),
+               mapTypeId: google.maps.MapTypeId.TERRAIN
+          });
           var overlay = new google.maps.OverlayView();
 
           overlay.onAdd = function() {
@@ -647,6 +652,7 @@
       console.log(data);
       },
       error: function(error) {
+         $('#loading').remove();
          console.log(error);
       }
     });
