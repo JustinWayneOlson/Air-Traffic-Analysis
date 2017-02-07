@@ -2,7 +2,7 @@
 Author: Michael Muehlbradt
 Contributor: 
 This script creates keyspace and tables for db setup
-DBSchema: 
+DBSchema: table for transtats and ADSBExchange
 Table naming convention: 
 Usage: run this command in cqlsh: SOURCE 'path-to-/cassandra_setup.cql'
 -------------------------------------------------------------------------
@@ -16,7 +16,7 @@ USE AirportTrafficAnalytics;
 /* ------------------------------------------------------------
 Tables for Transtats
 ------------------------------------------------------------ */
-CREATE TABLE testing (
+CREATE TABLE Transtats (
 "Year" timestamp,
 "Quarter" bigint,
 "Month" bigint,
