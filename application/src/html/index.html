@@ -6,9 +6,11 @@
    <script src="js/jquery.datetimepicker.full.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACUlehJQDDBT85PlM_JzIm_rc8Z0iO4dU&callback=initMap"></script>
+   <script src='https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js'></script>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
    <link href="css/jquery.datetimepicker.min.css" rel="stylesheet"/>
+   <link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet"></link>
    <style>
    html, body,
     #map {
@@ -153,6 +155,32 @@
 
 </div>
    <div id="map"></div>
+   <table id='info-table' class="display compact" cellspacing='0', width='100%'>
+      <thead>
+         <tr>
+            <th>Airport Code</th>
+            <th>Total Flights</th>
+            <th>NAS Delayed Flights</th>
+            <th>NAS Delay Percentage</th>
+            <th>NAS Delay Minutes</th>
+            <th>Carrier Delayed Flights</th>
+            <th>Carrier Delay Percentage</th>
+            <th>Carrier Delay Minutes</th>
+            <th>Weather Delayed Flights</th>
+            <th>Weather Delay Percentage</th>
+            <th>Weather Delay Minutes</th>
+            <th>Security Delayed Flights</th>
+            <th>Security Delay Percentage</th>
+            <th>Security Delay Minutes</th>
+            <th>Late Aircraft Delayed Flights</th>
+            <th>Late Aircraft Delay Percentage</th>
+            <th>Late Aircraft Delay Minutes</th>
+
+         </tr>
+      </thead>
+      <tbody>
+      </tbody>
+   </table>
    <script>
    $(document).ready(function(){
       $('#legend').hide();
@@ -169,6 +197,8 @@
             format: 'm/d/Y'
          }
       );
+
+      $('#info-table').DataTable();
 
       $.ajax(
          {
@@ -677,22 +707,9 @@
             }
             var table_data = []
             function moreinfo(){
+              $('.odd').remove();
               var delay_data = $(this)[0].__data__;
-              $('body').append("<div>\
-                  \t Airport Code: " + delay_data.Name + " <br>\
-                  \t Total Flights: " + delay_data.TotalFlights + " <br>\
-                  \t Flights Delayed due to NAS: " + delay_data.NASDelayTot + " // NAS Delay Percentage: " + delay_data.NASDelayTot / delay_data.TotalDelayedFlights + "% \
-                    // NAS Delay in Minutes: " + delay_data.NASDelay + " minutes <br>\
-                  \t Flights Delayed due to Carrier: " + delay_data.CarrierDelayTot + " // Carrier Delay Percentage: " + delay_data.CarrierDelayTot / delay_data.TotalDelayedFlights + "% \
-                    // Carrier Delay in Minutes: " + delay_data.CarrierDelay + " minutes <br>\
-                  \t Flights Delayed due to Weather: " + delay_data.WeatherDelayTot + " // Weather Delay Percentage: " + delay_data.WeatherDelayTot / delay_data.TotalDelayedFlights + "% \
-                    // Weather Delay in Minutes: " + delay_data.WeatherDelay + " minutes <br>\
-                  \t Flights Delayed due to Security: " + delay_data.SecurityDelayTot + " // Security Delay Percentage: " + delay_data.SecurityDelayTot / delay_data.TotalDelayedFlights + "% \
-                    // Security Delay in Minutes: " + delay_data.SecurityDelay + " minutes <br>\
-                  \t Flights Delayed due to Late Aircraft: " + delay_data.LateAircraftDelayTot + " // Late Aircraft Delay Percentage: " + delay_data.LateAircraftDelayTot / delay_data.TotalDelayedFlights + "% \
-                    // Late Aircraft Delay in Minutes: " + delay_data.LateAircraftDelay + " minutes <br>\
-                  \t ------------------------------------------------------------------------------\
-                  <div>");
+              $('tbody').append('<tr><td>' + delay_data.Name + '</td><td>' + delay_data.TotalFlights + '</td><td>' + delay_data.NASDelayTot + '</td><td>' + delay_data.NASDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.NASDelay + '</td><td>' + delay_data.CarrierDelayTot + '</td><td>' + delay_data.CarrierDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.CarrierDelay + '</td><td>' + delay_data.WeatherDelayTot + '</td><td>' + delay_data.WeatherDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.WeatherDelay + '</td><td>' + delay_data.SecurityDelayTot + '</td><td>' + delay_data.SecurityDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.SecurityDelay + '</th><th>' + delay_data.LateAircraftDelayTot + '</td><td>' + delay_data.LateAircraftDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.LateAircraftDelay + '</td></tr>')
             }
             function transform(d) {
               var p = latLongToPos(d);
