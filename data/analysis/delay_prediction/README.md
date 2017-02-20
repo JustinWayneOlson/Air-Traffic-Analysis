@@ -11,6 +11,14 @@ feature_finder: Automatically creates combinations of features and tests each se
 
 Fully threaded using multiprocessing. Writes to a csv file with results. Length of combinations, number of threads, and many other settings can be changed.
 
+Flight Time DTreeClassifier: Decision tree test for estimating time to a destination.
+
+Flight Time MLPClassifier: MLP neural net test for estimating time to a destination.
+
+Flight Time RandomGuess: Randomly guesses time to a destination. Used for establishing baseline accuracy for estimating time to a destination.
+
+MLP Auto Tester: Tests combinations of alpha values and hidden layer compositions when estimating time to a destination. Outputs results to a csv file.
+
 ##Design Choices
 Number of Iterations (10): Chosen after using a high number of iterations to find convergance of accuracy, then lowering number of iterations until average accuracy was consistent with itself and more iteration tests. Used average_tester.
 
