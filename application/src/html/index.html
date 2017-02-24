@@ -1051,12 +1051,13 @@
 
               var link = svg.selectAll(".link")
                 .data(data.links)
-                .enter().append("line")
+                .enter().append("path")
                 .attr("class", "path")
                 .each(drawlink);
 
               node.append("circle")
-                .attr("r", 4.5);
+                .attr("r", 4.5)
+                .style("fill", "white");
 
               node.append("text")
                 .attr("x", 7)
@@ -1066,8 +1067,21 @@
                   return d.name;
                 });
 
+              //Convert GPS coordinates to corresponding div pixels
               function latLongToPos(d) {
                 var p = new google.maps.LatLng(d.lat, d.long);
+                p = projection.fromLatLngToDivPixel(p);
+                p.x = p.x - padding;
+                p.y = p.y - padding;
+                return p;
+              }
+
+              //Comput GPS midpoint between source and destination airport
+              function latLongToMidpoint(source, dest) {
+                //half_lat adjusted North by 3 degrees to adjust for curved paths
+                half_lat = (dest.lat + source.lat)/2 + 3;
+                half_lon = (dest.long + source.long)/2;
+                var p = new google.maps.LatLng(half_lat, half_lon);
                 p = projection.fromLatLngToDivPixel(p);
                 p.x = p.x - padding;
                 p.y = p.y - padding;
@@ -1080,17 +1094,24 @@
                   .attr("transform", "translate(" + p.x + "," + p.y + ")");
               }
 
+              //Driver function to draw links between set of 3 points
               function drawlink(d) {
                 console.log(d);
-                var p1 = latLongToPos(data.nodes[d.source]),
-                  p2 = latLongToPos(data.nodes[d.target]);
+                var p1 = latLongToPos(data.nodes[d.source]);
+                var p2 = latLongToMidpoint(data.nodes[d.source], data.nodes[d.target]);
+                var p3 = latLongToPos(data.nodes[d.target]);
+                var lineData = [{"x": p1.x, "y": p1.y},
+                                {"x": p2.x, "y": p2.y},
+                                {"x": p3.x, "y": p3.y}];
+                var lineFunction = d3.svg.line()
+                  .x(function(d) { return d.x; })
+                  .y(function(d) { return d.y; })
+                  .interpolate("basis");
+
                 d3.select(this)
-                  .attr('x1', p1.x)
-                  .attr('y1', p1.y)
-                  .attr('x2', p2.x)
-                  .attr('y2', p2.y)
+                  .attr("d", lineFunction(lineData))
                   .style('fill', 'none')
-                  .style('stroke', 'steelblue');
+                  .style('stroke', 'yellow');
               }
             };
           };
