@@ -45,15 +45,21 @@ num_iter = 2
 #Alpha value for MLPClassifier. 
 #1st run: [0.001, 0.01, 0.05, 0.1, 0.5, 1, 5, 10, 50, 100, 500]
 #2nd run: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1]
-alpha_value = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1]
+#3rd run: [0.005, 0.01, 0.05, 0.1, 0.5, 1, 10]
+#4th run: [0.005, 0.01, 0.1, 1]
+alpha_value = [0.005, 0.01, 0.1, 1]
 #Composition of hidden layers for MLPClassifier (100,40,) Would be 2 layers, with 100 nodes in the first layer and 40 nodes in the second
 #2 layer with 5000 layer take too long[(20,10,5,), (20,10,), (50,25,), (100,50,), (500, 100,), (1000, 500,), (5000, 1000,), (5000, 2500,), (20,), (50,), (100,), (500,), (1000,), (5000,), (10000,), (20000,), (50000,)]#(100,50)#(20,10,5,)
 #1st run: [(20,10,5,), (20,10,), (50,25,), (100,50,), (500, 100,), (20,), (50,), (100,), (500,)]
 #2nd run: [(500,), (500,100,), (1000,), (1000, 100,), (1000, 200,), (1000, 500,)]
-hidden_layer_comp = [(500,), (500,100,), (1000,), (1000, 100,), (1000, 200,), (1000, 500,)]
+#3rd run: [(500,100,), (1000,), (1000, 100,), (1000, 200,), (2000)]
+#4th run: [(500,100,), (1000,), (1000, 200,), (2000,)]
+hidden_layer_comp = [(500,100,), (1000,), (1000, 200,), (2000,)]
 total_combos = len(hidden_layer_comp)*len(alpha_value)
 #Granulatity to round to
-round_base = 30 #Will be off by round_base/2 at most. Ex. With round_base=20, 11 rounds to 20, 10 rounds to 0
+#1st Rounds: 30
+#2nd run: 20
+round_base = 20 #Will be off by round_base/2 at most. Ex. With round_base=20, 11 rounds to 20, 10 rounds to 0
 #List of the indices of the columns to use as features
 feature_list = [2,4,31,56]#[2,4,11,21,31,56] #Month(2), Day of Week(4), Listed Departure Time(31) #10,31 late additions
 #Index of the column to use as a label. 34 for Departure Delay, 45 for Arrival Delay
