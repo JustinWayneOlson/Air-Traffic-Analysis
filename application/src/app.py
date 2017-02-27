@@ -11,6 +11,7 @@ import tornado.web
 from  tornado.escape import json_decode
 import random
 import os
+import pprint as pp
 
 #Handler for main (index) page
 class MainHandler(tornado.web.RequestHandler):
@@ -35,33 +36,33 @@ class DropdownFillHandler(tornado.web.RequestHandler):
         self.write(response)
 
 #Handler to display airports (nodes) and flights (links)
-class DisplayFlightsHandler(tornado.web.RequestHandler):
-    def post(self):
-        received_query = json_decode(self.request.body)
-        flights = flights_df(received_query)
-        airports = airports_dict("data/airport_locs.csv")
-        nodes, node_lookup = create_nodes(flights, airports)
-        if len(nodes) == 1:
-            self.write({"response":"Error no airports found for given query"})
-
-        links = make_links(nodes, flights, node_lookup)
-        return_data = {}
-        return_data['nodes'] = nodes
-        return_data['links'] = links
-        nodes = color(nodes)
-        self.write(return_data)
-
-#Handler to display airports (nodes)
 class DisplayAirportsHandler(tornado.web.RequestHandler):
     def post(self):
         received_query = json_decode(self.request.body)
-        flights = flights_df(received_query)
-        airports = airports_dict("data/airport_locs.csv")
-        nodes, node_lookup = create_nodes(flights, airports)
+        flights, verbose_toggle, paths_toggle = flights_df(received_query)
         return_data = {}
-        return_data['nodes'] = nodes
-        nodes = color(nodes)
-        self.write(return_data)
+        if(verbose_toggle):
+           return_data['verbose'] = "String of stuff you want to print on front-end"
+        print(paths_toggle)
+        print(type(paths_toggle))
+        if(paths_toggle):
+            airports = airports_dict("data/airport_locs.csv")
+            nodes, node_lookup = create_nodes(flights, airports)
+            if len(nodes) == 1:
+                self.write({"response":"Error no airports found for given query"})
+
+            links = make_links(nodes, flights, node_lookup)
+            return_data['nodes'] = nodes
+            return_data['links'] = links
+            nodes = color(nodes)
+            self.write(return_data)
+        else:
+            airports = airports_dict("data/airport_locs.csv")
+            nodes, node_lookup = create_nodes(flights, airports)
+            return_data['nodes'] = nodes
+            nodes = color(nodes)
+            pp.pprint(return_data)
+            self.write(return_data)
 
 #Method to create Pandas dataframe with flight information
 def flights_df(query):
@@ -73,6 +74,12 @@ def flights_df(query):
   where_string = ""
   start_date = False
   end_date = False
+  print("1fjdkLFdjkhfjkafkjdls;a")
+  pp.pprint(query)
+  verbose_toggle = query['verbose_toggle']
+  del query['verbose_toggle']
+  paths_toggle = query['path_toggle']
+  del query['path_toggle']
   if "date_start" in query.keys():
       date_start = ' AND to_date("FlightDate", \'YYYY-MM-DD\') >= to_date(\'{}\', \'MM/DD/YYYY\')'.format(query["date_start"])
       start_date = True
@@ -102,7 +109,7 @@ def flights_df(query):
   #Create and return dataframe
   dataframe = pd.read_sql_query(query_string, con = engine)
   dataframe.fillna(0, inplace=True)
-  return dataframe
+  return dataframe, verbose_toggle, paths_toggle
 
 #Method to create 'airports' dictionary of dictionaries where key = airport code and values = lat/lon
 def airports_dict(filename):
@@ -251,8 +258,7 @@ def make_app():
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),
         (r"/display-airports", DisplayAirportsHandler),
-        (r"/dropdown-fill/(.*)", DropdownFillHandler),
-        (r"/display-flights", DisplayFlightsHandler)
+        (r"/dropdown-fill/(.*)", DropdownFillHandler)
     ])
 
 if __name__ == "__main__":
