@@ -25,6 +25,12 @@ class AboutHandler(tornado.web.RequestHandler):
       #URL to about page
       self.render("./html/about.html")
 
+#Handler for routing page
+class RoutingHandler(tornado.web.RequestHandler):
+  def get(self):
+      #URL to about page
+      self.render("./html/routing.html")
+
 #Handler to populate dropdown menus with options from database
 class DropdownFillHandler(tornado.web.RequestHandler):
    def get(self, column):
@@ -253,6 +259,7 @@ def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
         (r"/about", AboutHandler),
+        (r"/routing", RoutingHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),
