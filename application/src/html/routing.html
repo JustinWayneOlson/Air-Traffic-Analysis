@@ -1,0 +1,161 @@
+<head>
+   <script src="https://d3js.org/d3.v3.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
+   <script src="js/jquery.datetimepicker.full.min.js"></script>
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACUlehJQDDBT85PlM_JzIm_rc8Z0iO4dU&callback=initMap"></script>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.1/bootstrap-slider.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.1/css/bootstrap-slider.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+   <link href="css/jquery.datetimepicker.min.css" rel="stylesheet"/>
+   <style>
+         .navbar-brand{
+            margin-right: 50px;
+         }
+   </style>
+</head>
+<body id="main">
+   <nav class="navbar navbar-default">
+      <div class='container-fluid'>
+         <div class='navbar-header'>
+            <a href="http://www.northropgrumman.com/Pages/default.aspx">
+               <img class="navbar-brand navbar-logo" src='/img/ng.png'></img>
+            </a>
+            <a href="http://www.colorado.edu/cs/senior-project">
+               <img class="navbar-brand navbar-logo" src='/img/cu.png'></img>
+            </a>
+         </div>
+         <div class="collapse navbar-collapse">
+            <ul class='nav navbar-nav'>
+               <li><a class="navbar-brand" href='/'>Air Traffic Analysis</a></li>
+               <li><a class="navbar-brand" href='about'>About</a></li>
+               <li class='active' href='routing'><a class="navbar-brand" href="about">Routing<span class="sr-only">(current)</span></a></li>
+            </ul>
+         </div>
+      </div>
+   </nav>
+
+   <div class='container-fluid'>
+      <div class='col-xs-6'>
+            <div class='col-xs-6'>
+               <h3> Routing Parameters: </h3>
+               <label for='grid-size'>Lat/Long Grid size</label>
+               <br>
+               <input id="grid-size" data-slider-id='gird-sizeSlider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+               <br>
+               <label for='altitude'>Altitude Grid</label>
+               <br>
+               <input id="altitude" data-slider-id='altitudeSlider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+               <br>
+               <input id='heuristic' type='checkbox' value='heuristic'> Heuristic Optimization
+            </div>
+         <div class='col-xs-6'>
+            <h3> Routes: </h3>
+            <label for='flight-number'>Flight Number</label>
+            <br>
+            <input id='flight-number' type='text'>
+            <br>
+            <label for='carrier'>Carrier</label>
+            <br>
+            <input id='carrier' type='text'>
+            <br>
+            <label for='origin'>Origin</label>
+            <br>
+            <input id='origin' type='text'>
+            <br>
+            <label for='destination'>Destination</label>
+            <br>
+            <input id='destination' type='text'>
+            <br>
+            <label for='date'>Takeoff Date</label>
+            <br>
+            <input id='date' type='text'>
+            <br>
+         </div>
+      </div>
+   <div class='col-xs-6'>
+      <div class='jumbotron'>
+         <div class='row'>
+            <input id='options' style='width:100%;' multiple='multiple'>
+         </div>
+         <div class='row'>
+            <button class='btn btn-success' id='compute'>Compute</button>
+            <button class='btn btn-success' id='plot'>Plot</button>
+            <button class='btn btn-danger' id='delete'>Delete</button>
+         </div>
+      </div>
+   </div>
+   </div>
+   <script>
+     $(document).ready(function(){
+        $('#grid-size').slider({
+            formatter: function(value) {
+               return 'Current value: ' + value;
+            }
+         });
+        $('#altitude').slider({
+            formatter: function(value) {
+               return 'Current value: ' + value;
+            }
+         });
+
+        $.ajax({
+            type: "GET",
+            url: "/dropdown-fill/Dest",
+            success: function(data){
+               $('#destination').select2({
+                  data:data['response'],
+                  placeholder: "Select an option"
+               });
+            },
+            error: function(error){
+               console.log(error);
+            }
+         });
+
+        $.ajax({
+            type: "GET",
+            url: "/dropdown-fill/Carrier",
+            success: function(data){
+               $('#carrier').select2({
+                  data:data['response'],
+                  placeholder: "Select an option"
+               });
+            },
+            error: function(error){
+               console.log(error);
+            }
+         });
+
+
+        $.ajax({
+            type: "GET",
+            url: "/dropdown-fill/Origin",
+            success: function(data){
+               $('#origin').select2({
+                  data:data['response'],
+                  placeholder: "Select an option"
+               });
+            },
+            error: function(error){
+               console.log(error);
+            }
+         });
+
+        $('#options').select2({
+            data: ["Suggested routes based on filter options", "Routes selected for computation"],
+            dropdownAutoWidth : true
+        });
+
+        $('#date').datetimepicker({
+          timepicker:false,
+            format: 'm/d/Y'
+         });
+
+      });
+
+   </script>
+</body>
