@@ -4,33 +4,40 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
    <script src="js/jquery.datetimepicker.full.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACUlehJQDDBT85PlM_JzIm_rc8Z0iO4dU&callback=initMap"></script>
    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.1/bootstrap-slider.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.1/css/bootstrap-slider.min.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
    <link href="css/jquery.datetimepicker.min.css" rel="stylesheet"/>
    <style>
-       .navbar-logo {
-         height: 36px;
-       }
+         .navbar-brand{
+            margin-right: 50px;
+         }
    </style>
 </head>
 <body id="main">
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a href="http://www.northropgrumman.com/Pages/default.aspx">
-     <img class="navbar-brand navbar-logo" src='/img/ng.png'></img>
-  </a>
-  <a href="http://www.colorado.edu/cs/senior-project">
-     <img class="navbar-brand navbar-logo" src='/img/cu.png'></img>
-  </a>
-  <a class="navbar-brand" href='/'>Air Traffic Analysis</a>
-  <a class="navbar-brand" href='routing'>Routing</a>
-  <a class="navbar-brand" href="about">About</a>
-</nav>
+   <nav class="navbar navbar-default">
+      <div class='container-fluid'>
+         <div class='navbar-header'>
+            <a href="http://www.northropgrumman.com/Pages/default.aspx">
+               <img class="navbar-brand navbar-logo" src='/img/ng.png'></img>
+            </a>
+            <a href="http://www.colorado.edu/cs/senior-project">
+               <img class="navbar-brand navbar-logo" src='/img/cu.png'></img>
+            </a>
+         </div>
+         <div class="collapse navbar-collapse">
+            <ul class='nav navbar-nav'>
+               <li><a class="navbar-brand" href='/'>Air Traffic Analysis</a></li>
+               <li><a class="navbar-brand" href='about'>About</a></li>
+               <li class='active' href='routing'><a class="navbar-brand" href="about">Routing<span class="sr-only">(current)</span></a></li>
+            </ul>
+         </div>
+      </div>
+   </nav>
+
    <div class='container-fluid'>
       <div class='col-xs-6'>
             <div class='col-xs-6'>
