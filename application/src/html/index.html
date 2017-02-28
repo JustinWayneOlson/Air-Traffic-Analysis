@@ -274,7 +274,7 @@
       },
       error: function(error)
       {
-        console.log(error);
+        eonsole.log(error);
       }
     });
     //Ajax call to populate dropdown menu for Destination airport(s)
@@ -799,6 +799,7 @@
               }
             };
             });
+            return feature;
 
             function latLongToPos(d) {
               var p = new google.maps.LatLng(d.lat, d.long);
