@@ -189,120 +189,145 @@
       </tbody>
    </table>
    <script>
-   $(document).ready(function(){
-      $('#legend').hide();
-      $('#date_start').datetimepicker(
-         {
-            timepicker:false,
-            format: 'm/d/Y'
-         }
-      );
+   $(document).ready(function()
+   {
+    $('#legend').hide();
 
-      $('#date_end').datetimepicker(
-         {
-            timepicker:false,
-            format: 'm/d/Y'
-         }
-      );
-
-      $('#info-table').DataTable();
-
-      $.ajax(
-         {
-            type: "GET",
-            url: "/dropdown-fill/Origin",
-            success: function(data){
-               $('#Origin').select2({
-                  data:data['response'],
-                  placeholder: "Select an option"
-               });
-            },
-            error: function(error){
-               console.log(error);
-            }
-         }
-      );
-
-      $.ajax(
-         {
-            type: "GET",
-            url: "/dropdown-fill/Dest",
-            success: function(data){
-               $('#Dest').select2({
-                  data:data['response'],
-                  placeholder: "Select an option"
-               });
-            },
-            error: function(error){
-               console.log(error);
-            }
-         }
-      );
-
-      $.ajax(
-         {
-            type: "GET",
-            url: "/dropdown-fill/Carrier",
-            success: function(data){
-               $('#Carrier').select2({
-                  data:data['response'],
-                  placeholder: "Select an option"
-               });
-            },
-            error: function(error){
-               console.log(error);
-            }
-         }
-      );
-   });
-
-   $("#plot-airports").click(function (event) {
-      $('#map').append('<img id="loading" src="/img/loading.gif"></img>');
-      var data = {}
-      $('#selections-container').find('input').each(function(index,value){
-         if($(value).val() && $(value).attr('type') != 'checkbox')
-         {
-            if($(value).attr('multiple')=='multiple')
-            {
-            console.log("multiple")
-               data[$(value).attr('id')] = $(value).val().split(',');
-            }
-            else
-            {
-               data[$(value).attr('id')] = $(value).val();
-            }
-         }
-         else if($(value).attr('type') == 'checkbox')
-         {
-            data['verbose_toggle'] = $('#verbose-toggle').prop('checked');
-            data['path_toggle'] = $('#path-toggle').prop('checked');
-         }
+    //Time picker for start date formatted m/d/y
+    $('#date_start').datetimepicker(
+      {
+          timepicker:false,
+          format: 'm/d/Y'
       });
-    console.log(data);
+
+    //Time picjer for end date formatted m/d/y
+    $('#date_end').datetimepicker(
+      {
+        timepicker:false,
+        format: 'm/d/Y'
+      });
+
+
+    $('#info-table').DataTable();
+
+    //Ajax call to populate dropdown menu for Source airports(s)
+    $.ajax(
+    {
+      type: "GET",
+      url: "/dropdown-fill/Origin",
+      success: function(data)
+      {
+        $('#Origin').select2({
+          data:data['response'],
+          placeholder: "Select an option"
+        });
+      },
+      error: function(error)
+      {
+        console.log(error);
+      }
+    });
+
+    //Ajax call to populate dropdown menu for Destination airport(s)
+    $.ajax(
+    {
+      type: "GET",
+      url: "/dropdown-fill/Dest",
+      success: function(data)
+      {
+        $('#Dest').select2({
+          data:data['response'],
+          placeholder: "Select an option"
+        });
+      },
+      error: function(error)
+      {
+        console.log(error);
+      }
+    });
+
+    //Ajax call to populate dropdown menu for different Carriers
+    $.ajax(
+    {
+      type: "GET",
+      url: "/dropdown-fill/Carrier",
+      success: function(data)
+      {
+        $('#Carrier').select2({
+          data:data['response'],
+          placeholder: "Select an option"
+        });
+      },
+      error: function(error)
+      {
+        console.log(error);
+      }
+    });
+  });
+
+  //Ran if the "Plot Airports" button is pushed
+  $("#plot-airports").click(function (event) 
+  {
+    //Loading icon while Google map is loading
+    $('#map').append('<img id="loading" src="/img/loading.gif"></img>');
+
+    //Instandiate 'data' dictionary to store user input
+    var data = {}
+    $('#selections-container').find('input').each(function(index,value)
+    {
+      //For the non-checkbox options...
+      if($(value).val() && $(value).attr('type') != 'checkbox')
+      {
+        //Add multiple values for a single input into the dictionary
+        if($(value).attr('multiple')=='multiple')
+        {
+          data[$(value).attr('id')] = $(value).val().split(',');
+        }
+
+        //Otherwise, add the single value into the dictionary
+        else
+        {
+          data[$(value).attr('id')] = $(value).val();
+        }
+      }
+
+      //For the checkbox options...
+      else if($(value).attr('type') == 'checkbox')
+      {
+        //Add whether or not the 'Verbose Output' or 'Toggle Plaths' options are checked
+        //True if checked, False if unchecked
+        data['verbose_toggle'] = $('#verbose-toggle').prop('checked');
+        data['path_toggle'] = $('#path-toggle').prop('checked');
+      }
+    });
+
+    //Stringify the data dictionary
     var form_query = JSON.stringify(data);
 
+    //Ajax call to run once the 'Display Airports' button is pushed
     $.ajax(
     {
       url: "/display-airports",
       type: "POST",
       data: form_query,
 
-      success: function(data) {
-         if(data['verbose'])
-         {
-            console.log(data['verbose']);
-            $('#verbose-container').append('<p>' + data['verbose'] + '</p>')
-         }
-         if(!(data['links']))
-         {
-            $('#navbar-dropdown').click();
-            $('#legend').show();
-            $('#loading').remove();
-            var map = new google.maps.Map(d3.select("#map").node(), {
-                  zoom: 4,
-                  center: new google.maps.LatLng(39.8282, -98.5795),
-                  mapTypeId: google.maps.MapTypeId.TERRAIN,
-                  styles: [
+      success: function(data) 
+      {
+        if(data['verbose'])
+        {
+          console.log(data['verbose']);
+          $('#verbose-container').append('<p>' + data['verbose'] + '</p>')
+        }
+        if(!(data['links']))
+        {
+          $('#navbar-dropdown').click();
+          $('#legend').show();
+          $('#loading').remove();
+          var map = new google.maps.Map(d3.select("#map").node(), {
+           zoom: 4,
+           center: new google.maps.LatLng(39.8282, -98.5795),
+           mapTypeId: google.maps.MapTypeId.TERRAIN,
+           styles: [
                             {
                               "elementType": "geometry",
                               "stylers": [
@@ -558,129 +583,143 @@
                                 }
                               ]
                             }
-                          ]
+                    ]
              });
-            var geoJSON;
-            var request;
-            var gettingData = false;
-            var openWeatherMapKey = "b6c5711b8dcd855fced4510aa21dbecc";
+          var geoJSON;
+          var request;
+          var gettingData = false;
+          var openWeatherMapKey = "b6c5711b8dcd855fced4510aa21dbecc";
 
-            function initialize(map) {
-              google.maps.event.addListener(map, 'idle', checkIfDataRequested);
+          function initialize(map) 
+          {
+            google.maps.event.addListener(map, 'idle', checkIfDataRequested);
 
-              map.data.addListener('click', function(event) {
-                infowindow.setContent(
-                  "<img src=" + event.feature.getProperty("icon") + ">"
-                  + "<br /><strong>" + event.feature.getProperty("city") + "</strong>"
-                  + "<br />" + event.feature.getProperty("temperature") + "&deg;C"
-                  + "<br />" + event.feature.getProperty("weather")
-                  );
-                infowindow.setOptions({
-                  position: {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng()
-                  },
-                  pixelOffset: {
-                    width: 0,
-                    height: -15
-                  }
-                });
-                infowindow.open(map);
-              });
-            }
+            map.data.addListener('click', function(event) 
+            {
+              infowindow.setContent(
+              "<img src=" + event.feature.getProperty("icon") + ">"
+              + "<br /><strong>" + event.feature.getProperty("city") + "</strong>"
+              + "<br />" + event.feature.getProperty("temperature") + "&deg;C"
+              + "<br />" + event.feature.getProperty("weather"));
 
-            var checkIfDataRequested = function() {
-              while (gettingData === true) {
-                request.abort();
-                gettingData = false;
-              }
-              getCoords();
-            };
-
-            var getCoords = function() {
-              var bounds = map.getBounds();
-              var NE = bounds.getNorthEast();
-              var SW = bounds.getSouthWest();
-              getWeather(NE.lat(), NE.lng(), SW.lat(), SW.lng());
-            };
-
-            var getWeather = function(northLat, eastLng, southLat, westLng) {
-              gettingData = true;
-              console.log("Getting weather...");
-              var requestString = "http://api.openweathermap.org/data/2.5/box/city?bbox="
-                                  + westLng + "," + northLat + ","
-                                  + eastLng + "," + southLat + ","
-                                  + map.getZoom()
-                                  + "&cluster=yes&format=json"
-                                  + "&APPID=" + openWeatherMapKey;
-              request = new XMLHttpRequest();
-              request.onload = processResults;
-              request.open("get", requestString, true);
-              request.send();
-            };
-
-            var processResults = function() {
-              console.log(this);
-              var results = JSON.parse(this.responseText);
-              console.log("Results:");
-              console.log(results);
-              if (results.list.length > 0) {
-                resetData();
-                for (var i = 0; i < results.list.length; i++) {
-                  geoJSON.features.push(jsonToGeoJson(results.list[i]));
-                }
-                drawIcons(geoJSON);
-              }
-            };
-
-            var infowindow = new google.maps.InfoWindow();
-
-            var jsonToGeoJson = function(weatherItem) {
-              var feature = {
-                type: "Feature",
-                properties: {
-                  city: weatherItem.name,
-                  weather: weatherItem.weather[0].main,
-                  temperature: weatherItem.main.temp,
-                  icon: "http://openweathermap.org/img/w/"
-                          + weatherItem.weather[0].icon + ".png",
-                  coordinates: [weatherItem.coord.lon, weatherItem.coord.lat]
+              infowindow.setOptions({
+                position: {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng()
                 },
+                pixelOffset: {
+                  width: 0,
+                  height: -15
+                }});
+              infowindow.open(map);
+            });
+          }
 
-                geometry: {
-                  type: "Point",
-                  coordinates: [weatherItem.coord.lon, weatherItem.coord.lat]
-                }
-              };
-
-              map.data.setStyle(function(feature) {
-                return {
-                  icon: {
-                    url: feature.getProperty('icon'),
-                    anchor: new google.maps.Point(25, 25)
-                  }
-                };
-              });
-
-              return feature;
-            };
-
-            var resetData = function() {
-              geoJSON = {
-                type: "FeatureCollection",
-                features: []
-              };
-              map.data.forEach(function(feature){
-                map.data.remove(feature);
-              });
-            };
-
-            var drawIcons = function(weather) {
-              map.data.addGeoJson(geoJSON);
+          var checkIfDataRequested = function() 
+          {
+            while (gettingData === true) 
+            {
+              request.abort();
               gettingData = false;
+            }
+            getCoords();
+          };
+
+          var getCoords = function() 
+          {
+            var bounds = map.getBounds();
+            var NE = bounds.getNorthEast();
+            var SW = bounds.getSouthWest();
+            getWeather(NE.lat(), NE.lng(), SW.lat(), SW.lng());
+          };
+
+          var getWeather = function(northLat, eastLng, southLat, westLng) 
+          {
+            gettingData = true;
+            console.log("Getting weather...");
+            var requestString = "http://api.openweathermap.org/data/2.5/box/city?bbox="
+                                + westLng + "," + northLat + ","
+                                + eastLng + "," + southLat + ","
+                                + map.getZoom()
+                                + "&cluster=yes&format=json"
+                                + "&APPID=" + openWeatherMapKey;
+            request = new XMLHttpRequest();
+            request.onload = processResults;
+            request.open("get", requestString, true);
+            request.send();
+          };
+
+          var processResults = function() 
+          {
+            console.log(this);
+            var results = JSON.parse(this.responseText);
+            console.log("Results:");
+            console.log(results);
+            if (results.list.length > 0) 
+            {
+              resetData();
+              for (var i = 0; i < results.list.length; i++) 
+              {
+                geoJSON.features.push(jsonToGeoJson(results.list[i]));
+              }
+              drawIcons(geoJSON);
+            }
+          };
+
+          var infowindow = new google.maps.InfoWindow();
+
+          var jsonToGeoJson = function(weatherItem) 
+          {
+            console.log(weatherItem);
+            var feature = 
+            {
+              type: "Feature",
+              properties: {
+                city: weatherItem.name,
+                weather: weatherItem.weather[0].main,
+                temperature: weatherItem.main.temp,
+                icon: "http://openweathermap.org/img/w/"
+                        + weatherItem.weather[0].icon + ".png",
+                coordinates: [weatherItem.coord.Lon, weatherItem.coord.Lat]
+              },
+
+              geometry: {
+                type: "Point",
+                coordinates: [weatherItem.coord.Lon, weatherItem.coord.Lat]
+              }
             };
 
-            google.maps.event.addDomListener(window, 'load', initialize(map));
+            map.data.setStyle(function(feature) {
+            return {
+              icon: {
+                url: feature.getProperty('icon'),
+                anchor: new google.maps.Point(25, 25)
+              }
+            };
+            });
+
+            return feature;
+          };
+
+          var resetData = function() 
+          {
+            geoJSON = {
+              type: "FeatureCollection",
+              features: []
+            };
+            map.data.forEach(function(feature)
+            {
+              map.data.remove(feature);
+            });
+          };
+
+          var drawIcons = function(weather) 
+          {
+            map.data.addGeoJson(geoJSON);
+            gettingData = false;
+          };
+
+          google.maps.event.addDomListener(window, 'load', initialize(map));
 
 
 
@@ -746,14 +785,14 @@
                }
             else
             {
-               $('#navbar-dropdown').click();
-               $('#legend').show();
-               $('#loading').remove();
-                  var map = new google.maps.Map(d3.select("#map").node(), {
-                        zoom: 4,
-                        center: new google.maps.LatLng(39.8282, -98.5795),
-                        mapTypeId: google.maps.MapTypeId.TERRAIN,
-                        styles: [
+              $('#navbar-dropdown').click();
+              $('#legend').show();
+              $('#loading').remove();
+              var map = new google.maps.Map(d3.select("#map").node(), {
+                    zoom: 4,
+                    center: new google.maps.LatLng(39.8282, -98.5795),
+                    mapTypeId: google.maps.MapTypeId.TERRAIN,
+                    styles: [
                                {
                                  "elementType": "geometry",
                                  "stylers": [
@@ -1010,103 +1049,102 @@
                                  ]
                                }
                              ]
-                   });
-                   var overlay = new google.maps.OverlayView();
+              });
+              var overlay = new google.maps.OverlayView();
 
-                   overlay.onAdd = function() {
-                     var layer = d3.select(this.getPanes().overlayLayer).append("div")
-                       .attr("class", "stations");
+              overlay.onAdd = function() {
+              var layer = d3.select(this.getPanes().overlayLayer).append("div")
+               .attr("class", "stations");
 
-                     overlay.draw = function() {
+              overlay.draw = function() {
 
-                       layer.select('svg').remove();
+              layer.select('svg').remove();
 
-                       var projection = this.getProjection(),
-                         padding = 10;
+              var projection = this.getProjection(),
+              padding = 10;
 
-                       var merc_projection = d3.geo.mercator();
+              var svg = layer.append("svg")
+               .attr('width', 1200)
+               .attr('height', 600);
 
-                       var svg = layer.append("svg")
-                         .attr('width', 1200)
-                         .attr('height', 600);
+              var node = svg.selectAll(".stations")
+               .data(data.nodes)
+               .enter().append("g")
+               .each(transform)
+               .attr("class", "node");
 
-                       var node = svg.selectAll(".stations")
-                         .data(data.nodes)
-                         .enter().append("g")
-                         .each(transform)
-                         .attr("class", "node");
+              var link = svg.selectAll(".link")
+               .data(data.links)
+               .enter().append("path")
+               .attr("class", "path")
+               .each(drawlink);
 
-                       var link = svg.selectAll(".link")
-                         .data(data.links)
-                         .enter().append("path")
-                         .attr("class", "path")
-                         .each(drawlink);
+              node.append("circle")
+               .attr("r", 4.5)
+               .style("fill", "white");
 
-                       node.append("circle")
-                         .attr("r", 4.5)
-                         .style("fill", "white");
+              node.append("text")
+               .attr("x", 7)
+               .attr("y", 0)
+               .attr("dy", ".31em")
+               .text(function(d) { return d.name; });
 
-                       node.append("text")
-                         .attr("x", 7)
-                         .attr("y", 0)
-                         .attr("dy", ".31em")
-                         .text(function(d) {
-                           return d.name;
-                         });
+              //Convert GPS coordinates to corresponding div pixels
+              function latLongToPos(d) 
+              {
+                var p = new google.maps.LatLng(d.lat, d.long);
+                p = projection.fromLatLngToDivPixel(p);
+                p.x = p.x - padding;
+                p.y = p.y - padding;
+                return p;
+              }
 
-                       //Convert GPS coordinates to corresponding div pixels
-                       function latLongToPos(d) {
-                         var p = new google.maps.LatLng(d.lat, d.long);
-                         p = projection.fromLatLngToDivPixel(p);
-                         p.x = p.x - padding;
-                         p.y = p.y - padding;
-                         return p;
-                       }
+              //Comput GPS midpoint between source and destination airport
+              function latLongToMidpoint(source, dest) 
+              {
+                //half_lat adjusted North by 3 degrees to adjust for curved paths
+                half_lat = (dest.lat + source.lat)/2 + 3;
+                half_lon = (dest.long + source.long)/2;
+                var p = new google.maps.LatLng(half_lat, half_lon);
+                p = projection.fromLatLngToDivPixel(p);
+                p.x = p.x - padding;
+                p.y = p.y - padding;
+                return p;
+              }
 
-                       //Comput GPS midpoint between source and destination airport
-                       function latLongToMidpoint(source, dest) {
-                         //half_lat adjusted North by 3 degrees to adjust for curved paths
-                         half_lat = (dest.lat + source.lat)/2 + 3;
-                         half_lon = (dest.long + source.long)/2;
-                         var p = new google.maps.LatLng(half_lat, half_lon);
-                         p = projection.fromLatLngToDivPixel(p);
-                         p.x = p.x - padding;
-                         p.y = p.y - padding;
-                         return p;
-                       }
+              function transform(d) 
+              {
+                var p = latLongToPos(d);
+                return d3.select(this)
+                 .attr("transform", "translate(" + p.x + "," + p.y + ")");
+              }
 
-                       function transform(d) {
-                         var p = latLongToPos(d);
-                         return d3.select(this)
-                           .attr("transform", "translate(" + p.x + "," + p.y + ")");
-                       }
+              //Driver function to draw links between set of 3 points
+              function drawlink(d) 
+              {
+                console.log(d);
+                var p1 = latLongToPos(data.nodes[d.source]);
+                var p2 = latLongToMidpoint(data.nodes[d.source], data.nodes[d.target]);
+                var p3 = latLongToPos(data.nodes[d.target]);
+                var lineData = [{"x": p1.x, "y": p1.y},
+                                {"x": p2.x, "y": p2.y},
+                                {"x": p3.x, "y": p3.y}];
+                var lineFunction = d3.svg.line()
+                 .x(function(d) { return d.x; })
+                 .y(function(d) { return d.y; })
+                 .interpolate("basis");
 
-                       //Driver function to draw links between set of 3 points
-                       function drawlink(d) {
-                         console.log(d);
-                         var p1 = latLongToPos(data.nodes[d.source]);
-                         var p2 = latLongToMidpoint(data.nodes[d.source], data.nodes[d.target]);
-                         var p3 = latLongToPos(data.nodes[d.target]);
-                         var lineData = [{"x": p1.x, "y": p1.y},
-                                         {"x": p2.x, "y": p2.y},
-                                         {"x": p3.x, "y": p3.y}];
-                         var lineFunction = d3.svg.line()
-                           .x(function(d) { return d.x; })
-                           .y(function(d) { return d.y; })
-                           .interpolate("basis");
+                d3.select(this)
+                 .attr("d", lineFunction(lineData))
+                 .style('fill', 'none')
+                 .style('stroke', 'yellow');
+                }
+              };
+            };
 
-                         d3.select(this)
-                           .attr("d", lineFunction(lineData))
-                           .style('fill', 'none')
-                           .style('stroke', 'yellow');
-                       }
-                     };
-                   };
-
-                   overlay.setMap(map);
-
-               console.log(data);
-         }
+            overlay.setMap(map);
+            console.log(data);
+          }
       },
       error: function(error) {
          $('#loading').remove()

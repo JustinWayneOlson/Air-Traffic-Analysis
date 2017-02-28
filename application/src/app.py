@@ -42,7 +42,7 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
         flights, verbose_toggle, paths_toggle = flights_df(received_query)
         return_data = {}
         if(verbose_toggle):
-           return_data['verbose'] = "String of stuff you want to print on front-end"
+           return_data['verbose'] = "This is eventually going to be more information!"
         print(paths_toggle)
         print(type(paths_toggle))
         if(paths_toggle):
@@ -74,12 +74,11 @@ def flights_df(query):
   where_string = ""
   start_date = False
   end_date = False
-  print("1fjdkLFdjkhfjkafkjdls;a")
-  pp.pprint(query)
   verbose_toggle = query['verbose_toggle']
   del query['verbose_toggle']
   paths_toggle = query['path_toggle']
   del query['path_toggle']
+
   if "date_start" in query.keys():
       date_start = ' AND to_date("FlightDate", \'YYYY-MM-DD\') >= to_date(\'{}\', \'MM/DD/YYYY\')'.format(query["date_start"])
       start_date = True
