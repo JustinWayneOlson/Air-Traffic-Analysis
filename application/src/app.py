@@ -46,29 +46,44 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
     def post(self):
         received_query = json_decode(self.request.body)
         flights, verbose_toggle, paths_toggle = flights_df(received_query)
+        plot_data = mean_data(flights)
         return_data = {}
         if(verbose_toggle):
            return_data['verbose'] = "This is eventually going to be more information!"
-        print(paths_toggle)
-        print(type(paths_toggle))
         if(paths_toggle):
             airports = airports_dict("data/airport_locs.csv")
             nodes, node_lookup = create_nodes(flights, airports)
             if len(nodes) == 1:
                 self.write({"response":"Error no airports found for given query"})
-
             links = make_links(nodes, flights, node_lookup)
             return_data['nodes'] = nodes
             return_data['links'] = links
+            return_data['plot_data'] = plot_data
             nodes = color(nodes)
             self.write(return_data)
         else:
             airports = airports_dict("data/airport_locs.csv")
             nodes, node_lookup = create_nodes(flights, airports)
             return_data['nodes'] = nodes
+            return_data['plot_data'] = plot_data
             nodes = color(nodes)
-            pp.pprint(return_data)
             self.write(return_data)
+
+def mean_data(flights):
+   for index, row in flights.iterrows():
+       print flights.FlightDate
+   '''Plot data: { 'bar':{
+                        'labels': [distinct airports],
+                        'series': [values]
+                        },
+                  'line':{
+                        'labels': [distinct dates],
+                        'series': [daily sums]
+                     }
+                 }
+   '''
+   plot_data = {}
+   return plot_data
 
 #Method to create Pandas dataframe with flight information
 def flights_df(query):
@@ -96,19 +111,16 @@ def flights_df(query):
   for index,key in enumerate(query.keys()):
       if index == 0:
            item = str(query[key]).replace('[','(').replace(']',')').replace("u'","'")
-           print item
            where_string = " WHERE \"{}\" IN {}".format(key, item)
       if index != 0:
            item = str(query[key]).replace('[','(').replace(']',')').replace("u'","'")
-           print item
            where_string += " AND \"{}\" IN {}".format(key, item)
   if(start_date):
       where_string += date_start
   if(end_date):
     where_string += date_end
   limit_string = " LIMIT 100000;"
-  query_string = 'SELECT DISTINCT "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
-  print query_string
+  query_string = 'SELECT DISTINCT "FlightDate", "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
 
 
   #Create and return dataframe
@@ -137,7 +149,6 @@ def create_nodes(flights, airports):
   for index, row in flights.iterrows():
       dest_airport = str(row.Dest)
       origin_airport = str(row.Origin)
-
       #If we haven't encountered this airport before initialize all the values accordingly
       if dest_airport not in airports_list:
           airport = {}
@@ -221,7 +232,6 @@ def color(nodes):
       if node['Color'] == 'white':
          continue
       avg = node['TotalDelay'] / node['TotalFlights']
-      print avg
       #If average >90% --> red
       if avg > 75:
           node['Color'] = "red"
@@ -242,14 +252,12 @@ def make_links(nodes, flights, node_lookup):
     temp_dict = {}
     targets = []
     for index,row in flights.iterrows():
-        print node_lookup[row.Dest]
         temp_dict['source'] = node_lookup[row.Origin]
         temp_dict['target'] = node_lookup[row.Dest]
         if(not(row.Dest in targets)):
             links.append(temp_dict)
             targets.append(row.Dest)
         temp_dict = {}
-    print links
 
     return links
 
