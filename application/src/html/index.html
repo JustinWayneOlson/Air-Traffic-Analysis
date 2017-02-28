@@ -309,88 +309,9 @@
       $('#' + tab_id).append('<div class="row"><div class="col-xs-6 map-container"><div class="map" id="map-' + tab_num + '"></div></div><div class="col-xs-6 table-container"><table id="table-' + tab_num + '" class="display"></table></div></div>');
       $('#' + tab_id).append('<div class="row"><div class="col-xs-4 line-plot-container"><div id="ct-chart-line-' + tab_num + '" class="ct-chart"></div></div><div class="col-xs-4 pie-plot-container"><div id="ct-chart-pie-' + tab_num + '" class="ct-chart"></div></div><div class="col-xs-4 bar-plot-container"><div id="ct-chart-bar-' + tab_num + '" class="ct-chart"></div></div></div>');
       $('#tabs').tabs("refresh");
-      $('.ui-tabs-anchor').on('click', function (event) {
-         $('.ct-chart').each(function(i, e) {
-            e.__chartist__.update();
-         });
-      });
-      $('#map- ' + tab_num).append('<img id="loading" src="/img/loading.gif"></img>');
-      var data = {}
-      $('#selections-container').find('input').each(function(index,value){
-         if($(value).val())
-         {
-            if($(value).attr('multiple')=='multiple')
-            {
-            console.log("multiple")
-               data[$(value).attr('id')] = $(value).val().split(',');
-            }
-            else
-            {
-               data[$(value).attr('id')] = $(value).val();
-            }
-         }
-   });
-    var form_query = JSON.stringify(data);
-
-    $.ajax(
-    {
-      url: "/display-airports",
-      type: "POST",
-      data: form_query,
-
-      success: function(data) {
-      var chart_data = {
-         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-         series: [
-            [5, 2, 4, 2, 0]
-         ]
-       };
-
-      new Chartist.Line('#ct-chart-line-'+ tab_num, chart_data);
-      new Chartist.Bar('#ct-chart-bar-'+ tab_num, chart_data);
-      var chart_data = {
-        series: [20, 15, 40]
-      };
-
-      var options = {
-         labelInterpolationFnc: function(value) {
-         return value[0]
-         }
-      };
-
-      new Chartist.Pie('#ct-chart-pie-' + tab_num, chart_data, options);
-      console.log(data);
-      var table_data = [];
-      $.each(data['nodes'], function(index, value){
-         var temp = [
-            value["Name"],
-            "test",
-            "test1",
-            "test2",
-            "test3",
-            "test4",
-            "test5",
-         ];
-         table_data.push(temp);
-      });
-      $('#table-' + tab_num).DataTable({
-         data: table_data,
-         columns: [
-               { title: "Airport Code"},
-               { title: "Total Flights"},
-               { title: "Carrier Delay %"},
-               { title: "Late Aircraft Delay %"},
-               { title: "NAS Delay %"},
-               { title: "Security Delay %"},
-               { title: "Weather Delay %"},
-         ]
-      });
-      $('#navbar-dropdown').click();
-      $('#legend').show();
-      $('#loading').remove();
       var map = new google.maps.Map(d3.select("#map-" + tab_num).node(), {
             zoom: 4,
-            center: new google.maps.LatLng(39.8282, -98.5795),
+            center: new google.maps.LatLng(52, -133),
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             styles: [
                       {
@@ -650,6 +571,88 @@
                       }
                     ]
        });
+      $('.ui-tabs-anchor').on('click', function (event) {
+         $('.ct-chart').each(function(i, e) {
+            e.__chartist__.update();
+         });
+         $('.map').each(function(i, e) {
+            google.maps.event.trigger(map, 'resize');
+         });
+      });
+      $('#map- ' + tab_num).append('<img id="loading" src="/img/loading.gif"></img>');
+      var data = {}
+      $('#selections-container').find('input').each(function(index,value){
+         if($(value).val())
+         {
+            if($(value).attr('multiple')=='multiple')
+            {
+            console.log("multiple")
+               data[$(value).attr('id')] = $(value).val().split(',');
+            }
+            else
+            {
+               data[$(value).attr('id')] = $(value).val();
+            }
+         }
+   });
+    var form_query = JSON.stringify(data);
+
+    $.ajax(
+    {
+      url: "/display-airports",
+      type: "POST",
+      data: form_query,
+
+      success: function(data) {
+      var chart_data = {
+         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+         series: [
+            [5, 2, 4, 2, 0]
+         ]
+       };
+
+      new Chartist.Line('#ct-chart-line-'+ tab_num, chart_data);
+      new Chartist.Bar('#ct-chart-bar-'+ tab_num, chart_data);
+      var chart_data = {
+        series: [20, 15, 40]
+      };
+
+      var options = {
+         labelInterpolationFnc: function(value) {
+         return value[0]
+         }
+      };
+
+      new Chartist.Pie('#ct-chart-pie-' + tab_num, chart_data, options);
+      console.log(data);
+      var table_data = [];
+      $.each(data['nodes'], function(index, value){
+         var temp = [
+            value["Name"],
+            "test",
+            "test1",
+            "test2",
+            "test3",
+            "test4",
+            "test5",
+         ];
+         table_data.push(temp);
+      });
+      $('#table-' + tab_num).DataTable({
+         data: table_data,
+         columns: [
+               { title: "Airport Code"},
+               { title: "Total Flights"},
+               { title: "Carrier Delay %"},
+               { title: "Late Aircraft Delay %"},
+               { title: "NAS Delay %"},
+               { title: "Security Delay %"},
+               { title: "Weather Delay %"},
+         ]
+      });
+      $('#navbar-dropdown').click();
+      $('#legend').show();
+      $('#loading').remove();
       var geoJSON;
       var request;
       var gettingData = false;
