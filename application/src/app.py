@@ -70,9 +70,35 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
             self.write(return_data)
 
 def mean_data(flights):
-   for index, row in flights.iterrows():
-       print flights.FlightDate
-   '''Plot data: { 'bar':{
+    indp_var = []
+    delay_time = []
+    for index, row in flights.iterrows():
+      indp_var.append(row.FlightDate)
+      delay_time.append(row.CarrierDelay)
+    print(indp_var)
+    print(len(indp_var))
+    start_day_index = 0
+    curr_day = indp_var[0]
+    mean_day = []
+    indp_axis = []
+
+    for index in range(0, len(indp_var)):
+        if(curr_day != indp_var[index]):
+            mean_day.append(np.round(np.mean(delay_time[start_day_index:index])))
+            indp_axis.append(curr_day)
+            curr_day = indp_var[index]
+            start_day_index = index
+
+    if(start_day_index == index):
+        mean_day.append(np.round(delay_time[index]))
+
+    else:
+        mean_day.append(np.round(np.mean(delay_time[start_day_index:index])))
+
+    indp_axis.append(indp_var[index])
+    print(indp_axis)
+    print(mean_day)
+    '''Plot data: { 'bar':{
                         'labels': [distinct airports],
                         'series': [values]
                         },
@@ -81,9 +107,9 @@ def mean_data(flights):
                         'series': [daily sums]
                      }
                  }
-   '''
-   plot_data = {}
-   return plot_data
+    '''
+    plot_data = indp_var, mean_day
+    return plot_data
 
 #Method to create Pandas dataframe with flight information
 def flights_df(query):
@@ -119,7 +145,7 @@ def flights_df(query):
       where_string += date_start
   if(end_date):
     where_string += date_end
-  limit_string = " LIMIT 100000;"
+  limit_string = 'ORDER BY "FlightDate" LIMIT 100000;'
   query_string = 'SELECT DISTINCT "FlightDate", "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
 
 
@@ -277,6 +303,6 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8888)
-    print("serving on port 8888")
+    app.listen(8008)
+    print("serving on port 8008")
     tornado.ioloop.IOLoop.current().start()
