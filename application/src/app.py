@@ -111,7 +111,7 @@ def mean_data(flights):
                      }
                  }
     '''
-    line_plot_data['labels'] = indp_var
+    line_plot_data['labels'] = indp_axis
     line_plot_data['series'] = mean_day
     plot_data['line'] = line_plot_data
     plot_data['bar'] = bar_plot_data
