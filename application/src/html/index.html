@@ -640,14 +640,22 @@
       success: function(data)
       {
          console.log(data);
-         var chart_data = {
+         var line_chart_data = {
+            labels: data['plot_data']['line']['labels'],
             series: [
                data['plot_data']['line']['series']
             ]
           };
 
-         new Chartist.Line('#ct-chart-line-'+ tab_num, chart_data);
-         new Chartist.Bar('#ct-chart-bar-'+ tab_num, chart_data);
+         var bar_chart_data = {
+            labels: data['plot_data']['bar']['labels'],
+            series: [
+               data['plot_data']['bar']['series']
+            ]
+          };
+
+         new Chartist.Line('#ct-chart-line-'+ tab_num, line_chart_data);
+         new Chartist.Bar('#ct-chart-bar-'+ tab_num, bar_chart_data);
          var chart_data = {
            series: [20, 15, 40]
          };
