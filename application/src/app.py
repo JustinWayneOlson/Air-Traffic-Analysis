@@ -72,6 +72,9 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
 def mean_data(flights):
     indp_var = []
     delay_time = []
+    plot_data = {}
+    line_plot_data = {}
+    bar_plot_data = {}
     for index, row in flights.iterrows():
       indp_var.append(row.FlightDate)
       delay_time.append(row.CarrierDelay)
@@ -108,7 +111,10 @@ def mean_data(flights):
                      }
                  }
     '''
-    plot_data = indp_var, mean_day
+    line_plot_data['labels'] = indp_var
+    line_plot_data['series'] = mean_day
+    plot_data['line'] = line_plot_data
+    plot_data['bar'] = bar_plot_data
     return plot_data
 
 #Method to create Pandas dataframe with flight information
