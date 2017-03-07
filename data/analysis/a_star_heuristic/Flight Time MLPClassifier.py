@@ -39,16 +39,16 @@ import csv, time
 start_time = time.time()
 '''IMPORTANT VARIABLES'''
 #Data file to use
-csv_file = "On_Time_On_Time_Performance_2015_7.csv"
+csv_file = "On_Time_On_Time_Performance_2015_4.csv"
 #Number of iterations to run and average over
-num_iter = 2
+num_iter = 1
 #Alpha value for MLPClassifier. 
-alpha_value = 0.01 #0.1 -> ~65%, 1.0 -> ~60%
+alpha_value = 0.1 #0.1 -> ~65%, 1.0 -> ~60%
 #Composition of hidden layers for MLPClassifier (100,40,) Would be 2 layers, with 100 nodes in the first layer and 40 nodes in the second
-layers = [(20,10,5,), (50,25), (50,25,)]
-hidden_layer_comp = layers[2]#(100,50)#(20,10,5,)
+layers = (500,100,)
+hidden_layer_comp = layers#(100,50)#(20,10,5,)
 #Granulatity to round to
-round_base = 30 #Will be off by round_base/2 at most. Ex. With round_base=20, 11 rounds to 20, 10 rounds to 0
+round_base = 20 #Will be off by round_base/2 at most. Ex. With round_base=20, 11 rounds to 20, 10 rounds to 0
 #List of the indices of the columns to use as features
 #Test 6,7
 feature_list = [2,4,31,56]#[2,4,11,21,31,56] #Month(2), Day of Week(4), Listed Departure Time(31) #10,31 late additions
@@ -81,7 +81,6 @@ parse_time = time.time()
 for num, row in enumerate(csv_data_list[1:300000]):
 	#Split row of information by 
 	info = str(row).replace("'", "").split(",") #replace("\"", "")
-
 	#Check for delay, if delay, then 1, otherwise 0. Info[39] will be 0 for early or on time
 	#This loop also naively trusts that the cell will contain data. This is the lazy way to do this, but if it fails the try, the cell is empty or the wrong data type. It then just excludes this data from the set.
 	try:
@@ -110,8 +109,8 @@ print("----------Time to parse data into lists:", time.time()-parse_time)
 print("Total size of data set:", len(x))
 print("--Number of data read failures:", failed)
 
-print("Time to load data:", time.time() - start_time, "seconds")
-print("----Testing", num_iter, "iterations----")
+print("Time to load and parse data:", time.time() - start_time, "seconds")
+print("----Testing", num_iter, "iterations starting at ", time.ctime(), "----")
 from sklearn.model_selection import train_test_split
 #K nearest neighbors (default is 5)
 from sklearn.neural_network import MLPClassifier
@@ -141,7 +140,17 @@ for i in range(num_iter):
 	predictions = [int(round_base * round(float(random.randint(0,660))/round_base)) for x in range(len(y_test))]
 	avg_list.append([accuracy_score(y_test, predictions), time.time() - loop_time])
 	'''
-	avg_list.append([clf.score(x_test, y_test), time.time() - loop_time])
+	pred_score = 0
+	preds = clf.predict(x_test)
+	
+
+	for ind,t in enumerate(preds):
+		if int(round_base * round(float(t)/round_base)) == y_test[ind]:
+			pred_score += 1
+
+	avg_list.append([float(pred_score)/len(x_test), time.time() - loop_time])
+
+	#avg_list.append([clf.score(x_test, y_test), time.time() - loop_time])
 
 #print(avg_list)
 print("----Took", time.time() - start_time, "seconds to test", num_iter, "times----")
@@ -152,9 +161,12 @@ print(sum(accs)*100/float(num_iter), "%")
 print("Average time per loop")
 print(sum(times)/float(num_iter), "seconds")
 
-'''
+
 import pickle
 print("----Pickling----")
+with open("Tester04.pkl", "wb") as output_file:
+	pickle.dump(clf, output_file, pickle.HIGHEST_PROTOCOL)
+'''
 with open("2015_07_data=" + str(len(x)) + "_feat=" + str(feature_list) + "_label=" + str(label) + "_round=" + str(round_base) + "_alpha=" + str(alpha_value) + "_layer_comp=" + str(hidden_layer_comp) + ".pkl", "wb") as output_file:
 	pickle.dump(clf, output_file, pickle.HIGHEST_PROTOCOL)
 '''

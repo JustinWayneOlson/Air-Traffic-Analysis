@@ -36,27 +36,65 @@ In each row, here is the key for indexes:
 [62] Late aircraft delay
 '''
 import csv, time
+
+def read_csv(filename, row_num):
+	csvreader = csv.reader(open(filename, newline=""))
+	print("Loading data from " + filename)
+	#List of lists that contains x_data (features)
+	x = []
+	#List that contains y_data (labels)
+	y = []
+	#Number of flights that had incomplete data
+	failed = 0
+	delay = 0
+
+	#Convert csvreader to list
+	csv_data_list = list(csvreader)
+
+	#Turn read object into list, and ignore 1st row that only contains header
+	for num, row in enumerate(csv_data_list[1:row_num]): #[1:300000]
+		#Split row of information by 
+		info = str(row).replace("'", "").split(",") #replace("\"", "")
+
+		#Check for delay, if delay, then 1, otherwise 0. Info[39] will be 0 for early or on time
+		#This loop also naively trusts that the cell will contain data. This is the lazy way to do this, but if it fails the try, the cell is empty or the wrong data type. It then just excludes this data from the set.
+		try:
+			#Try to get all data first, then append to the lists at the end if ecerythign is valid
+			if float(info[label]) > 0: #39 for Departure, 50 or Arrival
+				y_temp = int(round_base * round(float(info[label])/round_base)) #Round to nearest 5
+			else:
+				y_temp = 0
+			#Add items to features list based on indicies given
+			x_temp = [float(info[feat]) for feat in feature_list]
+			
+			y.append(y_temp)
+			#x.append([float(info[2].replace("\"", "")), float(info[4].replace("\"", "")),float(info[36].replace("\"", ""))])
+			x.append(x_temp)
+
+		except:
+			failed += 1
+
+	return x,y
+
 start_time = time.time()
 '''IMPORTANT VARIABLES'''
 #Data file to use
-csv_file = "On_Time_On_Time_Performance_2015_7.csv"
+#csv_file = "On_Time_On_Time_Performance_2015_7.csv"
+#Range of years and months to test across
+csv_inputs = ["On_Time_On_Time_Performance_2015_" + str(i) + ".csv" for i in range(1,13)]#range(1,13)]
 #Number of iterations to run and average over
 num_iter = 2
-#Alpha value for MLPClassifier. 
-#1st run: [0.001, 0.01, 0.05, 0.1, 0.5, 1, 5, 10, 50, 100, 500]
-#2nd run: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1]
-#3rd run: [0.005, 0.01, 0.05, 0.1, 0.5, 1, 10]
-#4th run: [0.005, 0.01, 0.1, 1]
+#Number of rows to read in from csv files
+row_num = 300000
+'''
 alpha_value = [0.005, 0.01, 0.1, 1]
 #Composition of hidden layers for MLPClassifier (100,40,) Would be 2 layers, with 100 nodes in the first layer and 40 nodes in the second
-#2 layer with 5000 layer take too long[(20,10,5,), (20,10,), (50,25,), (100,50,), (500, 100,), (1000, 500,), (5000, 1000,), (5000, 2500,), (20,), (50,), (100,), (500,), (1000,), (5000,), (10000,), (20000,), (50000,)]#(100,50)#(20,10,5,)
-#1st run: [(20,10,5,), (20,10,), (50,25,), (100,50,), (500, 100,), (20,), (50,), (100,), (500,)]
-#2nd run: [(500,), (500,100,), (1000,), (1000, 100,), (1000, 200,), (1000, 500,)]
-#3rd run: [(500,100,), (1000,), (1000, 100,), (1000, 200,), (2000)]
-#4th run: [(500,100,), (1000,), (1000, 200,), (2000,)]
-#5th run: [(500,100,), (1000,), (1000, 200,)]
 hidden_layer_comp = [(500,100,), (1000,), (1000, 200,)]
-total_combos = len(hidden_layer_comp)*len(alpha_value)
+'''
+#Configurations that have worked well generally. (0.005 | 500,100), (0.1 | 500,100), (0.005 | 2000), (0.01 | 500), (0.01 | 2000)
+#mlp_configs = [(0.005, (500,100)), (0.1, (500,100)), (0.005, (2000)), (0.01, (500)), (0.01, (2000))]
+mlp_configs = [(0.01, (500,100))]
+total_combos = len(mlp_configs)*len(csv_inputs)
 #Granulatity to round to
 #1st Rounds: 30
 #2nd run: 20
@@ -67,58 +105,12 @@ feature_list = [2,4,31,56]#[2,4,11,21,31,56] #Month(2), Day of Week(4), Listed D
 label = 54 #53 for total time of the flight, 54 for only time in the air
 
 #Output data about classifier
-print("--Alpha Values to test:", len(alpha_value))
-print("--Layer compositioms to test:", len(hidden_layer_comp))
 print("--Total combinations:", total_combos)
+print("--Total months:", len(csv_inputs))
 print("--Features (indices):", feature_list)
 print("--Label (indices):", label)
 print("--Iterations per combination:", num_iter)
 
-
-csvreader = csv.reader(open(csv_file, newline=""))
-print("Loading data from " + csv_file)
-#List of lists that contains x_data (features)
-x = []
-#List that contains y_data (labels)
-y = []
-#Number of flights that had incomplete data
-failed = 0
-delay = 0
-
-#Convert csvreader to list
-csv_data_list = list(csvreader)
-print("----------Time to open and convert to list:", time.time()-start_time)
-
-parse_time = time.time()
-#Turn read object into list, and ignore 1st row that only contains header
-for num, row in enumerate(csv_data_list[1:300000]): #[1:300000]
-	#Split row of information by 
-	info = str(row).replace("'", "").split(",") #replace("\"", "")
-
-	#Check for delay, if delay, then 1, otherwise 0. Info[39] will be 0 for early or on time
-	#This loop also naively trusts that the cell will contain data. This is the lazy way to do this, but if it fails the try, the cell is empty or the wrong data type. It then just excludes this data from the set.
-	try:
-		#Try to get all data first, then append to the lists at the end if ecerythign is valid
-		if float(info[label]) > 0: #39 for Departure, 50 or Arrival
-			y_temp = int(round_base * round(float(info[label])/round_base)) #Round to nearest 5
-		else:
-			y_temp = 0
-		#Add items to features list based on indicies given
-		x_temp = [float(info[feat]) for feat in feature_list]
-		
-		y.append(y_temp)
-		#x.append([float(info[2].replace("\"", "")), float(info[4].replace("\"", "")),float(info[36].replace("\"", ""))])
-		x.append(x_temp)
-
-	except:
-		failed += 1
-
-print("----------Time to parse data into lists:", time.time()-parse_time)
-
-print("Total size of data set:", len(x))
-print("--Number of data read failures:", failed)
-
-print("Time to load data:", time.time() - start_time, "seconds")
 
 from sklearn.model_selection import train_test_split
 #K nearest neighbors (default is 5)
@@ -127,19 +119,21 @@ from sklearn.neural_network import MLPClassifier
 #List to store all results from all combinations of testing. [alpha, layer comp, accuracy, time/loop]
 mlp_list = []
 cur_combo = 0
-#Iterate through alpha values
-for loop_alpha in alpha_value:
-	#Loop through hidden layer compositions
-	for loop_layer in hidden_layer_comp:
+#Iterate through months
+for loop_month in csv_inputs:
+	#Load data for this month
+	x,y = read_csv(loop_month, row_num)
+
+	#Loop through mlp configurations
+	for loop_mlp in mlp_configs:
 		#List to store accuracy and time to split, train, and test each iteration [[accuracy(0.0-1.0), time(seconds)]]
 		avg_list = []
 		for i in range(num_iter):
 			loop_time = time.time()
 			#Split data set into 4 sections, x and y training sets, and x and y testing sets
 			x_train, x_test, y_train, y_test = train_test_split(x, y) #, test_size = 0.33)
-			
 			#Initialize empty classifier
-			clf = MLPClassifier(alpha=loop_alpha, hidden_layer_sizes=loop_layer)
+			clf = MLPClassifier(alpha=loop_mlp[0], hidden_layer_sizes=loop_mlp[1])
 			#train_time = time.time()
 			#Fit data
 			clf.fit(x_train, y_train)
@@ -150,7 +144,7 @@ for loop_alpha in alpha_value:
 		#Split list of lists into separate list
 		accs, times = zip(*avg_list)
 		#Add to list of overall results
-		mlp_list.append([loop_alpha, loop_layer, sum(accs)*100/float(num_iter), sum(times)/float(num_iter)])
+		mlp_list.append([loop_month, loop_mlp[0], loop_mlp[1], sum(accs)*100/float(num_iter), sum(times)/float(num_iter)])
 		'''
 		print("Average accuracy")
 		print(sum(accs)*100/float(num_iter), "%")
@@ -158,15 +152,15 @@ for loop_alpha in alpha_value:
 		print(sum(times)/float(num_iter), "seconds")
 		'''
 		cur_combo += 1
-		print("--Percent Done:", 100*(cur_combo/total_combos), "| Alpha:", loop_alpha, "| Layer:", loop_layer)
-	print("Alpha", loop_alpha, "| Percent Done:", 100*(cur_combo/total_combos), "| Time:", time.time()-start_time)
+		print("--Percent Done:", 100*(cur_combo/total_combos), "| Alpha:", loop_mlp[0], "| Layer:", loop_mlp[1])
+	print("Done:", loop_month, "| Percent Done:", 100*(cur_combo/total_combos), "| Time:", time.time()-start_time)
 
 
 prog_time = time.time()-start_time
-print("----Took", prog_time, "seconds to test", len(hidden_layer_comp)*len(alpha_value), "combos", num_iter, "times each----")
+print("----Took", prog_time, "seconds to test", total_combos, "combos", num_iter, "times each----")
 
 #Write results to csv file
-with open("MLP_" + str(len(alpha_value)) + "_alphas_" + str(len(hidden_layer_comp)) + "_layers_" + str(total_combos) + "_combos_" + str(num_iter) + "_iters.csv", "w", newline='') as fo:
+with open("MLP_" + str(len(csv_inputs)) + "_months_" + str(len(mlp_configs)) + "_configs_" + str(total_combos) + "_combos_"+ str(num_iter) + "_iters.csv", "w", newline='') as fo:
 	writer = csv.writer(fo)
 	#Write data about the process
 	writer.writerow(["Feature Indices", str(feature_list)])
@@ -174,16 +168,15 @@ with open("MLP_" + str(len(alpha_value)) + "_alphas_" + str(len(hidden_layer_com
 	writer.writerow(["Iterations/Feature set", str(num_iter)])
 	writer.writerow(["Number of combinations", str(total_combos)])
 	writer.writerow(["Rounding Base", str(round_base)])
-	writer.writerow(["Alpha Values", str(alpha_value)])
-	writer.writerow(["Hidden Layer Comps", str(hidden_layer_comp)])
+	writer.writerow(["Months Tested", str(csv_inputs)])
+	writer.writerow(["MLP Configs", str(mlp_configs)])
 	#writer.writerow(["Feature Pool", str(feature_pool)])
 	#writer.writerow(["Max Threads", str(max_process)])
 	#writer.writerow(["Min Combo Length", str(min_combo)])
 	#writer.writerow(["Max Combo Length", str(max_combo)])
 	writer.writerow(["Time to Run (Sec)", str(prog_time)])
-	writer.writerow(["CSV Input File Name", csv_file])
 	writer.writerow(["Valid Data", str(len(x))])
-	writer.writerow(["Alpha Value", "Hidden Layer Comp", "Accuracy (%)", "Time/Loop (seconds)"])
+	writer.writerow(["Month", "Alpha Value", "Hidden Layer Comp", "Accuracy (%)", "Time/Loop (seconds)"])
 	#Sort list by third column (accuracy), then reverse to get highest at top
-	[writer.writerow(x) for x in sorted(mlp_list, key=lambda x: x[2])[::-1]]
+	[writer.writerow(x) for x in sorted(mlp_list, key=lambda x: x[3])[::-1]]
 	
