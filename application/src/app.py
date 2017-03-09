@@ -44,9 +44,11 @@ class DropdownFillHandler(tornado.web.RequestHandler):
 #Handler to display airports (nodes) and flights (links)
 class DisplayAirportsHandler(tornado.web.RequestHandler):
     def post(self):
-        received_query = json_decode(self.request.body)
-        flights, verbose_toggle, paths_toggle = flights_df(received_query)
-        plot_data = mean_data(flights)
+        received_query = received_query2 = json_decode(self.request.body)
+        flights, verbose_toggle, paths_toggle = flights_df(received_query, '"FlightDate"')
+        plot_data1 = mean_data(flights)
+        flights, verbose_toggle, paths_toggle = flights_df(received_query2, '"Origin"')
+        plot_data2 = mean_data(flights)
         return_data = {}
         if(verbose_toggle):
            return_data['verbose'] = "This is eventually going to be more information!"
@@ -114,11 +116,11 @@ def mean_data(flights):
     line_plot_data['labels'] = indp_axis
     line_plot_data['series'] = mean_day
     plot_data['line'] = line_plot_data
-    plot_data['bar'] = bar_plot_data
+    plot_data['bar'] = line_plot_data
     return plot_data
 
 #Method to create Pandas dataframe with flight information
-def flights_df(query):
+def flights_df(query, order_by):
   #Connect to the PostgreSQL database
   POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
   engine = create_engine(POSTGRES_URL)
@@ -151,7 +153,7 @@ def flights_df(query):
       where_string += date_start
   if(end_date):
     where_string += date_end
-  limit_string = 'ORDER BY "FlightDate" LIMIT 100000;'
+  limit_string = 'ORDER BY ' + order_by + ' LIMIT 100000;'
   query_string = 'SELECT DISTINCT "FlightDate", "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
 
 
