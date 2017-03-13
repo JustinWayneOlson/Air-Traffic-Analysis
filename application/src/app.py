@@ -12,6 +12,7 @@ from  tornado.escape import json_decode
 import random
 import os
 import pprint as pp
+import copy
 
 #Handler for main (index) page
 class MainHandler(tornado.web.RequestHandler):
@@ -44,11 +45,11 @@ class DropdownFillHandler(tornado.web.RequestHandler):
 #Handler to display airports (nodes) and flights (links)
 class DisplayAirportsHandler(tornado.web.RequestHandler):
     def post(self):
-        received_query = received_query2 = json_decode(self.request.body)
+        received_query = json_decode(self.request.body)
+        received_query2 = copy.deepcopy(received_query)
         flights, verbose_toggle, paths_toggle = flights_df(received_query, '"FlightDate"')
-        plot_data1 = mean_data(flights)
-        flights, verbose_toggle, paths_toggle = flights_df(received_query2, '"Origin"')
-        plot_data2 = mean_data(flights)
+        flights_bar, verbose_toggle, paths_toggle = flights_df(received_query2, '"Origin"')
+        plot_data = mean_data(flights, flights_bar)
         return_data = {}
         if(verbose_toggle):
            return_data['verbose'] = "This is eventually going to be more information!"
@@ -71,15 +72,35 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
             nodes = color(nodes)
             self.write(return_data)
 
-def mean_data(flights):
+def mean_data(flights_line, flights_bar):
+   plot_data = {}
+   line_plot_data = {}
+   bar_plot_data = {}
+   #for line
+   typeData = "date"
+   plot_data_line = calc_data(flights_line, typeData)
+
+
+   #for bar
+   typeData = "origin"
+   plot_data_bar = calc_data(flights_bar, typeData)
+
+   plot_data['line'] = plot_data_line
+   plot_data['bar'] = plot_data_bar
+   return plot_data
+
+def calc_data(flights, typeData):
     indp_var = []
     delay_time = []
     plot_data = {}
     line_plot_data = {}
     bar_plot_data = {}
     for index, row in flights.iterrows():
-      indp_var.append(row.FlightDate)
-      delay_time.append(row.CarrierDelay)
+       if(typeData == "date"):
+         indp_var.append(row.FlightDate)
+       if(typeData == "origin"):
+         indp_var.append(row.Origin)
+       delay_time.append(row.CarrierDelay)
     print(indp_var)
     print(len(indp_var))
     start_day_index = 0
@@ -113,11 +134,12 @@ def mean_data(flights):
                      }
                  }
     '''
+
     line_plot_data['labels'] = indp_axis
     line_plot_data['series'] = mean_day
-    plot_data['line'] = line_plot_data
-    plot_data['bar'] = line_plot_data
-    return plot_data
+    #plot_data['line'] = line_plot_data
+    #plot_data['bar'] = line_plot_data
+    return line_plot_data
 
 #Method to create Pandas dataframe with flight information
 def flights_df(query, order_by):
@@ -311,6 +333,6 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8008)
-    print("serving on port 8008")
+    app.listen(8007)
+    print("serving on port 8007")
     tornado.ioloop.IOLoop.current().start()
