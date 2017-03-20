@@ -139,8 +139,8 @@ session.execute("""CREATE TABLE Routing (
 "FlightDate": text,
 "Origin" text,
 "Dest" text,
-"gridLines": text,
-"routeLines": text,
+"gridLines": map,
+"routeLines": map,
 Primary Key ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
