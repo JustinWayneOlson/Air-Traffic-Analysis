@@ -134,13 +134,14 @@ PRIMARY KEY ("FlightNum", "FlightDate"),
 Tables for Routing
 --------------------------------------------------------- */
 session.execute("""CREATE TABLE Routing (
-"Carrier": text,
-"FlightNum": bigint,
-"FlightDate": text,
+"Carrier" text,
+"DepTime" double,
+"FlightNum" bigint,
+"FlightDate" text,
 "Origin" text,
 "Dest" text,
-"gridLines": map,
-"routeLines": map,
+"gridLines" map,
+"routeLines" map,
 Primary Key ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
