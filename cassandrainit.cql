@@ -134,6 +134,8 @@ PRIMARY KEY ("FlightNum", "FlightDate"),
 Tables for Routing
 --------------------------------------------------------- */
 session.execute("""CREATE TABLE Routing (
+"jobNum" int,
+"jobName" text,                               
 "Carrier" text,
 "DepTime" double,
 "FlightNum" bigint,
