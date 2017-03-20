@@ -130,6 +130,20 @@ CREATE TABLE Transtats (
 PRIMARY KEY ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
+/*--------------------------------------------------------
+Tables for Routing
+--------------------------------------------------------- */
+session.execute("""CREATE TABLE Routing (
+"Carrier": text,
+"FlightNum": bigint,
+"FlightDate": text,
+"OriginAirportID": bigint,
+"DestAirportID": bigint,
+"gridLines": text,
+"routeLines": text,
+Primary Key ("FlightNum", "FlightDate"),
+) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
+
 /* --------------------------------------------------------
 Tables for ADSBExchange
 ---------------------------------------------------------- */
