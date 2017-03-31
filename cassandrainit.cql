@@ -17,12 +17,12 @@ USE AirportTrafficAnalytics;
 Tables for Transtats
 ------------------------------------------------------------ */
 CREATE TABLE Transtats (
-"Year" timestamp,
+"Year" bigint, //formerly timestamp
 "Quarter" bigint,
 "Month" bigint,
 "DayofMonth" bigint,
 "DayOfWeek" bigint,
-"FlightDate" text, 
+"FlightDate" timestamp, //formerly text 
 "UniqueCarrier" text,
 "AirlineID" bigint,
 "Carrier" text,
@@ -139,7 +139,7 @@ session.execute("""CREATE TABLE Routing (
 "Carrier" text,
 "DepTime" double,
 "FlightNum" bigint,
-"FlightDate" text,
+"FlightDate" timestamp, //formerly text
 "Origin" text,
 "Dest" text,
 "gridLines" map,
