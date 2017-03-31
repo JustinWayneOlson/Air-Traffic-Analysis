@@ -6,6 +6,9 @@ import csv, pickle
 #Automatically splits the data into training and testing sets
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
+#Connects to the cassandra cluster, and formats queries responses as dicts
+from cassandra.cluster import Cluster
+from cassandra.query import dict_factory
 
 #Class that creates MLP Classifier, reads data, trains the classifier, writes the classifier to disk
 class MLP:
@@ -40,11 +43,7 @@ class MLP:
 	def read_csv(self):
 		filename = "On_Time_On_Time_Performance_" + str(self.year) + "_" + str(self.month) + ".csv"
 		csvreader = csv.reader(open(filename, newline=""))
-		##print("Loading data from " + filename)
-		#List of lists that contains x_data (features)
-		x = []
-		#List that contains y_data (labels)
-		y = []
+
 		#Number of flights that had incomplete data
 		failed = 0
 		delay = 0
@@ -68,22 +67,51 @@ class MLP:
 				#Add items to features list based on indicies given
 				x_temp = [float(info[feat]) for feat in self.features]
 				
-				y.append(y_temp)
-				#x.append([float(info[2].replace("\"", "")), float(info[4].replace("\"", "")),float(info[36].replace("\"", ""))])
-				x.append(x_temp)
+				self.y.append(y_temp)
+				self.x.append(x_temp)
 
 			except:
 				failed += 1
-		#Store created lists of data in the private variables
-		self.x = x
-		self.y = y
+
 		#Return the number of data points that could be read successfully
-		return len(x)
+		return len(self.x)
 
 	#Read data in from the cassandra database. Returns the number of data points that could be successfully read
 	def read_database(self):
-		#TODO
-		pass
+		cluster = Cluster(["localhost"])
+		session = cluster.connect()
+		session.row_factory = dict_factory
+		session.execute("USE AirportTrafficAnalytics")
+		query = "SELECT * from transtats WHERE LIMIT %s" % (self.rows)
+		response = session.execute(query)
+
+		#List of the indices of the columns to use as features
+		feature_list = ["Month", "DayOfWeek", "CRSDepTime", "Distance"]#[2,4,31,56]#[2,4,11,21,31,56] #Month(2), Day of Week(4), Listed Departure Time(31) #10,31 late additions
+		#Index of the column to use as a label. 34 for Departure Delay, 45 for Arrival Delay
+		label = "AirTime"#54 #53 for total time of the flight, 54 for only time in the air
+
+		failed = 0
+		for i in response:
+			'''
+			x.append([i[feat] for feat in feature_list])
+			y.append(i[label])
+			'''
+			#This loop also naively trusts that the cell will contain data. This is the lazy way to do this, but if it fails the try, the cell is empty or the wrong data type. It then just excludes this data from the set.
+			try:
+				#Try to get all data first, then append to the lists at the end if ecerythign is valid
+				if float(i[self.label]) > 0: #39 for Departure, 50 or Arrival
+					y_temp = int(self.rounding * round(float(i[self.label])/self.rounding)) #Round to nearest 5
+				else:
+					y_temp = 0
+				#Add items to features list based on indicies given
+				x_temp = [float(i[feat]) for feat in self.feature_list]
+				
+				self.y.append(y_temp)
+				#x.append([float(info[2].replace("\"", "")), float(info[4].replace("\"", "")),float(info[36].replace("\"", ""))])
+				self.x.append(x_temp)
+
+			except:
+			failed += 1
 
 	#Train the model and record it's accuracy. Checks if data has been read in before training. Returns True if training succeeded, False if training failed.
 	def train(self):
@@ -97,6 +125,16 @@ class MLP:
 			return True
 		else:
 			return False
+
+	#Persist the current trained model to the database. Checks if the model has been created yet, and that accuracy is above 0% and has been trained on a data set > 0
+	def save(self):
+		pass
+		#TODO
+
+	#Checks the database to see if there is already a trained model with the same parameters as the current model. Returns True if one exists, Flase otherwise
+	def check_database(self):
+		pass
+		#TODO
 
 	#Getter that returns the % accuracy of the currently trained model.
 	def get_accuracy(self):
@@ -114,7 +152,7 @@ if __name__ == "__main__":
 	#Configurations that have worked well generally. (0.005 | 500,100), (0.1 | 500,100), (0.005 | 2000), (0.01 | 500), (0.01 | 2000)
 	#Configurations to pickle. Format is [(year, month, alpha, h layer)]
 	y = 2015
-	m = 1
+	m = 9
 	alpha = 0.1
 	layer = (500,100)
 	#Granulatity to round to
