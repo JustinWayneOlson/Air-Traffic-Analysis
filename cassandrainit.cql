@@ -142,6 +142,8 @@ session.execute("""CREATE TABLE Routing (
 "FlightDate" timestamp, //formerly text
 "Origin" text,
 "Dest" text,
+"gridResPlanar" int,
+"gridResVert" int,                
 "gridLines" map,
 "routeLines" map,
 Primary Key ("FlightNum", "FlightDate"),
