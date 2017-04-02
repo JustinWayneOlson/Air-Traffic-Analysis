@@ -170,7 +170,7 @@ CREATE TABLE MLPClassifier (
 /* --------------------------------------------------------
 Tables for AirpotLocations
 ---------------------------------------------------------- */
-CREATE TABLE MLPClassifier (
+CREATE TABLE AirportLocations (
    "City" text,
    "State" text,
    "Code" text,
