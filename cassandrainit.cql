@@ -1,6 +1,6 @@
 /* ---------------------------------------------------------------------
 Author: Michael Muehlbradt
-Contributor: 
+Contributor: Mitch Zinser
 This script creates keyspace and tables for db setup
 DBSchema: table for transtats and ADSBExchange
 Table naming convention: 
@@ -150,9 +150,21 @@ Primary Key ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
 /* --------------------------------------------------------
-Tables for ADSBExchange
+Tables for MLPClassifier
 ---------------------------------------------------------- */
+session.execute("""CREATE TABLE MLPClassifier (
+   "Year" bigint,
+   "Month" bigint,
+   "RoundingBase" bigint,
+   "Features" frozen<list<int>>,
+   "Label" bigint,
+   "HLayer" frozen<list<int>>,
+   "Alpha" double,
+   "RowsTrain" bigint,
+   "Accuracy" double,
+   "Model" blob,
+   PRIMARY KEY ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha"),
+  ) WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
 
-//CREATE TABLE IF NOT EXISTS ADSBExchange (
 
 
