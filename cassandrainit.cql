@@ -133,7 +133,7 @@ PRIMARY KEY ("FlightNum", "FlightDate"),
 /*--------------------------------------------------------
 Tables for Routing
 --------------------------------------------------------- */
-session.execute("""CREATE TABLE Routing (
+CREATE TABLE Routing (
 "jobNum" int,
 "jobName" text,                               
 "Carrier" text,
@@ -152,7 +152,7 @@ PRIMARY KEY ("FlightNum", "FlightDate"),
 /* --------------------------------------------------------
 Tables for MLPClassifier
 ---------------------------------------------------------- */
-session.execute("""CREATE TABLE MLPClassifier (
+CREATE TABLE MLPClassifier (
    "Year" bigint,
    "Month" bigint,
    "RoundingBase" bigint,
@@ -170,7 +170,7 @@ session.execute("""CREATE TABLE MLPClassifier (
 /* --------------------------------------------------------
 Tables for AirpotLocations
 ---------------------------------------------------------- */
-session.execute("""CREATE TABLE MLPClassifier (
+CREATE TABLE MLPClassifier (
    "City" text,
    "State" text,
    "Code" text,
