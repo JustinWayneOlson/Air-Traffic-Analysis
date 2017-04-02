@@ -30,7 +30,6 @@ def main(argv):
    with open(csv_file) as csvfile:
       csvdata = csv.reader(csvfile)
       for insert_column in csvdata:
-         print len(insert_column)
          if(first):
             first = False
             continue
@@ -48,8 +47,10 @@ def main(argv):
          start_string = "INSERT INTO AirportTrafficAnalytics.Transtats({}) VALUES ({});".format(column_labels, value_string[:-1])
          session.execute("USE AirportTrafficAnalytics")
          start_string = start_string.replace('\n', '')
-         print start_string
-         session.execute(start_string)
+         try:
+            session.execute(start_string)
+         except:
+            print "Invalid CSV Format"
 if __name__ == "__main__":
    main(sys.argv)
 
