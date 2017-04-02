@@ -1,6 +1,6 @@
 /* ---------------------------------------------------------------------
 Author: Michael Muehlbradt
-Contributor: 
+Contributor: Mitch Zinser
 This script creates keyspace and tables for db setup
 DBSchema: table for transtats and ADSBExchange
 Table naming convention: 
@@ -17,12 +17,12 @@ USE AirportTrafficAnalytics;
 Tables for Transtats
 ------------------------------------------------------------ */
 CREATE TABLE Transtats (
-"Year" timestamp,
+"Year" bigint, //formerly timestamp
 "Quarter" bigint,
 "Month" bigint,
 "DayofMonth" bigint,
 "DayOfWeek" bigint,
-"FlightDate" text, 
+"FlightDate" timestamp, //formerly text 
 "UniqueCarrier" text,
 "AirlineID" bigint,
 "Carrier" text,
@@ -130,10 +130,53 @@ CREATE TABLE Transtats (
 PRIMARY KEY ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
+/*--------------------------------------------------------
+Tables for Routing
+--------------------------------------------------------- */
+session.execute("""CREATE TABLE Routing (
+"jobNum" int,
+"jobName" text,                               
+"Carrier" text,
+"DepTime" double,
+"FlightNum" bigint,
+"FlightDate" timestamp, //formerly text
+"Origin" text,
+"Dest" text,
+"gridResPlanar" int,
+"gridResVert" int,                
+"gridLines" map,
+"routeLines" map,
+Primary Key ("FlightNum", "FlightDate"),
+) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
+
 /* --------------------------------------------------------
-Tables for ADSBExchange
+Tables for MLPClassifier
 ---------------------------------------------------------- */
+session.execute("""CREATE TABLE MLPClassifier (
+   "Year" bigint,
+   "Month" bigint,
+   "RoundingBase" bigint,
+   "Features" frozen<list<int>>,
+   "Label" bigint,
+   "HLayer" frozen<list<int>>,
+   "Alpha" double,
+   "RowsTrain" bigint,
+   "Accuracy" double,
+   "Model" blob,
+   PRIMARY KEY ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha"),
+  ) WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
 
-//CREATE TABLE IF NOT EXISTS ADSBExchange (
+                
+/* --------------------------------------------------------
+Tables for AirpotLocations
+---------------------------------------------------------- */
+session.execute("""CREATE TABLE MLPClassifier (
+   "City" text,
+   "State" text,
+   "Code" text,
+   "Lat" double,
+   "Lon" double,
 
+   PRIMARY KEY ("Code"),
+  ) WITH CLUSTERING ORDER BY ("Code" DESC);
 
