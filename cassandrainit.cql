@@ -144,8 +144,8 @@ CREATE TABLE Routing (
 "Dest" text,
 "gridResPlanar" int,
 "gridResVert" int,                
-"gridLines" map,
-"routeLines" map,
+"gridLines" map<lat, double, lon, double>,
+"routeLines" map<lat, double, lon, double, alt, double, speed, double, time, timestamp>,
 PRIMARY KEY ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
