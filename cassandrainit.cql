@@ -166,5 +166,17 @@ session.execute("""CREATE TABLE MLPClassifier (
    PRIMARY KEY ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha"),
   ) WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
 
+                
+/* --------------------------------------------------------
+Tables for AirpotLocations
+---------------------------------------------------------- */
+session.execute("""CREATE TABLE MLPClassifier (
+   "City" text,
+   "State" text,
+   "Code" text,
+   "Lat" double,
+   "Lon" double,
 
+   PRIMARY KEY ("Code"),
+  ) WITH CLUSTERING ORDER BY ("Code" DESC);
 
