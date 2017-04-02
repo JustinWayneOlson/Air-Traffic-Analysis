@@ -1,6 +1,6 @@
 /* ---------------------------------------------------------------------
 Author: Michael Muehlbradt
-Contributor: 
+Contributor: Mitch Zinser
 This script creates keyspace and tables for db setup
 DBSchema: table for transtats and ADSBExchange
 Table naming convention: 
@@ -17,12 +17,12 @@ USE AirportTrafficAnalytics;
 Tables for Transtats
 ------------------------------------------------------------ */
 CREATE TABLE Transtats (
-"Year" timestamp,
+"Year" bigint, //formerly timestamp
 "Quarter" bigint,
 "Month" bigint,
 "DayofMonth" bigint,
 "DayOfWeek" bigint,
-"FlightDate" text, 
+"FlightDate" timestamp, //formerly text 
 "UniqueCarrier" text,
 "AirlineID" bigint,
 "Carrier" text,
@@ -101,39 +101,84 @@ CREATE TABLE Transtats (
 "Div2TotalGTime" double,
 "Div2LongestGTime" double,
 "Div2WheelsOff" double,
-"Div2TailNum" double,
-"Div3Airport" double,
+"Div2TailNum" text,
+"Div3Airport" text,
 "Div3AirportID" double,
 "Div3AirportSeqID" double,
 "Div3WheelsOn" double,
 "Div3TotalGTime" double,
 "Div3LongestGTime" double,
 "Div3WheelsOff" double,
-"Div3TailNum" double,
-"Div4Airport" double,
+"Div3TailNum" text,
+"Div4Airport" text,
 "Div4AirportID" double,
 "Div4AirportSeqID" double,
 "Div4WheelsOn" double,
 "Div4TotalGTime" double,
 "Div4LongestGTime" double,
 "Div4WheelsOff" double,
-"Div4TailNum" double,
-"Div5Airport" double,
+"Div4TailNum" text,
+"Div5Airport" text,
 "Div5AirportID" double,
 "Div5AirportSeqID" double,
 "Div5WheelsOn" double,
 "Div5TotalGTime" double,
 "Div5LongestGTime" double,
 "Div5WheelsOff" double,
-"Div5TailNum" double,
+"Div5TailNum" text,
 "Unnamed: 109" double,
 PRIMARY KEY ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
+/*End Transtats Table*/
+
+/*--------------------------------------------------------
+Tables for Routing
+--------------------------------------------------------- */
+CREATE TABLE Routing (
+"jobNum" int,
+"jobName" text,                               
+"Carrier" text,
+"DepTime" double,
+"FlightNum" bigint,
+"FlightDate" timestamp, //formerly text
+"Origin" text,
+"Dest" text,
+"gridResPlanar" int,
+"gridResVert" int,                
+"gridLines" map<lat, double, lon, double>,
+"routeLines" map<lat, double, lon, double, alt, double, speed, double, time, timestamp>,
+PRIMARY KEY ("FlightNum", "FlightDate"),
+) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
+
 /* --------------------------------------------------------
-Tables for ADSBExchange
+Tables for MLPClassifier
 ---------------------------------------------------------- */
+CREATE TABLE MLPClassifier (
+   "Year" bigint,
+   "Month" bigint,
+   "RoundingBase" bigint,
+   "Features" frozen<list<int>>,
+   "Label" bigint,
+   "HLayer" frozen<list<int>>,
+   "Alpha" double,
+   "RowsTrain" bigint,
+   "Accuracy" double,
+   "Model" blob,
+   PRIMARY KEY ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha"),
+  ); // WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
 
-//CREATE TABLE IF NOT EXISTS ADSBExchange (
+                
+/* --------------------------------------------------------
+Tables for AirpotLocations
+---------------------------------------------------------- */
+CREATE TABLE AirportLocations (
+   "City" text,
+   "State" text,
+   "Code" text,
+   "Lat" double,
+   "Lon" double,
 
+   PRIMARY KEY ("Code"),
+  ) WITH CLUSTERING ORDER BY ("Code" DESC);
 

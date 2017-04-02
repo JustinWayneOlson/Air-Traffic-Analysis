@@ -28,14 +28,14 @@
       height: 100%;
       width:100%;
     }
-    .map 
+    .map
     {
       width: 100%;
       height: 100%;
       margin: 0;
       padding: 0;
     }
-    .map-container 
+    .map-container
     {
       width: 50%;
       height: 45%;
@@ -67,13 +67,13 @@
       border-style: solid;
       border-width: 1px
     }
-    .link 
+    .link
     {
       stroke: #ccc;
       stroke-width: 1.5px;
     }
     .stations,
-    .stations svg 
+    .stations svg
     {
       position: absolute;
       width: 1200px;
@@ -81,20 +81,20 @@
       padding-right: 100px;
       font: 12px sans-serif;
     }
-    .stations circle 
+    .stations circle
     {
       fill: brown;
       stroke: black;
       stroke-width: 1.5px;
     }
-    .my-legend .legend-title 
+    .my-legend .legend-title
     {
       text-align: left;
       margin-bottom: 5px;
       font-weight: bold;
       font-size: 90%;
     }
-    .my-legend .legend-scale ul 
+    .my-legend .legend-scale ul
     {
       margin: 0;
       margin-bottom: 5px;
@@ -102,7 +102,7 @@
       float: left;
       list-style: none;
     }
-    .my-legend .legend-scale ul li 
+    .my-legend .legend-scale ul li
     {
       font-size: 80%;
       list-style: none;
@@ -110,7 +110,7 @@
       line-height: 18px;
       margin-bottom: 2px;
     }
-    .my-legend ul.legend-labels li span 
+    .my-legend ul.legend-labels li span
     {
       display: block;
       float: left;
@@ -120,13 +120,13 @@
       margin-left: 0;
       border: 1px solid #999;
     }
-    .my-legend .legend-source 
+    .my-legend .legend-source
     {
       font-size: 70%;
       color: #999;
       clear: both;
     }
-    .my-legend a 
+    .my-legend a
     {
       color: #777;
       background: #ECEEEF;
@@ -257,7 +257,7 @@
   {
     $('#legend').hide();
     $('#tabs').tabs();
-    
+
     //Time picker for start date formatted m/d/y
     $('#date_start').datetimepicker(
     {
@@ -290,7 +290,7 @@
         console.log(error);
       }
     });
-    
+
     //Ajax call to populate dropdown menu for Destination airport(s)
     $.ajax(
     {
@@ -340,7 +340,7 @@
     $('#tabs').tabs("refresh");
 
     //Instantiating map visualization (night mode)
-    var map = new google.maps.Map(d3.select("#map-" + tab_num).node(), 
+    var map = new google.maps.Map(d3.select("#map-" + tab_num).node(),
     {
       zoom: 4,
       center: new google.maps.LatLng(52, -133),
@@ -348,7 +348,7 @@
       styles: [
         {
           "elementType": "geometry",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#212121"
@@ -357,7 +357,7 @@
         },
         {
           "elementType": "labels.icon",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -366,7 +366,7 @@
         },
         {
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#757575"
@@ -375,7 +375,7 @@
         },
         {
           "elementType": "labels.text.stroke",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#212121"
@@ -385,7 +385,7 @@
         {
           "featureType": "administrative",
           "elementType": "geometry",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#757575"
@@ -398,7 +398,7 @@
         {
           "featureType": "administrative.country",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#9e9e9e"
@@ -407,7 +407,7 @@
         },
         {
           "featureType": "administrative.land_parcel",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -417,7 +417,7 @@
         {
           "featureType": "administrative.locality",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#bdbdbd"
@@ -426,7 +426,7 @@
         },
         {
           "featureType": "administrative.neighborhood",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -435,7 +435,7 @@
         },
         {
           "featureType": "poi",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -445,7 +445,7 @@
         {
           "featureType": "poi",
           "elementType": "labels.text",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -455,7 +455,7 @@
         {
           "featureType": "poi",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#757575"
@@ -465,7 +465,7 @@
         {
           "featureType": "poi.park",
           "elementType": "geometry",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#181818"
@@ -475,7 +475,7 @@
         {
           "featureType": "poi.park",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#616161"
@@ -485,7 +485,7 @@
         {
           "featureType": "poi.park",
           "elementType": "labels.text.stroke",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#1b1b1b"
@@ -494,7 +494,7 @@
         },
         {
           "featureType": "road",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -504,7 +504,7 @@
         {
           "featureType": "road",
           "elementType": "geometry.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#2c2c2c"
@@ -514,7 +514,7 @@
         {
           "featureType": "road",
           "elementType": "labels",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -524,7 +524,7 @@
         {
           "featureType": "road",
           "elementType": "labels.icon",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -534,7 +534,7 @@
         {
           "featureType": "road",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#8a8a8a"
@@ -544,7 +544,7 @@
         {
           "featureType": "road.arterial",
           "elementType": "geometry",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#373737"
@@ -554,7 +554,7 @@
         {
           "featureType": "road.highway",
           "elementType": "geometry",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#3c3c3c"
@@ -564,7 +564,7 @@
         {
           "featureType": "road.highway.controlled_access",
           "elementType": "geometry",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#4e4e4e"
@@ -574,7 +574,7 @@
         {
           "featureType": "road.local",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#616161"
@@ -583,7 +583,7 @@
         },
         {
           "featureType": "transit",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -593,7 +593,7 @@
         {
           "featureType": "transit",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#757575"
@@ -603,7 +603,7 @@
         {
           "featureType": "water",
           "elementType": "geometry",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#000000"
@@ -613,7 +613,7 @@
         {
           "featureType": "water",
           "elementType": "labels.text",
-          "stylers": 
+          "stylers":
           [
             {
               "visibility": "off"
@@ -623,7 +623,7 @@
         {
           "featureType": "water",
           "elementType": "labels.text.fill",
-          "stylers": 
+          "stylers":
           [
             {
               "color": "#3d3d3d"
@@ -632,14 +632,14 @@
         }
       ]
     });
-    
-    $('.ui-tabs-anchor').on('click', function (event) 
+
+    $('.ui-tabs-anchor').on('click', function (event)
     {
-      $('.ct-chart').each(function(i, e) 
+      $('.ct-chart').each(function(i, e)
       {
         e.__chartist__.update();
       });
-      $('.map').each(function(i, e) 
+      $('.map').each(function(i, e)
       {
         google.maps.event.trigger(map, 'resize');
       });
@@ -690,6 +690,7 @@
 
       success: function(data)
       {
+      console.log(data);
         var chart_data = {
           labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
           series: [
@@ -699,14 +700,14 @@
 
         new Chartist.Line('#ct-chart-line-'+ tab_num, chart_data);
         new Chartist.Bar('#ct-chart-bar-'+ tab_num, chart_data);
-        var chart_data = 
+        var chart_data =
         {
           series: [20, 15, 40]
         };
 
-        var options = 
+        var options =
         {
-          labelInterpolationFnc: function(value) 
+          labelInterpolationFnc: function(value)
           {
             return value[0]
           }
@@ -860,7 +861,7 @@
             });
             return feature;
 
-            function latLongToPos(d) 
+            function latLongToPos(d)
             {
               var p = new google.maps.LatLng(d.lat, d.long);
               p = projection.fromLatLngToDivPixel(p);
@@ -886,13 +887,13 @@
               $('.odd').remove();
               var delay_data = $(this)[0].__data__;
             }
-            function transform(d) 
+            function transform(d)
             {
               var p = latLongToPos(d);
               return d3.select(this)
                 .attr("transform", "translate(" + p.x + "," + p.y + ")");
             }
-            function setColor(d) 
+            function setColor(d)
             {
               return d3.select(this)
                 .style('fill', d.Color)
@@ -920,11 +921,11 @@
           google.maps.event.addDomListener(window, 'load', initialize(map));
 
           var overlay = new google.maps.OverlayView();
-          overlay.onAdd = function() 
+          overlay.onAdd = function()
           {
             var layer = d3.select(this.getPanes().overlayMouseTarget).append("div")
               .attr("class", "stations");
-            overlay.draw = function() 
+            overlay.draw = function()
             {
               layer.select('svg').remove();
               var projection = this.getProjection(),
@@ -947,7 +948,7 @@
                 .on('mouseover', someinfo)
                 .on('mouseout', mouseoutofinfo);
 
-              function latLongToPos(d) 
+              function latLongToPos(d)
               {
                 var p = new google.maps.LatLng(d.lat, d.long);
                 p = projection.fromLatLngToDivPixel(p);
@@ -975,13 +976,13 @@
                 var delay_data = $(this)[0].__data__;
                 $('tbody').append('<tr><td>' + delay_data.Name + '</td><td>' + delay_data.TotalFlights + '</td><td>' + delay_data.NASDelayTot + '</td><td>' + delay_data.NASDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.NASDelay + '</td><td>' + delay_data.CarrierDelayTot + '</td><td>' + delay_data.CarrierDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.CarrierDelay + '</td><td>' + delay_data.WeatherDelayTot + '</td><td>' + delay_data.WeatherDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.WeatherDelay + '</td><td>' + delay_data.SecurityDelayTot + '</td><td>' + delay_data.SecurityDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.SecurityDelay + '</th><th>' + delay_data.LateAircraftDelayTot + '</td><td>' + delay_data.LateAircraftDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.LateAircraftDelay + '</td></tr>')
               }
-              function transform(d) 
+              function transform(d)
               {
                 var p = latLongToPos(d);
                 return d3.select(this)
                   .attr("transform", "translate(" + p.x + "," + p.y + ")");
               }
-              function setColor(d) 
+              function setColor(d)
               {
                 return d3.select(this)
                 .style('fill', d.Color)
@@ -991,18 +992,18 @@
           overlay.setMap(map);
 
         }
-        
+
         else
         {
           $('#loading').remove();
           var overlay = new google.maps.OverlayView();
 
-          overlay.onAdd = function() 
+          overlay.onAdd = function()
           {
             var layer = d3.select(this.getPanes().overlayLayer).append("div")
               .attr("class", "stations");
 
-            overlay.draw = function() 
+            overlay.draw = function()
             {
 
               layer.select('svg').remove();
@@ -1091,7 +1092,7 @@
           overlay.setMap(map);
         }
       },
-      error: function(error) 
+      error: function(error)
       {
          $('#loading').remove()
          console.log(error);
