@@ -164,7 +164,7 @@ CREATE TABLE MLPClassifier (
    "Accuracy" double,
    "Model" blob,
    PRIMARY KEY ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha"),
-  ) WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
+  ) // WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
 
                 
 /* --------------------------------------------------------
