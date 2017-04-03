@@ -1,4 +1,4 @@
-from helpers.py import *
+from helpers import *
 
 #Handler for main (index) page
 class MainHandler(tornado.web.RequestHandler):
