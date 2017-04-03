@@ -1,0 +1,104 @@
+html,
+body,
+.dataTables_wrapper {
+    height: 100%;
+    overflow-y: scroll;
+}
+.ct-chart {
+    height: 100%;
+    width: 100%;
+}
+.map {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.map-container {
+    width: 50%;
+    height: 45%;
+    border-style: solid;
+    border-width: 1px;
+}
+.table-container {
+    width: 50%;
+    height: 45%;
+    border-style: solid;
+    border-width: 1px
+}
+.line-plot-container {
+    height: 40%;
+    border-style: solid;
+    border-width: 1px
+}
+.pie-plot-container {
+    height: 40%;
+    border-style: solid;
+    border-width: 1px
+}
+.bar-plot-container {
+    height: 40%;
+    border-style: solid;
+    border-width: 1px
+}
+.link {
+    stroke: #ccc;
+    stroke-width: 1.5px;
+}
+.stations,
+.stations svg {
+    position: absolute;
+    width: 1200px;
+    height: 600px;
+    padding-right: 100px;
+    font: 12px sans-serif;
+}
+.stations circle {
+    fill: brown;
+    stroke: black;
+    stroke-width: 1.5px;
+}
+.my-legend .legend-title {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 90%;
+}
+.my-legend .legend-scale ul {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+.my-legend .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    margin-left: 0;
+    line-height: 18px;
+    margin-bottom: 2px;
+}
+.my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 1px solid #999;
+}
+.my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+}
+.my-legend a {
+    color: #777;
+    background: #ECEEEF;
+}
+.navbar-brand {
+    margin-right: 50px;
+}
+.ui-tabs .ui-tabs-nav {
+    padding: 10px;
+}
