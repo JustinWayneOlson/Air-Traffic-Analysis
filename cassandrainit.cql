@@ -133,6 +133,9 @@ PRIMARY KEY ("FlightNum", "FlightDate"),
 /*--------------------------------------------------------
 Tables for Routing
 --------------------------------------------------------- */
+CREATE TYPE Node ("lat" double, "long" double, "alt" double, "speed" double, "time" timestamp);
+CREATE TYPE Coord ("lat" double, "long" double);
+
 CREATE TABLE Routing (
 "jobNum" int,
 "jobName" text,                               
@@ -144,8 +147,8 @@ CREATE TABLE Routing (
 "Dest" text,
 "gridResPlanar" int,
 "gridResVert" int,                
-"gridLines" map<lat, double, lon, double>,
-"routeLines" map<lat, double, lon, double, alt, double, speed, double, time, timestamp>,
+"gridLines" set <Coord>,
+"routeLines" set <Node>,
 PRIMARY KEY ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
