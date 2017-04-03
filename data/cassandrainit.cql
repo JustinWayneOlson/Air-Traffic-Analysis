@@ -137,6 +137,7 @@ Tables for Routing
 --------------------------------------------------------- */
 CREATE TYPE Node ("lat" double, "long" double, "alt" double, "speed" double, "time" timestamp);
 CREATE TYPE Coord ("lat" double, "long" double);
+CREATE TYPE Links ("source" double, "target" double);
 
 CREATE TABLE Routing (
 "jobNum" int,
@@ -149,8 +150,8 @@ CREATE TABLE Routing (
 "Dest" text,
 "gridResPlanar" int,
 "gridResVert" int,                
-"gridLines" set <frozen <Coord>>,
-"routeLines" set <frozen <Node>>,
+"gridLines" map <frozen <Coord>, frozen <Links>>,
+"routeLines" map <frozen <Node>, frozen <Links>>,
 PRIMARY KEY ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
