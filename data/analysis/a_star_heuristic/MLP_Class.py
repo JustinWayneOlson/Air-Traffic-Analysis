@@ -9,6 +9,7 @@ from sklearn.neural_network import MLPClassifier
 #Connects to the cassandra cluster, and formats queries responses as dicts
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
+import json
 
 #Class that creates MLP Classifier, reads data, trains the classifier, writes the classifier to disk
 class MLP:
@@ -26,7 +27,7 @@ class MLP:
 		self.year = year
 		self.month = month
 		self.rows = rows
-		self.features = features
+		self.features = sorted(features)
 		self.label = label
 		self.rounding = rounding
 		self.alpha = alpha
@@ -134,57 +135,89 @@ class MLP:
 			cluster = Cluster(["localhost"])
 			session = cluster.connect()
 			session.row_factory = dict_factory
+			
 			session.execute("USE AirportTrafficAnalytics")
-			query = """INSERT INTO transtats ("Year", "Month", "Round")""" % (self.rows)
-			response = session.execute(query)
+			query = """INSERT INTO MLPClassifier ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha", "Accuracy", "Model", "RowsTrain") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+			params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha, self.accuracy, 'self.pickle_classifier()', self.rows)
+			response = session.execute(query, params)
+			return(response, params)
 		#Otherwise return false
 		else:
 			return False
 
-	#Checks the database to see if there is already a trained model with the same parameters as the current model. Returns True if one exists, Flase otherwise
+	#Checks the database to see if there is already a trained model with the same parameters as the current model. Returns True if one exists, False otherwise
 	def check_database(self):
 		pass
 		#SELECT primary_keys FROM TABLE WHERE primary_keys = blah LIMIT 1; Just try to query for the record, and if there is a result return True
-		#TODO
+		#Connect to cassandra cluster
+		cluster = Cluster(["localhost"])
+		session = cluster.connect()
+		session.row_factory = dict_factory
+
+		#session.encoder.mapping[tuple] = session.encoder.cql_encode_tuple
+		session.execute("USE AirportTrafficAnalytics")
+		query = """SELECT * FROM MLPClassifier WHERE "Year"=%s AND "Month"=%s AND "RoundingBase"=%s AND "Features"=%s AND "Label"=%s AND "HLayer"=%s AND "Alpha"=%s LIMIT 1"""
+		#("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha")
+		params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha)
+		response = session.execute(query, params)
+		return response
+			
 
 	#Getter that returns the % accuracy of the currently trained model.
 	def get_accuracy(self):
 		return self.accuracy*100
 	#Get the pickled classifier
 	def pickle_classifier(self):
-		return pickle.dumps(clf, pickle.HIGHEST_PROTOCOL)
+		#return bytearray(pickle.dumps(self.classifier, pickle.DEFAULT_PROTOCOL))
+		
+		import codecs
+		temp_clf = pickle.dumps(self.classifier, pickle.DEFAULT_PROTOCOL)
+		print(len(codecs.encode(temp_clf, "base64").decode()))
+		print("--------------------------------")
+		return codecs.encode(temp_clf, "base64").decode()
+		
+	#Return the MLPClassifier object loaded from str and unpickled
+	def unpickle_classifier(self, pkl_str):
+		return pickle.laods(codecs.decode(pkl_str.encode(), "base64"))
+
 
 if __name__ == "__main__":
 	import time
 	start_time = time.time()
 	#Number of rows to read in from csv files
-	row_num = 2#00000
+	row_num = 200#000
 	#Configurations that have worked well generally. (0.005 | 500,100), (0.1 | 500,100), (0.005 | 2000), (0.01 | 500), (0.01 | 2000)
 	#Configurations to pickle. Format is [(year, month, alpha, h layer)]
-	y = 2016
-	m = 7
+	y = 2015
+	m = 9
 	alpha = 0.1
 	layer = (500,100)
 	#Granulatity to round to
 	round_base = 20 #Will be off by round_base/2 at most. Ex. With round_base=20, 11 rounds to 20, 10 rounds to 0
 	#List of the indices of the columns to use as features
-	feature_list = ["Month", "DayOfWeek", "CRSDepTime", "Distance"]#[2,4,31,56]#[2,4,11,21,31,56] #Month(2), Day of Week(4), Listed Departure Time(31) #10,31 late additions
+	feature_list = ['Month', 'DayOfWeek', 'CRSDepTime', 'Distance']#[2,4,31,56]#[2,4,11,21,31,56] #Month(2), Day of Week(4), Listed Departure Time(31) #10,31 late additions
+	feature_list = [2,4,31,56]
 	#Index of the column to use as a label. 34 for Departure Delay, 45 for Arrival Delay
-	label = "AirTime"#54 #53 for total time of the flight, 54 for only time in the air
+	label = 'AirTime'#54 #53 for total time of the flight, 54 for only time in the air
+	label = 54
 	
 	#Create object
 	test_mlp = MLP(y,m,row_num,feature_list,label,round_base,alpha,layer)
 	#Read in data
-	#print("Reading in data from csv")
-	#print(test_mlp.read_csv())
-	print("Reading in data from Cassandra")
-	print(test_mlp.read_database())
+	print("Reading in data from csv")
+	print(test_mlp.read_csv())
+	##print("Reading in data from Cassandra")
+	##print(test_mlp.read_database())
 	#Train classifier
-	##print("Training")
-	##print(test_mlp.train())
-	##print("Accuracy")
-	##print(test_mlp.get_accuracy())
-	print(test_mlp.x)
+	print("Training")
+	print(test_mlp.train())
+	print("Accuracy")
+	print(test_mlp.get_accuracy())
+
+	#print(test_mlp.save())
+	print("CHECKING DB")
+	print(test_mlp.check_database())
+
 
 	prog_time = time.time()-start_time
 	print("Ran in", prog_time, "seconds")
