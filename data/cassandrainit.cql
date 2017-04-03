@@ -149,8 +149,8 @@ CREATE TABLE Routing (
 "Dest" text,
 "gridResPlanar" int,
 "gridResVert" int,                
-"gridLines" set <Coord>,
-"routeLines" set <Node>,
+"gridLines" set <frozen <Coord>>,
+"routeLines" set <frozen <Node>>,
 PRIMARY KEY ("FlightNum", "FlightDate"),
 ) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
 
@@ -183,5 +183,5 @@ CREATE TABLE AirportLocations (
    "Lon" double,
 
    PRIMARY KEY ("Code"),
-  ) WITH CLUSTERING ORDER BY ("Code" DESC);
+  );
 
