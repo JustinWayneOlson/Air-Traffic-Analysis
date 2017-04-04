@@ -56,7 +56,6 @@ class MLP:
 		for num, row in enumerate(csv_data_list[1:self.rows]): #[1:300000]
 			#Split row of information by 
 			info = str(row).replace("'", "").split(",") #replace("\"", "")
-
 			#Check for delay, if delay, then 1, otherwise 0. Info[39] will be 0 for early or on time
 			#This loop also naively trusts that the cell will contain data. This is the lazy way to do this, but if it fails the try, the cell is empty or the wrong data type. It then just excludes this data from the set.
 			try:
@@ -90,11 +89,6 @@ class MLP:
 
 		failed = 0
 		for i in response:
-			#print(float(i[feat]) for feat in self.features)
-			'''
-			x.append([i[feat] for feat in feature_list])
-			y.append(i[label])
-			'''
 			#This loop also naively trusts that the cell will contain data. This is the lazy way to do this, but if it fails the try, the cell is empty or the wrong data type. It then just excludes this data from the set.
 			try:
 				#Try to get all data first, then append to the lists at the end if ecerythign is valid
@@ -135,12 +129,11 @@ class MLP:
 			cluster = Cluster(["localhost"])
 			session = cluster.connect()
 			session.row_factory = dict_factory
-			
 			session.execute("USE AirportTrafficAnalytics")
 			query = """INSERT INTO MLPClassifier ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha", "Accuracy", "Model", "RowsTrain") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 			params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha, self.accuracy, self.pickle_classifier(), self.rows)
 			response = session.execute(query, params)
-			return(True)
+			return True
 		#Otherwise return false
 		else:
 			return False
@@ -153,7 +146,6 @@ class MLP:
 		cluster = Cluster(["localhost"])
 		session = cluster.connect()
 		session.row_factory = dict_factory
-
 		#session.encoder.mapping[tuple] = session.encoder.cql_encode_tuple
 		session.execute("USE AirportTrafficAnalytics")
 		query = """SELECT * FROM MLPClassifier WHERE "Year"=%s AND "Month"=%s AND "RoundingBase"=%s AND "Features"=%s AND "Label"=%s AND "HLayer"=%s AND "Alpha"=%s LIMIT 1"""
@@ -165,6 +157,7 @@ class MLP:
 			return True
 		else:
 			return False
+
 	#Loads the model from the database, returns True if successful, False if any part failed
 	def load(self):
 		#Check if the database contains a model for this configuration
@@ -173,7 +166,6 @@ class MLP:
 			cluster = Cluster(["localhost"])
 			session = cluster.connect()
 			session.row_factory = dict_factory
-
 			#session.encoder.mapping[tuple] = session.encoder.cql_encode_tuple
 			session.execute("USE AirportTrafficAnalytics")
 			query = """SELECT * FROM MLPClassifier WHERE "Year"=%s AND "Month"=%s AND "RoundingBase"=%s AND "Features"=%s AND "Label"=%s AND "HLayer"=%s AND "Alpha"=%s LIMIT 1"""
@@ -181,7 +173,7 @@ class MLP:
 			params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha)
 			response = session.execute(query, params)
 			res = [i for i in response]
-			#print("Model:", i["Model"])
+			#Save the unpickled classifier
 			self.classifier = self.unpickle_classifier(res[0]["Model"])
 			return True
 		else:
@@ -191,21 +183,18 @@ class MLP:
 	def test_accuracy(self):
 		#Split data set into 4 sections, x and y training sets, and x and y testing sets
 		x_train, x_test, y_train, y_test = train_test_split(self.x, self.y) #, test_size = 0.33)
-		#Fit data
-		#self.classifier.fit(x_train, y_train)
+		#Return accuracy in percent
 		return self.classifier.score(x_test, y_test)*100
 	#Getter that returns the % accuracy of the currently trained model.
 	def get_accuracy(self):
 		return self.accuracy*100
 	#Function that takes in a set of features and returns a prediction
-	def get_prediction(self, feats):
+	def get_prediction(self, feats):	
 		return self.classifier.predict(feats)
 	#Get the pickled classifier
 	def pickle_classifier(self):
 		#return bytearray(pickle.dumps(self.classifier, pickle.DEFAULT_PROTOCOL))
 		temp_clf = pickle.dumps(self.classifier, pickle.DEFAULT_PROTOCOL)
-		print(len(codecs.encode(temp_clf, "base64").decode()))
-		print("--------------------------------")
 		return codecs.encode(temp_clf, "base64").decode()
 		
 	#Return the MLPClassifier object loaded from str and unpickled
@@ -217,7 +206,7 @@ if __name__ == "__main__":
 	import time
 	start_time = time.time()
 	#Number of rows to read in from csv files
-	row_num = 2000#00
+	row_num = 50000#0
 	#Configurations that have worked well generally. (0.005 | 500,100), (0.1 | 500,100), (0.005 | 2000), (0.01 | 500), (0.01 | 2000)
 	#Configurations to pickle. Format is [(year, month, alpha, h layer)]
 	y = 2015
@@ -226,20 +215,29 @@ if __name__ == "__main__":
 	layer = (500,100)
 	#Granulatity to round to
 	round_base = 20 #Will be off by round_base/2 at most. Ex. With round_base=20, 11 rounds to 20, 10 rounds to 0
-	#List of the indices of the columns to use as features
-	feature_list = ['Month', 'DayOfWeek', 'CRSDepTime', 'Distance']#[2,4,31,56]#[2,4,11,21,31,56] #Month(2), Day of Week(4), Listed Departure Time(31) #10,31 late additions
-	feature_list = [2,4,31,56]
-	#Index of the column to use as a label. 34 for Departure Delay, 45 for Arrival Delay
-	label = 'AirTime'#54 #53 for total time of the flight, 54 for only time in the air
-	label = 54
-	
 	#Create object
 	test_mlp = MLP(y,m,row_num,feature_list,label,round_base,alpha,layer)
-	#Read in data
-	print("Reading in data from csv")
-	print(test_mlp.read_csv())
-	##print("Reading in data from Cassandra")
-	##print(test_mlp.read_database())
+
+	use_cassandra = True
+	if use_cassandra:
+		#List of the cassandra columns to use as features
+		feature_list = ['Month', 'DayOfWeek', 'CRSDepTime', 'Distance']
+		#Index of the column to use as a label
+		label = 'AirTime'
+		#Read in data
+		print("Reading in data from Cassandra")
+		print(test_mlp.read_database())
+	else:
+		#List of the indices of the columns to use as features
+		feature_list = [2,4,31,56]
+		#Index of the column to use as a label
+		label = 54#54 #53 for total time of the flight, 54 for only time in the air
+		#Read in data
+		print("Reading in data from csv")
+		print(test_mlp.read_csv())
+	
+	
+	
 	#Train classifier
 	print("Training")
 	print(test_mlp.train())
@@ -255,5 +253,7 @@ if __name__ == "__main__":
 
 	prog_time = time.time()-start_time
 	print("Ran in", prog_time, "seconds")
-
-
+	'''
+	feat_in = [[9,2,900,2475], [9,5,1200,2475], [9,7,1210,1242]]
+	print("Predict(316, 349, 172):", test_mlp.get_prediction(feat_in))
+	'''
