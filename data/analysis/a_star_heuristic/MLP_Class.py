@@ -9,7 +9,7 @@ from sklearn.neural_network import MLPClassifier
 #Connects to the cassandra cluster, and formats queries responses as dicts
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
-import json
+import json, codecs
 
 #Class that creates MLP Classifier, reads data, trains the classifier, writes the classifier to disk
 class MLP:
@@ -138,9 +138,9 @@ class MLP:
 			
 			session.execute("USE AirportTrafficAnalytics")
 			query = """INSERT INTO MLPClassifier ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha", "Accuracy", "Model", "RowsTrain") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-			params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha, self.accuracy, 'self.pickle_classifier()', self.rows)
+			params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha, self.accuracy, self.pickle_classifier(), self.rows)
 			response = session.execute(query, params)
-			return(response, params)
+			return(True)
 		#Otherwise return false
 		else:
 			return False
@@ -160,17 +160,49 @@ class MLP:
 		#("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha")
 		params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha)
 		response = session.execute(query, params)
-		return response
-			
+		res = [i for i in response]
+		if len(res) > 0:
+			return True
+		else:
+			return False
+	#Loads the model from the database, returns True if successful, False if any part failed
+	def load(self):
+		#Check if the database contains a model for this configuration
+		if self.check_database():
+			#Connect to cassandra cluster
+			cluster = Cluster(["localhost"])
+			session = cluster.connect()
+			session.row_factory = dict_factory
 
+			#session.encoder.mapping[tuple] = session.encoder.cql_encode_tuple
+			session.execute("USE AirportTrafficAnalytics")
+			query = """SELECT * FROM MLPClassifier WHERE "Year"=%s AND "Month"=%s AND "RoundingBase"=%s AND "Features"=%s AND "Label"=%s AND "HLayer"=%s AND "Alpha"=%s LIMIT 1"""
+			#("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha")
+			params = (self.year, self.month, self.rounding, json.dumps(self.features, "utf-8"), str(self.label), json.dumps(self.h_layer, "utf-8"), self.alpha)
+			response = session.execute(query, params)
+			res = [i for i in response]
+			#print("Model:", i["Model"])
+			self.classifier = self.unpickle_classifier(res[0]["Model"])
+			return True
+		else:
+			return False
+
+	#Function that retests the accuracy and returns the result
+	def test_accuracy(self):
+		#Split data set into 4 sections, x and y training sets, and x and y testing sets
+		x_train, x_test, y_train, y_test = train_test_split(self.x, self.y) #, test_size = 0.33)
+		#Fit data
+		#self.classifier.fit(x_train, y_train)
+		return self.classifier.score(x_test, y_test)*100
 	#Getter that returns the % accuracy of the currently trained model.
 	def get_accuracy(self):
 		return self.accuracy*100
+	#Function that takes in a set of features and returns a prediction
+	def get_prediction(self, feats):
+		return self.classifier.predict(feats)
 	#Get the pickled classifier
 	def pickle_classifier(self):
 		#return bytearray(pickle.dumps(self.classifier, pickle.DEFAULT_PROTOCOL))
-		
-		import codecs
 		temp_clf = pickle.dumps(self.classifier, pickle.DEFAULT_PROTOCOL)
 		print(len(codecs.encode(temp_clf, "base64").decode()))
 		print("--------------------------------")
@@ -178,14 +210,14 @@ class MLP:
 		
 	#Return the MLPClassifier object loaded from str and unpickled
 	def unpickle_classifier(self, pkl_str):
-		return pickle.laods(codecs.decode(pkl_str.encode(), "base64"))
+		return pickle.loads(codecs.decode(pkl_str.encode(), "base64"))
 
 
 if __name__ == "__main__":
 	import time
 	start_time = time.time()
 	#Number of rows to read in from csv files
-	row_num = 200#000
+	row_num = 2000#00
 	#Configurations that have worked well generally. (0.005 | 500,100), (0.1 | 500,100), (0.005 | 2000), (0.01 | 500), (0.01 | 2000)
 	#Configurations to pickle. Format is [(year, month, alpha, h layer)]
 	y = 2015
@@ -213,10 +245,12 @@ if __name__ == "__main__":
 	print(test_mlp.train())
 	print("Accuracy")
 	print(test_mlp.get_accuracy())
-
-	#print(test_mlp.save())
+	print("Writing to Cassandra")
+	print(test_mlp.save())
 	print("CHECKING DB")
 	print(test_mlp.check_database())
+	print("Loading:", test_mlp.load())
+	print("New accuracy:", test_mlp.test_accuracy())
 
 
 	prog_time = time.time()-start_time
