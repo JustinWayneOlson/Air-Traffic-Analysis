@@ -12,14 +12,21 @@ from  tornado.escape import json_decode
 import random
 import os
 import pprint as pp
+from cassandra.cluster import Cluster
+
+def cql_query(query_string):
+  #Connect to the Cassandra database
+  cluster = Cluster(["localhost"])
+  session = cluster.connect()
+  session.execute("USE AirportTrafficAnalytics")
+  rows = session.execute(query_string)
+  #TODO Dataframe and distinct
+  return dataframe
 
 #Method to create Pandas dataframe with flight information
 def flights_df(query):
-  #Connect to the PostgreSQL database
-  POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
-  engine = create_engine(POSTGRES_URL)
 
-  #Construct the PostgreSQL query based upon user-input
+  #Construct the database query based upon user-input
   where_string = ""
   start_date = False
   end_date = False
@@ -49,13 +56,12 @@ def flights_df(query):
       where_string += date_start
   if(end_date):
     where_string += date_end
-  limit_string = " LIMIT 100000;"
-  query_string = 'SELECT DISTINCT "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
+  limit_string = " LIMIT 100000 ALLOW FILTERING;"
+  query_string = 'SELECT "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM AirportTrafficAnalytics.Transtats {} {}'.format(where_string, limit_string)
   print query_string
 
-
   #Create and return dataframe
-  dataframe = pd.read_sql_query(query_string, con = engine)
+  dataframe = cql_query(query_string)
   dataframe.fillna(0, inplace=True)
   return dataframe, verbose_toggle, paths_toggle
 
