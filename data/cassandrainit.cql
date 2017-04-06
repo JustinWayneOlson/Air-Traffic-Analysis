@@ -178,10 +178,10 @@ Tables for AirpotLocations
 ---------------------------------------------------------- */
 CREATE TABLE AirportLocations (
    "City" text,
-   "State" text,
    "Code" text,
    "Lat" double,
    "Lon" double,
+   "alt" double,
 
    PRIMARY KEY ("Code"),
   );
