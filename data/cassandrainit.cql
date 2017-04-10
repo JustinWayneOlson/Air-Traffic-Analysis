@@ -162,13 +162,13 @@ CREATE TABLE MLPClassifier (
    "Year" bigint,
    "Month" bigint,
    "RoundingBase" bigint,
-   "Features" frozen<list<int>>,
-   "Label" bigint,
-   "HLayer" frozen<list<int>>,
+   "Features" text,
+   "Label" text,
+   "HLayer" text,
    "Alpha" double,
    "RowsTrain" bigint,
    "Accuracy" double,
-   "Model" blob,
+   "Model" text,
    PRIMARY KEY ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha"),
   ); // WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
 
@@ -181,7 +181,7 @@ CREATE TABLE AirportLocations (
    "Code" text,
    "Lat" double,
    "Lon" double,
-   "alt" double,
+   "Alt" double,
 
    PRIMARY KEY ("Code"),
   );
