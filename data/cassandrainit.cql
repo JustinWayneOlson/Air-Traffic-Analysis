@@ -181,7 +181,7 @@ CREATE TABLE AirportLocations (
    "Code" text,
    "Lat" double,
    "Lon" double,
-   "alt" double,
+   "Alt" double,
 
    PRIMARY KEY ("Code"),
   );
