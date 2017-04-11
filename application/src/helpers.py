@@ -14,14 +14,28 @@ import os
 import pprint as pp
 from cassandra.cluster import Cluster
 
-def cql_query(query_string):
+def cql_query(query_string, cols):
   #Connect to the Cassandra database
   cluster = Cluster(["localhost"])
   session = cluster.connect()
   session.execute("USE AirportTrafficAnalytics")
   rows = session.execute(query_string)
+
+  #Initialize Dataframe
+  df = pd.DataFrame(columns=cols)
+
+  #Insert rows from query response
+  i = 0
+  while True:
+	try:
+		df.loc[i] = rows[i]
+		i += 1
+		
+	except IndexError:
+		break
+
   #TODO Dataframe and distinct
-  return dataframe
+  return df
 
 #Method to create Pandas dataframe with flight information
 def flights_df(query):
@@ -61,7 +75,8 @@ def flights_df(query):
   print query_string
 
   #Create and return dataframe
-  dataframe = cql_query(query_string)
+  cols = ['Origin', 'Dest', 'CarrierDelay', 'WeatherDelay', 'NASDelay', 'SecurityDelay', 'LateAircraftDelay']
+  dataframe = cql_query(query_string, cols)
   dataframe.fillna(0, inplace=True)
   return dataframe, verbose_toggle, paths_toggle
 
