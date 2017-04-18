@@ -59,19 +59,33 @@ class RoutingComputeHandler(tornado.web.RequestHandler):
    def post(self):
       print "TEST"
       recieved_query = json_decode(self.request.body)
-      pp.pprint(recieved_query)
-
+      #recieved_qurey has name, origin, dest, grid_res_planar, grid_res_vert, heruistic
       return_data = {
          'response': "Hello World!"
       }
+      #kick off compute job, write to cassandra
+      #response on success
       self.write(return_data)
 
 class ComputedRoutesHandler(tornado.web.RequestHandler):
    def get(self):
       #query cassandra for all already computed routes
+      #return list of unique route names
       return_data = {'response': "Hello World"}
       self.write(return_data)
 
+class DisplayRouteHandler(tornado.web.RequestHandler):
+   def get(self, route_name):
+      #query with route name get route information
+      #return nodes and links
+      return_data = {'response': "Hello World"}
+      self.write(return_data)
+
+class DeleteRouteHandler(tornado.web.RequestHandler):
+   def get(self, route_name):
+      #CQL DELETE with route name
+      return_data = {'response': "Hello World"}
+      self.write(return_data)
 
 #URL of endpoint, mapped to which class it correlates to
 #URL is matched via regex
@@ -82,6 +96,8 @@ def make_app():
         (r"/routing", RoutingHandler),
         (r"/computed-routes", ComputedRoutesHandler),
         (r"/routing-compute", RoutingComputeHandler),
+        (r"/display-route/(.*)". DisplayRouteHandler),
+        (r"/delete-route/(.*)". DeleteRouteHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),
