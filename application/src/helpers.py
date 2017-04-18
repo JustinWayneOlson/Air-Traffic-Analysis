@@ -15,25 +15,26 @@ import pprint as pp
 from cassandra.cluster import Cluster
 
 def cql_query(query_string, cols):
+  print query_string
   #Connect to the Cassandra database
   cluster = Cluster(["localhost"])
   session = cluster.connect()
   session.execute("USE AirportTrafficAnalytics")
   rows = session.execute(query_string)
-
   #Initialize Dataframe
   df = pd.DataFrame(columns=cols)
-
   #Insert rows from query response
   i = 0
+  df_index = 0
   while True:
-	try:
-		df.loc[i] = rows[i]
-		i += 1
-		
-	except IndexError:
-		break
-
+    try:
+      row = np.array(rows[i])
+      if(not((df == row).all(1).any())):
+        df.loc[df_index] = row
+        df_index += 1
+      i += 1
+    except IndexError:
+      break
   #TODO Dataframe and distinct
   return df
 
@@ -105,35 +106,40 @@ def create_nodes(flights, airports):
       #If we haven't encountered this airport before initialize all the values accordingly
       if dest_airport not in airports_list:
           airport = {}
+          carrier_delay = int(float(row.CarrierDelay))
+          weather_delay = int(float(row.WeatherDelay))
+          nas_delay = int(float(row.NASDelay))
+          security_delay = int(float(row.SecurityDelay))
+          late_delay = int(float(row.LateAircraftDelay))
           airport["Name"] = dest_airport
           airport["lat"] = airports[dest_airport]["Lat"]
           airport["long"] = airports[dest_airport]["Lon"]
-          airport["CarrierDelay"] = row.CarrierDelay
+          airport["CarrierDelay"] = carrier_delay
           if row.CarrierDelay > 0:
               airport["CarrierDelayTot"] = 1
           else:
               airport["CarrierDelayTot"] = 0
-          airport["WeatherDelay"] = row.WeatherDelay
+          airport["WeatherDelay"] = weather_delay
           if row.WeatherDelay > 0:
               airport["WeatherDelayTot"] = 1
           else:
               airport["WeatherDelayTot"] = 0
-          airport["NASDelay"] = row.NASDelay
+          airport["NASDelay"] = nas_delay
           if row.NASDelay > 0:
               airport["NASDelayTot"] = 1
           else:
               airport["NASDelayTot"] = 0
-          airport["SecurityDelay"] = row.SecurityDelay
+          airport["SecurityDelay"] = security_delay
           if row.SecurityDelay > 0:
               airport["SecurityDelayTot"] = 1
           else:
               airport["SecurityDelayTot"] = 0
-          airport["LateAircraftDelay"] = row.LateAircraftDelay
+          airport["LateAircraftDelay"] = late_delay
           if row.LateAircraftDelay > 0:
               airport["LateAircraftDelayTot"] = 1
           else:
               airport["LateAircraftDelayTot"] = 0
-          airport["TotalDelay"] = row.CarrierDelay + row.WeatherDelay + row.NASDelay + row.SecurityDelay + row.LateAircraftDelay
+          airport["TotalDelay"] = carrier_delay + weather_delay + nas_delay + security_delay + late_delay
           if airport["TotalDelay"] > 0:
               airport["TotalDelayedFlights"] = 1
           else:
@@ -145,23 +151,33 @@ def create_nodes(flights, airports):
       #Otherwise accumulate delay information
       else:
           airport = nodes[dest_airport]
-          airport["CarrierDelay"] += row.CarrierDelay
-          if row.CarrierDelay > 0:
+          carrier_delay = int(float(row.CarrierDelay))
+          weather_delay = int(float(row.WeatherDelay))
+          nas_delay = int(float(row.NASDelay))
+          security_delay = int(float(row.SecurityDelay))
+          late_delay = int(float(row.LateAircraftDelay))
+          print "airport"
+          print type(airport['CarrierDelay'])
+          print "var"
+          print type(carrier_delay)
+          airport["CarrierDelay"] += carrier_delay
+          if carrier_delay > 0:
               airport["CarrierDelayTot"] += 1
-          airport["WeatherDelay"] += row.WeatherDelay
-          if row.WeatherDelay > 0:
+          airport["WeatherDelay"] += weather_delay
+          if weather_delay > 0:
               airport["WeatherDelayTot"] += 1
-          airport["NASDelay"] += row.NASDelay
-          if row.NASDelay > 0:
+          airport["NASDelay"] += nas_delay
+          if nas_delay > 0:
               airport["NASDelayTot"] += 1
-          airport["SecurityDelay"] += row.SecurityDelay
-          if row.SecurityDelay > 0:
+          airport["SecurityDelay"] += security_delay
+          if security_delay > 0:
               airport["SecurityDelayTot"] += 1
-          airport["LateAircraftDelay"] += row.LateAircraftDelay
-          if row.LateAircraftDelay > 0:
+          airport["LateAircraftDelay"] += late_delay
+          if late_delay > 0:
               airport["LateAircraftDelayTot"] += 1
-          airport["TotalDelay"] += row.CarrierDelay + row.WeatherDelay + row.NASDelay + row.SecurityDelay + row.LateAircraftDelay
-          if row.CarrierDelay + row.WeatherDelay + row.NASDelay + row.SecurityDelay + row.LateAircraftDelay > 0:
+          airport["TotalDelay"] += carrier_delay + weather_delay + nas_delay + security_delay + late_delay
+          if carrier_delay + weather_delay + nas_delay + security_delay + late_delay > 0:
+
               airport["TotalDelayedFlights"] += 1
           airport["TotalFlights"] += 1
       airport['Color'] = ""

@@ -1,6 +1,10 @@
 $(document).ready(function() {
     $('#legend').hide();
     $('#tabs').tabs();
+    $('#Origin').prop("disabled", true);
+    $('#Dest').prop("disabled", true);
+    $('#Carrier').prop("disabled", true);
+
 
     //Time picker for start date formatted m/d/y
     $('#date_start').datetimepicker({
@@ -20,6 +24,8 @@ $(document).ready(function() {
         type: "GET",
         url: "/dropdown-fill/Origin",
         success: function(data) {
+            console.log('done');
+            $('#Origin').prop('disabled', false);
             $('#Origin').select2({
                 data: data['response'],
                 placeholder: "Select an option"
@@ -35,6 +41,7 @@ $(document).ready(function() {
         type: "GET",
         url: "/dropdown-fill/Dest",
         success: function(data) {
+            $('#Dest').prop('disabled', false);
             $('#Dest').select2({
                 data: data['response'],
                 placeholder: "Select an option"
@@ -50,6 +57,7 @@ $(document).ready(function() {
         type: "GET",
         url: "/dropdown-fill/Carrier",
         success: function(data) {
+            $('#Carrier').prop('disabled', false);
             $('#Carrier').select2({
                 data: data['response'],
                 placeholder: "Select an option"
