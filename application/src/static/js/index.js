@@ -387,7 +387,10 @@ $("#plot-airports").click(function(event) {
 
             //If the user requests verbose output, append output to verbose-contained in html
             if (data['verbose']) {
-                $('#verbose-container').append('<p>' + data['verbose'] + '</p>')
+                $('#verbose-container').append(data['verbose']);
+            }
+            else{
+                $('#verbose-container').append('nah');
             }
 
             if (!(data['links'])) {

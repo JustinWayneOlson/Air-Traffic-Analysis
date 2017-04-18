@@ -57,7 +57,7 @@ def flights_df(query):
   #Create and return dataframe
   dataframe = pd.read_sql_query(query_string, con = engine)
   dataframe.fillna(0, inplace=True)
-  return dataframe, verbose_toggle, paths_toggle
+  return dataframe, verbose_toggle, paths_toggle, query_string
 
 #Method to create 'airports' dictionary of dictionaries where key = airport code and values = lat/lon
 def airports_dict(filename):

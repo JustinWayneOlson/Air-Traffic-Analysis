@@ -32,10 +32,10 @@ class DropdownFillHandler(tornado.web.RequestHandler):
 class DisplayAirportsHandler(tornado.web.RequestHandler):
     def post(self):
         received_query = json_decode(self.request.body)
-        flights, verbose_toggle, paths_toggle = flights_df(received_query)
+        flights, verbose_toggle, paths_toggle, query_string = flights_df(received_query)
         return_data = {}
         if(verbose_toggle):
-           return_data['verbose'] = "This is eventually going to be more information!"
+           return_data['verbose'] = query_string
         print(paths_toggle)
         print(type(paths_toggle))
         if(paths_toggle):
