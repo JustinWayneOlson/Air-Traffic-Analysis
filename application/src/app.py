@@ -55,6 +55,24 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
             pp.pprint(return_data)
             self.write(return_data)
 
+class RoutingComputeHandler(tornado.web.RequestHandler):
+   def post(self):
+      print "TEST"
+      recieved_query = json_decode(self.request.body)
+      pp.pprint(recieved_query)
+
+      return_data = {
+         'response': "Hello World!"
+      }
+      self.write(return_data)
+
+class ComputedRoutesHandler(tornado.web.RequestHandler):
+   def get(self):
+      #query cassandra for all already computed routes
+      return_data = {'response': "Hello World"}
+      self.write(return_data)
+
+
 #URL of endpoint, mapped to which class it correlates to
 #URL is matched via regex
 def make_app():
@@ -62,6 +80,8 @@ def make_app():
         (r"/", MainHandler),
         (r"/about", AboutHandler),
         (r"/routing", RoutingHandler),
+        (r"/computed-routes", ComputedRoutesHandler),
+        (r"/routing-compute", RoutingComputeHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),

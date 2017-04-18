@@ -44,31 +44,25 @@
                <h3> Routing Parameters: </h3>
                <label for='grid-size'>Lat/Long Grid size</label>
                <br>
-               <input id="grid-size" data-slider-id='gird-sizeSlider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+               <input id="grid-size" data-slider-id='gird-sizeSlider' type="text" data-slider-min="0" data-slider-max="250" data-slider-step="1" data-slider-value="14"/>
                <br>
                <label for='altitude'>Altitude Grid</label>
                <br>
-               <input id="altitude" data-slider-id='altitudeSlider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+               <input id="altitude" data-slider-id='altitudeSlider' type="text" data-slider-min="0" data-slider-max="60000" data-slider-step="1" data-slider-value="14"/>
                <br>
-               <input id='heuristic' type='checkbox' value='heuristic'> Heuristic Optimization
+               <label for='heuristic'>Heuristic Name
+               <br>
+               <input id='heuristic' type='text'>
             </div>
          <div class='col-xs-6'>
             <h3> Routes: </h3>
-            <label for='flight-number'>Flight Number</label>
+            <label for='Origin'>Origin</label>
             <br>
-            <input id='flight-number' type='text'>
+            <input id='Origin' type='text'>
             <br>
-            <label for='carrier'>Carrier</label>
+            <label for='Dest'>Destination</label>
             <br>
-            <input id='carrier' type='text'>
-            <br>
-            <label for='origin'>Origin</label>
-            <br>
-            <input id='origin' type='text'>
-            <br>
-            <label for='destination'>Destination</label>
-            <br>
-            <input id='destination' type='text'>
+            <input id='Dest' type='text'>
             <br>
             <label for='date'>Takeoff Date</label>
             <br>
@@ -79,12 +73,21 @@
    <div class='col-xs-6'>
       <div class='jumbotron'>
          <div class='row'>
-            <input id='options' style='width:100%;' multiple='multiple'>
-         </div>
-         <div class='row'>
-            <button class='btn btn-success' id='compute'>Compute</button>
-            <button class='btn btn-success' id='plot'>Plot</button>
-            <button class='btn btn-danger' id='delete'>Delete</button>
+            <div class='col-xs-4'>
+               <label for='compute-name'>Name (create a name for this route)
+               <br>
+               <input type='text' id='compute-name'>
+               <br>
+               <button class='btn btn-success' id='compute'>Compute</button>
+            </div>
+            <div class='col-xs-8'>
+               <label for='routes'>Computed Routes
+               <br>
+               <input id='routes' style='width:100%;' multiple='multiple'>
+               <br>
+               <button class='btn btn-success' id='plot'>Plot</button>
+               <button class='btn btn-danger' id='delete'>Delete</button>
+            </div>
          </div>
       </div>
    </div>
@@ -95,7 +98,8 @@
             formatter: function(value) {
                return 'Current value: ' + value;
             }
-         });
+        });
+
         $('#altitude').slider({
             formatter: function(value) {
                return 'Current value: ' + value;
@@ -145,6 +149,20 @@
             }
          });
 
+        $.ajax({
+            type: "GET",
+            url: "/computed-routes",
+            success: function(data){
+               $('#routes').select2({
+                  data:data['response'],
+                  placeholder: "Select an already computed route"
+               });
+            },
+            error: function(error){
+               console.log(error);
+            }
+         });
+
         $('#options').select2({
             data: ["Suggested routes based on filter options", "Routes selected for computation"],
             dropdownAutoWidth : true
@@ -154,6 +172,55 @@
           timepicker:false,
             format: 'm/d/Y'
          });
+
+        $("#compute").on('click', function(){
+              console.log('clicked');
+              var post_object = {
+                  'name': $('#compute-name').val(),
+                  'origin': $('#Origin').val(),
+                  'dest': $('#Dest').val(),
+                  'grid_res_planar': $('#grid-size').val(),
+                  'grid_res_vert': $('#altitude').val(),
+                  'heuristic': $('#heuristic').val()
+              };
+              $.ajax({
+                  url: "/routing-compute",
+                  type: "POST",
+                  data: JSON.stringify(post_object),
+                  success:function(data){
+                     console.log(data);
+                  },
+                  error: function(error){
+                     console.log(error);
+                 }
+              });
+        });
+
+        $("#plot").on('click', function(){
+              $.ajax({
+                  url: "/display-route/" + $('#routes').val(),
+                  type: "GET",
+                  success:function(data){
+                     console.log(data);
+                  },
+                  error: function(error){
+                     console.log(error);
+                 }
+              });
+        });
+
+        $("#delete").on('click', function(){
+              $.ajax({
+                  url: "/delete-route/" + $('#routes').val(),
+                  type: "GET",
+                  success:function(data){
+                     console.log(data);
+                  },
+                  error: function(error){
+                     console.log(error);
+                 }
+              });
+        });
 
       });
 
