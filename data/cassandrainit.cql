@@ -140,20 +140,16 @@ CREATE TYPE Coord ("lat" double, "long" double);
 CREATE TYPE Links ("source" double, "target" double);
 
 CREATE TABLE Routing (
-"jobNum" int,
 "jobName" text,                               
-"Carrier" text,
-"DepTime" double,
-"FlightNum" bigint,
-"FlightDate" timestamp, //formerly text
 "Origin" text,
 "Dest" text,
 "gridResPlanar" int,
 "gridResVert" int,                
-"gridLines" map <frozen <Coord>, frozen <Links>>,
-"routeLines" map <frozen <Node>, frozen <Links>>,
-PRIMARY KEY ("FlightNum", "FlightDate"),
-) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
+"heuristic" text,
+//"gridLines" map <frozen <Coord>, frozen <Links>>,
+"routeLines" blob,
+PRIMARY KEY ("jobName"),
+) WITH CLUSTERING ORDER BY ("jobName" DESC);
 
 /* --------------------------------------------------------
 Tables for MLPClassifier
