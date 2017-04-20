@@ -135,25 +135,17 @@ PRIMARY KEY ("FlightNum", "FlightDate"),
 /*--------------------------------------------------------
 Tables for Routing
 --------------------------------------------------------- */
-CREATE TYPE Node ("lat" double, "long" double, "alt" double, "speed" double, "time" timestamp);
-CREATE TYPE Coord ("lat" double, "long" double);
-CREATE TYPE Links ("source" double, "target" double);
-
 CREATE TABLE Routing (
-"jobNum" int,
 "jobName" text,                               
-"Carrier" text,
-"DepTime" double,
-"FlightNum" bigint,
-"FlightDate" timestamp, //formerly text
 "Origin" text,
 "Dest" text,
 "gridResPlanar" int,
 "gridResVert" int,                
-"gridLines" map <frozen <Coord>, frozen <Links>>,
-"routeLines" map <frozen <Node>, frozen <Links>>,
-PRIMARY KEY ("FlightNum", "FlightDate"),
-) WITH CLUSTERING ORDER BY ("FlightDate" DESC);
+"heuristic" text,
+//"gridLines" text,
+"routeLines" text,
+PRIMARY KEY ("jobName"),
+);
 
 /* --------------------------------------------------------
 Tables for MLPClassifier
