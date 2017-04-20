@@ -4,7 +4,7 @@ Contributor: Mitch Zinser
 This script creates keyspace and tables for db setup
 DBSchema: table for transtats and ADSBExchange
 Table naming convention: 
-Usage: run this command in cqlsh: SOURCE 'path-to-/cassandra_setup.cql'
+Usage: run this command in cqlsh: SOURCE 'path-to-/cassandrainit.cql'
 -------------------------------------------------------------------------
 */
 CREATE KEYSPACE IF NOT EXISTS AirportTrafficAnalytics WITH replication = { 'class' : 'SimpleStrategy',
@@ -135,10 +135,6 @@ PRIMARY KEY ("FlightNum", "FlightDate"),
 /*--------------------------------------------------------
 Tables for Routing
 --------------------------------------------------------- */
-CREATE TYPE Node ("lat" double, "long" double, "alt" double, "speed" double, "time" timestamp);
-CREATE TYPE Coord ("lat" double, "long" double);
-CREATE TYPE Links ("source" double, "target" double);
-
 CREATE TABLE Routing (
 "jobName" text,                               
 "Origin" text,
@@ -149,7 +145,7 @@ CREATE TABLE Routing (
 //"gridLines" map <frozen <Coord>, frozen <Links>>,
 "routeLines" blob,
 PRIMARY KEY ("jobName"),
-) WITH CLUSTERING ORDER BY ("jobName" DESC);
+)
 
 /* --------------------------------------------------------
 Tables for MLPClassifier
