@@ -142,8 +142,8 @@ CREATE TABLE Routing (
 "gridResPlanar" int,
 "gridResVert" int,                
 "heuristic" text,
-//"gridLines" map <frozen <Coord>, frozen <Links>>,
-"routeLines" blob,
+//"gridLines" text,
+"routeLines" text,
 PRIMARY KEY ("jobName"),
 );
 
