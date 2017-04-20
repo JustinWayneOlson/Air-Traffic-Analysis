@@ -145,7 +145,7 @@ CREATE TABLE Routing (
 //"gridLines" map <frozen <Coord>, frozen <Links>>,
 "routeLines" blob,
 PRIMARY KEY ("jobName"),
-)
+);
 
 /* --------------------------------------------------------
 Tables for MLPClassifier
