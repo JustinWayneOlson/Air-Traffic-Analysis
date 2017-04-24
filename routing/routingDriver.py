@@ -145,13 +145,11 @@ def getDist(current, dest):
     dist = numpy.sqrt(numpy.square(current.lat - dest.lat) + numpy.square(current.lon - dest.lon) + numpy.square(current.alt - dest.alt))
     return dist
 
-#alter for multiple heuristics
-# same as getDist for now until we figure out a better huristic
-def h(current, dest):
-    return getDist(current, dest)
 
+def three_dim_astar(origin, dest, grid_res_planar, grid_res_vert, heuristic):
 
-def three_dim_astar(origin, dest, grid_res_planar, grid_res_vert):
+    heuristicModule = __import__(heuristic)
+
     closedNodes = list()
     openNodes = list()
 
@@ -184,7 +182,7 @@ def three_dim_astar(origin, dest, grid_res_planar, grid_res_vert):
             if openNodes.count(neighNode) == 0 and closedNodes.count(neighNode) == 0:
                 neighNode.approxCost = cost
                 openNodes.append(neighNode)
-                neighNode.priority = neighNode.approxCost + h(neighNode, endNode) #alter for multiple heuristics
+                neighNode.priority = neighNode.approxCost + heuristicModule.h(neighNode, endNode) 
                 neighNode.parent = currNode
 
     return grid
@@ -222,8 +220,9 @@ def routingDriver(jobName, Origin, Dest, gridResPlanar, gridResVert, heuristic):
 	target = airportlookup(Dest)
 	OriginCoords = lat_lon_alt_to_grid(source[0], source[1], source[2], gridResPlanar, gridResVert)
 	DestCoords = lat_lon_alt_to_grid(target[0], target[1], target[2],  gridResPlanar, gridResVert)
-	#Origin and des areindicies for rows cols and vblocks
-	grid = three_dim_astar(OriginCoords, DestCoords, gridResPlanar, gridResVert)
+
+	#Origin and des are indicies for rows cols and vblocks
+	grid = three_dim_astar(OriginCoords, DestCoords, gridResPlanar, gridResVert, heuristic)
 	node = grid [DestCoords[0]] [DestCoords[1]] [DestCoords[2]]
 
 
@@ -298,6 +297,6 @@ def routingDriver(jobName, Origin, Dest, gridResPlanar, gridResVert, heuristic):
 	#In line above fix Origin and Dest to read user defined input not coords
 	session.execute(query, params)
 
-routingDriver("Route01", "DEN", "LAX", 100, 1000, "3deuclideandist.py" )
+routingDriver("Route02", "DEN", "LAX", 100, 1000, "3dEuclideanDistance" )
 
 
