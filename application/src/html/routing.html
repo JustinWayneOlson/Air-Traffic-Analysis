@@ -122,6 +122,25 @@
 
         $.ajax({
             type: "GET",
+            url: "/computed-routes",
+            success: function(data){
+		var menu_data = $.map(data['response'], function(value, index){
+			console.log(value);
+			return value['jobName'];
+		});
+	       console.log(menu_data);
+               $('#routes').select2({
+                  data:menu_data,
+                  placeholder: "Select an option"
+               });
+            },
+            error: function(error){
+               console.log(error);
+            }
+         });
+
+        $.ajax({
+            type: "GET",
             url: "/dropdown-fill/Carrier",
             success: function(data){
                $('#carrier').select2({

@@ -38,6 +38,18 @@ def cql_query(query_string, cols):
   #TODO Dataframe and distinct
   return df
 
+def cql_query_dict(query):
+	from cassandra.cluster import Cluster
+	from cassandra.query import dict_factory
+	cluster = Cluster(["localhost"])
+	session = cluster.connect()
+	session.row_factory = dict_factory
+	session.execute("USE AirporttrafficAnalytics")
+	request = query
+	rows = session.execute(request)
+	return rows
+
+
 #Method to create Pandas dataframe with flight information
 def flights_df(query):
 

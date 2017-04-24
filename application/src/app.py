@@ -71,14 +71,19 @@ class ComputedRoutesHandler(tornado.web.RequestHandler):
    def get(self):
       #query cassandra for all already computed routes
       #return list of unique route names
-      return_data = {'response': "Hello World"}
+      
+      query = """SELECT "jobName" from Routing """
+      rows = cql_query_dict(query)
+      #print(list(rows))
+      return_data = {'response': list(rows)}
       self.write(return_data)
 
 class DisplayRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
       #query with route name get route information
       #return nodes and links
-      return_data = {'response': "Hello World"}
+
+
       self.write(return_data)
 
 class DeleteRouteHandler(tornado.web.RequestHandler):
@@ -96,8 +101,8 @@ def make_app():
         (r"/routing", RoutingHandler),
         (r"/computed-routes", ComputedRoutesHandler),
         (r"/routing-compute", RoutingComputeHandler),
-        (r"/display-route/(.*)". DisplayRouteHandler),
-        (r"/delete-route/(.*)". DeleteRouteHandler),
+        (r"/display-route/(.*)", DisplayRouteHandler),
+        (r"/delete-route/(.*)", DeleteRouteHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),
