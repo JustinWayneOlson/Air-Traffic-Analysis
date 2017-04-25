@@ -4,7 +4,7 @@ Contributor: Mitch Zinser
 This script creates keyspace and tables for db setup
 DBSchema: table for transtats and ADSBExchange
 Table naming convention: 
-Usage: run this command in cqlsh: SOURCE 'path-to-/cassandra_setup.cql'
+Usage: run this command in cqlsh: SOURCE 'path-to-/cassandrainit.cql'
 -------------------------------------------------------------------------
 */
 CREATE KEYSPACE IF NOT EXISTS AirportTrafficAnalytics WITH replication = { 'class' : 'SimpleStrategy',
@@ -154,13 +154,13 @@ CREATE TABLE MLPClassifier (
    "Year" bigint,
    "Month" bigint,
    "RoundingBase" bigint,
-   "Features" frozen<list<int>>,
-   "Label" bigint,
-   "HLayer" frozen<list<int>>,
+   "Features" text,
+   "Label" text,
+   "HLayer" text,
    "Alpha" double,
    "RowsTrain" bigint,
    "Accuracy" double,
-   "Model" blob,
+   "Model" text,
    PRIMARY KEY ("Year", "Month", "RoundingBase", "Features", "Label", "HLayer", "Alpha"),
   ); // WITH CLUSTERING ORDER BY ("Month" DESC, "RoundingBase" DESC, "Year" DESC);
 
@@ -170,10 +170,10 @@ Tables for AirpotLocations
 ---------------------------------------------------------- */
 CREATE TABLE AirportLocations (
    "City" text,
-   "State" text,
    "Code" text,
    "Lat" double,
    "Lon" double,
+   "Alt" double,
 
    PRIMARY KEY ("Code"),
   );
