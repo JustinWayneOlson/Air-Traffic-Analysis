@@ -22,10 +22,12 @@ class RoutingHandler(tornado.web.RequestHandler):
 #Handler to populate dropdown menus with options from database
 class DropdownFillHandler(tornado.web.RequestHandler):
    def get(self, column):
-        query  = 'SELECT "{}" FROM AirportTrafficAnalytics.Transtats LIMIT 100000 ALLOW FILTERING'.format(column)
-        dataframe = cql_query(query, [column])
-        response = {'response':[j for i in dataframe.values.tolist() for j in i]}
-        self.write(response)
+      POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
+      engine = create_engine(POSTGRES_URL)
+      query  = 'SELECT DISTINCT "{}" FROM flights LIMIT 100000'.format(column)
+      dataframe = pd.read_sql_query(query, con = engine)
+      response = {'response':[j for i in dataframe.values.tolist() for j in i]}
+      self.write(response)
 
 #Handler to display airports (nodes) and flights (links)
 class DisplayAirportsHandler(tornado.web.RequestHandler):

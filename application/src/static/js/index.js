@@ -79,6 +79,23 @@ $("#plot-airports").click(function(event) {
     $('#' + tab_id).append('<div class="row"><div class="col-xs-4 line-plot-container"><div id="ct-chart-line-' + tab_num + '" class="ct-chart"></div></div><div class="col-xs-4 pie-plot-container"><div id="ct-chart-pie-' + tab_num + '" class="ct-chart"></div></div><div class="col-xs-4 bar-plot-container"><div id="ct-chart-bar-' + tab_num + '" class="ct-chart"></div></div></div>');
     $('#tabs').tabs("refresh");
 
+      var observe_element = document.getElementById(tab_id);
+      var observer = new MutationObserver(function(mutations){
+           mutations.forEach(function(mutation){
+           $('.ct-chart').each(function(i, e) {
+               e.__chartist__.update();
+           });
+           $('.map').each(function(i, e) {
+               google.maps.event.trigger(map, 'resize');
+           });
+         });
+      });
+
+         observer.observe(observe_element, {
+            attributes: true
+         });
+
+
     //Instantiating map visualization (night mode)
     var map = new google.maps.Map(d3.select("#map-" + tab_num).node(), {
         zoom: 4,
@@ -283,15 +300,6 @@ $("#plot-airports").click(function(event) {
                 }]
             }
         ]
-    });
-
-    $('.ui-tabs-anchor').on('click', function(event) {
-        $('.ct-chart').each(function(i, e) {
-            e.__chartist__.update();
-        });
-        $('.map').each(function(i, e) {
-            google.maps.event.trigger(map, 'resize');
-        });
     });
 
     //Loading icon while Google map is loading
