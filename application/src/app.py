@@ -82,13 +82,16 @@ class DisplayRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
       #query with route name get route information
       #return nodes and links
-
-
+      rows = cql_query_dict(query)
+      query = """SELECT * from Routing WHERE "jobName" = '%s' """ % (route_name)
+      return_data = {'response': list(rows)}
       self.write(return_data)
 
 class DeleteRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
       #CQL DELETE with route name
+      query = """DELETE FROM Routing WHERE "jobName" = '%s'  """ %(route_name)
+      #This is a delete what do you want to be returned here? Confirmation?
       return_data = {'response': "Hello World"}
       self.write(return_data)
 

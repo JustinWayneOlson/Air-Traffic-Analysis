@@ -139,6 +139,57 @@
             }
          });
 
+	$('#compute').on('click', function(){
+		//this is the object that is sent to the server
+		//fill it with params for routing
+		var post_data = {
+			"Origin": "DEN",
+			"Dest":"LAX"
+			//FILL IN REST HERE
+		};
+		$.ajax({
+		    type: "POST",
+		    url: "/compute-route",
+		    data:post_data,
+		    success: function(data){
+			console.log("COMPUTE ENDPOINT RETURN HERE");
+			console.log(data);
+		    },
+		    error: function(error){
+		        console.log(error);
+		    }
+		});
+	});
+
+	$('#plot').on('click', function(){
+		//route name to delete
+		var route = "";
+		$.ajax({
+			type: "GET",
+			url: "/dsiplay-route/" + route,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(data){
+				console.log(data);
+			}	
+		});
+	});`
+
+	$('#deletet').on('click', function(){
+		var route = "";
+		$.ajax({
+			type: "GET",
+			url: "/delete-route/" + route,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(data){
+				console.log(data);
+			}	
+		});
+	});`
+
         $.ajax({
             type: "GET",
             url: "/dropdown-fill/Carrier",

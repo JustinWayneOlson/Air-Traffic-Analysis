@@ -297,6 +297,6 @@ def routingDriver(jobName, Origin, Dest, gridResPlanar, gridResVert, heuristic):
 	#In line above fix Origin and Dest to read user defined input not coords
 	session.execute(query, params)
 
-routingDriver("Route02", "DEN", "LAX", 100, 1000, "3dEuclideanDistance" )
+routingDriver("Route0", "SEA", "LAX", 100, 1000, "3dDistance" )
 
 
