@@ -214,7 +214,14 @@ def airportlookup(identifier):
 	return LatLonAlt
 
 #Function to be called from front end to perform routing calculation	
-def routingDriver(jobName, Origin, Dest, gridResPlanar, gridResVert, heuristic):
+#def routingDriver(jobName, Origin, Dest, gridResPlanar, gridResVert, heuristic):
+def routingDriver(input_dict):
+	jobName = input_dict['jobName']
+	Origin = input_dict['Origin']
+	Dest = input_dict['Dest']
+	gridResPlanar = input_dict['gridResPlanar']
+	gridResVert = input_dict['gridResVert']
+	heuristic = input_dict['heuristic']
 	
 	source = airportlookup(Origin)
 	target = airportlookup(Dest)
@@ -292,11 +299,10 @@ def routingDriver(jobName, Origin, Dest, gridResPlanar, gridResVert, heuristic):
 	#set Keyspace
 	session.execute("USE AirportTrafficAnalytics")
 	#set query format
-	query = """INSERT INTO Routing ("jobName", "Origin", "Dest", "gridResPlanar", "gridResVert", "heuristic", "routeLines") VALUES (%s, %s, %s, %s, %s, %s, %s) """
+	query = """INSERT INTO Routing ("jobName", "Origin", "Dest", "gridResPlanar", "gridResVert",
+ "heuristic", "routeLines") VALUES (%s, %s, %s, %s, %s, %s, %s) """
 	params = (str(jobName), str(Origin), str(Dest), int(gridResPlanar), int(gridResVert), str(heuristic), json.dumps(routeLines, "utf-8"))
 	#In line above fix Origin and Dest to read user defined input not coords
 	session.execute(query, params)
 
-routingDriver("Route0", "SEA", "LAX", 100, 1000, "3dDistance" )
-
-
+	return 1

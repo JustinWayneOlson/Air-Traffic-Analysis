@@ -1,4 +1,5 @@
 from helpers import *
+from routingDriver import *
 
 #Handler for main (index) page
 class MainHandler(tornado.web.RequestHandler):
@@ -59,10 +60,12 @@ class RoutingComputeHandler(tornado.web.RequestHandler):
    def post(self):
       print "TEST"
       recieved_query = json_decode(self.request.body)
+      return_data = {} 
       #recieved_qurey has name, origin, dest, grid_res_planar, grid_res_vert, heruistic
-      return_data = {
-         'response': "Hello World!"
-      }
+      try:
+	      return_data['response'] = routingDriver(received_query)
+      except:
+	      return_data['response'] = "Error could not handle request at this time."
       #kick off compute job, write to cassandra
       #response on success
       self.write(return_data)
@@ -91,8 +94,7 @@ class DeleteRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
       #CQL DELETE with route name
       query = """DELETE FROM Routing WHERE "jobName" = '%s'  """ %(route_name)
-      #This is a delete what do you want to be returned here? Confirmation?
-      return_data = {'response': "Hello World"}
+      return_data = {'response': "Attempted to delete:" route_name}
       self.write(return_data)
 
 #URL of endpoint, mapped to which class it correlates to
