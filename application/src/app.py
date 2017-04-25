@@ -60,7 +60,7 @@ class RoutingComputeHandler(tornado.web.RequestHandler):
    def post(self):
       print "TEST"
       recieved_query = json_decode(self.request.body)
-      return_data = {} 
+      return_data = {}
       #recieved_qurey has name, origin, dest, grid_res_planar, grid_res_vert, heruistic
       try:
 	      return_data['response'] = routingDriver(received_query)
@@ -74,7 +74,7 @@ class ComputedRoutesHandler(tornado.web.RequestHandler):
    def get(self):
       #query cassandra for all already computed routes
       #return list of unique route names
-      
+
       query = """SELECT "jobName" from Routing """
       rows = cql_query_dict(query)
       #print(list(rows))
@@ -85,8 +85,8 @@ class DisplayRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
       #query with route name get route information
       #return nodes and links
-      rows = cql_query_dict(query)
       query = """SELECT * from Routing WHERE "jobName" = '%s' """ % (route_name)
+      rows = cql_query_dict(query)
       return_data = {'response': list(rows)}
       self.write(return_data)
 
@@ -94,7 +94,7 @@ class DeleteRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
       #CQL DELETE with route name
       query = """DELETE FROM Routing WHERE "jobName" = '%s'  """ %(route_name)
-      return_data = {'response': "Attempted to delete:" route_name}
+      return_data = {'response': "Attempted to delete: {}".format(route_name)}
       self.write(return_data)
 
 #URL of endpoint, mapped to which class it correlates to

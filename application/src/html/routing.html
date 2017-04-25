@@ -172,7 +172,7 @@
 			},
 			error: function(data){
 				console.log(data);
-			}	
+			}
 		});
 	});`
 
@@ -186,7 +186,7 @@
 			},
 			error: function(data){
 				console.log(data);
-			}	
+			}
 		});
 	});`
 
@@ -244,13 +244,12 @@
          });
 
         $("#compute").on('click', function(){
-              console.log('clicked');
               var post_object = {
-                  'name': $('#compute-name').val(),
-                  'origin': $('#Origin').val(),
-                  'dest': $('#Dest').val(),
-                  'grid_res_planar': $('#grid-size').val(),
-                  'grid_res_vert': $('#altitude').val(),
+                  'jobName': $('#compute-name').val(),
+                  'Origin': $('#Origin').val(),
+                  'Dest': $('#Dest').val(),
+                  'gridResPlanar': $('#grid-size').val(),
+                  'gridResVert': $('#altitude').val(),
                   'heuristic': $('#heuristic').val()
               };
               $.ajax({
