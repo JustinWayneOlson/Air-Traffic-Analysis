@@ -239,7 +239,7 @@ def routingDriver(input_dict):
 	routeLines = {'links':[], 'nodes':[]}
 	#NodeDict matches info in Node class to communicate with front end
 
-	NodeDict = {'lat': float, 'lon':float, 'alt': float, 'timeVisited': str, 'aircraftType': str, 'aircraftWeight': float, 'aircraftFuelWeight': float, 'aircraftCargoWeight': float, 'aircraftFuelUsage': float, 'aircraftAirSpeed': float, 'aircraftGrndSpeed': float, 'windSpeed': float, 'windDirection': float, 'precipitationChance': float, 'precipitationType': str, 'precipitationStrength': float, 'airTemp': float, 'humidity': float, 'dewPoint': float, 'weatherCost': float, 'nodeIndex': int}
+	NodeDict = {'lat': float, 'long':float, 'alt': float, 'timeVisited': str, 'aircraftType': str, 'aircraftWeight': float, 'aircraftFuelWeight': float, 'aircraftCargoWeight': float, 'aircraftFuelUsage': float, 'aircraftAirSpeed': float, 'aircraftGrndSpeed': float, 'windSpeed': float, 'windDirection': float, 'precipitationChance': float, 'precipitationType': str, 'precipitationStrength': float, 'airTemp': float, 'humidity': float, 'dewPoint': float, 'weatherCost': float, 'nodeIndex': int}
 
 
 
@@ -248,7 +248,7 @@ def routingDriver(input_dict):
 
 		#Add node class params to Node dict for front end visualization
 		NodeDict['lat'] = node.parent.lat
-		NodeDict['lon'] = node.parent.lon
+		NodeDict['long'] = node.parent.lon * -1
 		NodeDict['alt'] = node.parent.alt
 		NodeDict['timeVisited'] = node.parent.timeVisited
 

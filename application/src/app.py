@@ -79,6 +79,7 @@ class ComputedRoutesHandler(tornado.web.RequestHandler):
       query = """SELECT "jobName" from Routing """
       rows = cql_query_dict(query)
       #print(list(rows))
+      pp.pprint(rows)
       return_data = {'response': list(rows)}
       self.write(return_data)
 
@@ -88,14 +89,16 @@ class DisplayRouteHandler(tornado.web.RequestHandler):
       #return nodes and links
       query = """SELECT * from Routing WHERE "jobName" = '%s' """ % (route_name)
       rows = cql_query_dict(query)
-      pp.pprint(rows)
-      return_data = {'response': list(rows)}
+      print(rows)
+      return_data = {'response': list(rows)[0]}
       self.write(return_data)
 
 class DeleteRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
       #CQL DELETE with route name
+      print route_name
       query = """DELETE FROM Routing WHERE "jobName" = '%s'  """ %(route_name)
+      cql_query_dict(query)
       return_data = {'response': "Attempted to delete: {}".format(route_name)}
       self.write(return_data)
 

@@ -9,6 +9,8 @@
    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.1/css/bootstrap-slider.min.css">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+   <link href="css/style.css" rel="stylesheet">
+   </div>
    <style>
          .navbar-brand{
             margin-right: 50px;
@@ -81,7 +83,7 @@
             <div class='col-xs-8'>
                <label for='routes'>Computed Routes
                <br>
-               <input id='routes' style='width:100%;' multiple='multiple'>
+               <input id='routes' style='width:100%'>
                <br>
                <button class='btn btn-success' id='plot'>Plot</button>
                <button class='btn btn-danger' id='delete'>Delete</button>
@@ -90,144 +92,6 @@
       </div>
    </div>
    </div>
-   <script>
-     $(document).ready(function(){
-        $('#grid-size').slider({
-            formatter: function(value) {
-               return 'Current value: ' + value;
-            }
-        });
-
-        $('#altitude').slider({
-            formatter: function(value) {
-               return 'Current value: ' + value;
-            }
-         });
-
-        $.ajax({
-            type: "GET",
-            url: "/dropdown-fill/Dest",
-            success: function(data){
-               $('#destination').select2({
-                  data:data['response'],
-                  placeholder: "Select an option"
-               });
-            },
-            error: function(error){
-               console.log(error);
-            }
-         });
-
-        $.ajax({
-            type: "GET",
-            url: "/computed-routes",
-            success: function(data){
-               var menu_data = $.map(data['response'], function(value, index){
-                  console.log(value);
-                  return value['jobName'];
-               });
-               console.log(menu_data);
-               $('#routes').select2({
-                  data:menu_data,
-                  placeholder: "Select an already computed route."
-               });
-            },
-            error: function(error){
-               console.log(error);
-            }
-         });
-
-
-        $.ajax({
-            type: "GET",
-            url: "/dropdown-fill/Carrier",
-            success: function(data){
-               $('#carrier').select2({
-                  data:data['response'],
-                  placeholder: "Select an option"
-               });
-            },
-            error: function(error){
-               console.log(error);
-            }
-         });
-
-
-        $.ajax({
-            type: "GET",
-            url: "/dropdown-fill/Origin",
-            success: function(data){
-               $('#origin').select2({
-                  data:data['response'],
-                  placeholder: "Select an option"
-               });
-            },
-            error: function(error){
-               console.log(error);
-            }
-         });
-
-
-        $('#options').select2({
-            data: ["Suggested routes based on filter options", "Routes selected for computation"],
-            dropdownAutoWidth : true
-        });
-
-
-        $("#compute").on('click', function(){
-              if($('#json-input').val()){
-                 var post_object = JSON.parse($('#json-input').val().replace(/\'/g,'"'));
-              }
-              else{
-                 var post_object = {
-                     'jobName': $('#compute-name').val(),
-                     'Origin': $('#Origin').val(),
-                     'Dest': $('#Dest').val(),
-                     'gridResPlanar': $('#grid-size').val(),
-                     'gridResVert': $('#altitude').val(),
-                     'heuristic': $('#heuristic').val()
-                 };
-              }
-              $.ajax({
-                  url: "/routing-compute",
-                  type: "POST",
-                  data: JSON.stringify(post_object),
-                  success:function(data){
-                     console.log(data);
-                  },
-                  error: function(error){
-                     console.log(error);
-                 }
-              });
-        });
-
-        $("#plot").on('click', function(){
-              $.ajax({
-                  url: "/display-route/" + $('#routes').val(),
-                  type: "GET",
-                  success:function(data){
-                     console.log(data);
-                  },
-                  error: function(error){
-                     console.log(error);
-                 }
-              });
-        });
-
-        $("#delete").on('click', function(){
-              $.ajax({
-                  url: "/delete-route/" + $('#routes').val(),
-                  type: "GET",
-                  success:function(data){
-                     console.log(data);
-                  },
-                  error: function(error){
-                     console.log(error);
-                 }
-              });
-        });
-
-      });
-
-   </script>
+   <div class='map' id='map'></div>
+   <script src='js/routing.js'></script>
 </body>
