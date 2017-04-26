@@ -90,6 +90,7 @@ $("#plot-airports").click(function(event) {
            });
          });
       });
+      console.log(observer);
 
          observer.observe(observe_element, {
             attributes: true

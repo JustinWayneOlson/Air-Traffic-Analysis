@@ -61,13 +61,12 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
 class RoutingComputeHandler(tornado.web.RequestHandler):
    def post(self):
       print "TEST"
-      recieved_query = json_decode(self.request.body)
+      received_query = json_decode(self.request.body)
       return_data = {}
       #recieved_qurey has name, origin, dest, grid_res_planar, grid_res_vert, heruistic
-      try:
-	      return_data['response'] = routingDriver(received_query)
-      except:
-	      return_data['response'] = "Error could not handle request at this time."
+      pp.pprint(received_query)
+      return_data['response'] = routingDriver(received_query)
+      #return_data['response'] = "Error could not handle request at this time."
       #kick off compute job, write to cassandra
       #response on success
       self.write(return_data)
@@ -89,6 +88,7 @@ class DisplayRouteHandler(tornado.web.RequestHandler):
       #return nodes and links
       query = """SELECT * from Routing WHERE "jobName" = '%s' """ % (route_name)
       rows = cql_query_dict(query)
+      pp.pprint(rows)
       return_data = {'response': list(rows)}
       self.write(return_data)
 

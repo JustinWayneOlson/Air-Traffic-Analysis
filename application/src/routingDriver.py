@@ -35,7 +35,7 @@ class Node:
         self.lon = lon
         self.alt = alt
 	self.timeVisited = None
-	
+
 	#Aircraft Performance parameters
 	self.aircraftType =  None
 	self.aircraftWeight = None
@@ -44,13 +44,13 @@ class Node:
 	self.aircraftFuelUsage = None
 	self.aircraftAirSpeed = None
 	self.aircraftGrndSpeed = None
-	
+
 	#Weather parameters
 	self.windSpeed = None
 	self.windDirection = None
 	self.precipitationChance = None
 	self.precipitationType = None
-	self.precipitationStrength = None	
+	self.precipitationStrength = None
 	self.airTemp = None
 	self.humidity = None
 	self.dewPoint = None
@@ -66,10 +66,10 @@ class Node:
         self.priority = None
 	self.nodeIndex = None
 
-# function that translates lat,lon,alt to row column vblock indicies. Need to fix alt 
+# function that translates lat,lon,alt to row column vblock indicies. Need to fix alt
 def lat_lon_alt_to_grid(lat, lon, alt, grid_res_planar, grid_res_vert):
     num_rows, num_cols, num_vBlocks = get_num_blocks(grid_res_planar, grid_res_vert)
-    row = int(((lat - (LAT_DIM / num_rows)/2) - BOT_LAT) / (LAT_DIM / num_rows)) 
+    row = int(((lat - (LAT_DIM / num_rows)/2) - BOT_LAT) / (LAT_DIM / num_rows))
     column = int(((lon - (LON_DIM / num_cols)/2) - RIGHT_LON) / (LON_DIM / num_cols))
     vblock = int(((alt - (ALT_DIM) / num_vBlocks)/2) / (ALT_DIM / num_vBlocks))
     result = [row, column, vblock]
@@ -78,6 +78,8 @@ def lat_lon_alt_to_grid(lat, lon, alt, grid_res_planar, grid_res_vert):
 
 
 def get_num_blocks(grid_res_planar, grid_res_vert):
+    grid_res_planar = int(grid_res_planar)
+    grid_res_vert = int(grid_res_vert)
     num_rows = int((LAT_DIM * miles_per_lat) / grid_res_planar)
     num_cols = int((LON_DIM * miles_per_lon )/ grid_res_planar)
     num_vBlocks = int(ALT_DIM / grid_res_vert)
@@ -111,7 +113,7 @@ def create_graph(grid_res_planar, grid_res_vert):
             alt_map = []
         grid.append(col_map)
         col_map = []
-	
+
     for i in range(0, num_rows):
         for j in range(0, num_cols):
             for k in range(0, num_vBlocks):
@@ -182,7 +184,7 @@ def three_dim_astar(origin, dest, grid_res_planar, grid_res_vert, heuristic):
             if openNodes.count(neighNode) == 0 and closedNodes.count(neighNode) == 0:
                 neighNode.approxCost = cost
                 openNodes.append(neighNode)
-                neighNode.priority = neighNode.approxCost + heuristicModule.h(neighNode, endNode) 
+                neighNode.priority = neighNode.approxCost + heuristicModule.h(neighNode, endNode)
                 neighNode.parent = currNode
 
     return grid
@@ -199,9 +201,9 @@ def airportlookup(identifier):
 	session.execute("USE AirportTrafficAnalytics")
 	query = """SELECT "Lat", "Lon", "Alt" from AirportLocations  WHERE "Code"= '%s' """ % (request)
 	rows = session.execute(query)
-	response = rows[0]	
+	response = rows[0]
 
-	#try  
+	#try
 	lat = float(response.Lat)
 	lon = float(response.Lon)
 	alt = float(response.Alt)
@@ -209,11 +211,11 @@ def airportlookup(identifier):
 
 	LatLonAlt =[lat, lon, alt]
 	#print("AirportLookup returned LatLonAlt", LatLonAlt)
-	
+
 
 	return LatLonAlt
 
-#Function to be called from front end to perform routing calculation	
+#Function to be called from front end to perform routing calculation
 #def routingDriver(jobName, Origin, Dest, gridResPlanar, gridResVert, heuristic):
 def routingDriver(input_dict):
 	jobName = input_dict['jobName']
@@ -222,7 +224,7 @@ def routingDriver(input_dict):
 	gridResPlanar = input_dict['gridResPlanar']
 	gridResVert = input_dict['gridResVert']
 	heuristic = input_dict['heuristic']
-	
+
 	source = airportlookup(Origin)
 	target = airportlookup(Dest)
 	OriginCoords = lat_lon_alt_to_grid(source[0], source[1], source[2], gridResPlanar, gridResVert)
@@ -240,16 +242,16 @@ def routingDriver(input_dict):
 	NodeDict = {'lat': float, 'lon':float, 'alt': float, 'timeVisited': str, 'aircraftType': str, 'aircraftWeight': float, 'aircraftFuelWeight': float, 'aircraftCargoWeight': float, 'aircraftFuelUsage': float, 'aircraftAirSpeed': float, 'aircraftGrndSpeed': float, 'windSpeed': float, 'windDirection': float, 'precipitationChance': float, 'precipitationType': str, 'precipitationStrength': float, 'airTemp': float, 'humidity': float, 'dewPoint': float, 'weatherCost': float, 'nodeIndex': int}
 
 
-	
+
 	while(node.parent != None):
 		#print("Coords: (%i, %i, %i)" % (node.parent.lat, node.parent.lon, node.parent.alt))
-	
+
 		#Add node class params to Node dict for front end visualization
 		NodeDict['lat'] = node.parent.lat
 		NodeDict['lon'] = node.parent.lon
 		NodeDict['alt'] = node.parent.alt
 		NodeDict['timeVisited'] = node.parent.timeVisited
-		
+
 		#Aircraft Performance parameters
 		NodeDict['aircraftType'] = node.parent.aircraftType
 		NodeDict['aircraftWeight'] = node.parent.aircraftWeight
@@ -258,7 +260,7 @@ def routingDriver(input_dict):
 		NodeDict['aircraftFuelUsage'] = node.parent.aircraftFuelUsage
 		NodeDict['aircraftAirSpeed'] = node.parent.aircraftAirSpeed
 		NodeDict['aircraftGrndSpeed'] = node.parent.aircraftGrndSpeed
-		
+
 		#Weather parameters
 		NodeDict['windSpeed'] = node.parent.windSpeed
 		NodeDict['windDirection'] = node.parent.windDirection
@@ -268,14 +270,14 @@ def routingDriver(input_dict):
 		NodeDict['airTemp'] = node.parent.airTemp
 		NodeDict['humidity'] = node.parent.humidity
 		NodeDict['dewPoint'] = node.parent.dewPoint
-		
+
 		#Airline parameters
-		
+
 		#A* parameters
         	NodeDict['noFly'] = node.parent.noFly
         	NodeDict['weatherCost'] =  node.parent.weatherCost
 		NodeDict['nodeIndex'] = node.parent.nodeIndex
-		
+
 		#add Node dict values to routelines nodes and numbers to links for visualization.
 		routeLines['nodes'].append(deepcopy(NodeDict))
 		node = node.parent
@@ -283,7 +285,7 @@ def routingDriver(input_dict):
 	# write loop that takes length of nodes array and creates {source n target n+1} pairs for links in routeLines
 	sourceTarget = {'source': int, 'target': int}
 	linksIndex = 0
-	
+
 	for index in range(len(routeLines['nodes']) -1):
 		sourceTarget['source']= linksIndex
 		linksIndex += 1
@@ -291,7 +293,7 @@ def routingDriver(input_dict):
 		routeLines['links'].append(deepcopy(sourceTarget))
 	#print(routeLines)
 
-	
+
 	#connect to Cassandra Cluster
 	cluster = Cluster(["localhost"])
 	session = cluster.connect()
