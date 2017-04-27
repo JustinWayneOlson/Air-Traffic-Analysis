@@ -372,18 +372,6 @@ $(document).ready(function() {
                                     return p;
                                 }
 
-                                //Comput GPS midpoint between source and destination airport
-                                function latLongToMidpoint(source, dest) {
-                                    //half_lat adjusted North by 3 degrees to adjust for curved paths
-                                    half_lat = (dest.lat + source.lat) / 2 + 3;
-                                    half_lon = (dest.long + source.long) / 2;
-                                    var p = new google.maps.LatLng(half_lat, half_lon);
-                                    p = projection.fromLatLngToDivPixel(p);
-                                    p.x = p.x - padding;
-                                    p.y = p.y - padding;
-                                    return p;
-                                }
-
                                 function transform(d) {
                                     var p = latLongToPos(d);
                                     return d3.select(this)
@@ -393,8 +381,7 @@ $(document).ready(function() {
                                 //Driver function to draw links between set of 3 points
                                 function drawlink(d) {
                                     var p1 = latLongToPos(data.nodes[d.source]);
-                                    var p2 = latLongToMidpoint(data.nodes[d.source], data.nodes[d.target]);
-                                    var p3 = latLongToPos(data.nodes[d.target]);
+                                    var p2 = latLongToPos(data.nodes[d.target]);
                                     var lineData = [{
                                             "x": p1.x,
                                             "y": p1.y
@@ -402,10 +389,6 @@ $(document).ready(function() {
                                         {
                                             "x": p2.x,
                                             "y": p2.y
-                                        },
-                                        {
-                                            "x": p3.x,
-                                            "y": p3.y
                                         }
                                     ];
                                     var lineFunction = d3.svg.line()
