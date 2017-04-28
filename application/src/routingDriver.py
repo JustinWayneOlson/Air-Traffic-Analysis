@@ -18,7 +18,7 @@ from copy import deepcopy
 TOP_LAT = 48.9959 #Portal ND
 BOT_LAT = 25.4687 #Homestead FL
 LEFT_LON = 124.1637 #Eureka CA
-RIGHT_LON = 67.2039 #Cutler ME
+RIGHT_LON = 50 #Cutler ME
 miles_per_lat = 69
 miles_per_lon = 69
 

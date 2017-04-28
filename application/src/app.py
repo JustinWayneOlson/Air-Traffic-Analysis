@@ -1,5 +1,12 @@
 from helpers import *
 from routingDriver import *
+from tornado import gen
+from tornado.ioloop import IOLoop
+import time
+
+@gen.coroutine
+def async_sleep(seconds):
+   yield gen.Task(IOLoop.instance().add_timeout, time.time() + seconds)
 
 #Handler for main (index) page
 class MainHandler(tornado.web.RequestHandler):
@@ -102,6 +109,13 @@ class DeleteRouteHandler(tornado.web.RequestHandler):
       return_data = {'response': "Attempted to delete: {}".format(route_name)}
       self.write(return_data)
 
+class TestBlockingHandler(tornado.web.RequestHandler):
+   @gen.coroutine
+   def get(self):
+      while(True):
+         continue
+      self.write({'response':'hello'});
+
 #URL of endpoint, mapped to which class it correlates to
 #URL is matched via regex
 def make_app():
@@ -111,6 +125,7 @@ def make_app():
         (r"/routing", RoutingHandler),
         (r"/computed-routes", ComputedRoutesHandler),
         (r"/routing-compute", RoutingComputeHandler),
+        (r"/blocking", TestBlockingHandler),
         (r"/display-route/(.*)", DisplayRouteHandler),
         (r"/delete-route/(.*)", DeleteRouteHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
@@ -122,6 +137,6 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8888)
+    app.listen(8080)
     print("serving on port 8888")
     tornado.ioloop.IOLoop.current().start()

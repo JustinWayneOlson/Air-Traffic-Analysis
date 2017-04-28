@@ -15,7 +15,7 @@ $(document).ready(function() {
         type: "GET",
         url: "/dropdown-fill/Dest",
         success: function(data) {
-            $('#destination').select2({
+            $('#Dest').select2({
                 data: data['response'],
                 placeholder: "Select an option"
             });
@@ -44,26 +44,12 @@ $(document).ready(function() {
     });
 
 
-    $.ajax({
-        type: "GET",
-        url: "/dropdown-fill/Carrier",
-        success: function(data) {
-            $('#carrier').select2({
-                data: data['response'],
-                placeholder: "Select an option"
-            });
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-
 
     $.ajax({
         type: "GET",
         url: "/dropdown-fill/Origin",
         success: function(data) {
-            $('#origin').select2({
+            $('#Origin').select2({
                 data: data['response'],
                 placeholder: "Select an option"
             });
