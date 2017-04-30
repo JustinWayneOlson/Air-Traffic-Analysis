@@ -17,19 +17,6 @@ LAT_DIM = TOP_LAT - BOT_LAT
 LON_DIM = LEFT_LON - RIGHT_LON
 ALT_DIM = 8000
 
-class Node:
-
-    def __init__(self, coords, lat, lon, alt):
-        self.coords = coords
-        self.lat = lat
-        self.lon = lon
-        self.alt = alt
-        self.approxCost = 0
-        self.neighbors = list()
-        self.noFly = False
-        self.weather_level = 0
-        self.parent = None
-        self.priority = None
 
 
 def latlon_to_miles(g):
@@ -152,12 +139,10 @@ def three_dim_astar(origin, dest, grid_res_planar, grid_res_vert):
     return grid
 
 
-
-
-
-grid = three_dim_astar([10,5,1], [10,15,8], 100, 500)
-
-node = grid[10][15][8]
+def findShortestPath(grid_res_planar, grid_res_vert, origin, dest, added_pt_buffer, bound_tol):
+    myGridContainer = GridMapContainer(grid_res_planar,grid_res_vert, origin_lon = origin[1], origin_lat = origin[0], dest_lat= dest[0], dest_lon = dest[1], added_pt_buffer= added_pt_buffer, bound_tol = bound_tol)
+    grid = Astar_3D(myGridContainer.gridMap, origin, dest)
+    return grid
 
 while(node.parent != None):
     print("Coords: (%i, %i, %i)" % (node.parent.lat, node.parent.lon, node.parent.alt))
