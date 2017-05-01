@@ -71,8 +71,7 @@ class GridMapContainer:
         self.lat_dim = None
         self.lon_dim = None
 
-        # 178 + 3 = 181  181 % 180 = 1
-        if origin_lat > dest_lat:
+              if origin_lat > dest_lat:
             # coord nums in lat lon but 2 in miles _ NEED TO CHANGE THIS IF WE
             self.start_lat = origin_lat + self.added_pt_buffer
             self.end_lat = dest_lat - self.added_pt_buffer
@@ -130,20 +129,10 @@ class GridMapContainer:
     # grid_res_vert - resolution for the altitude in miles
     def make_graph(self):
         self.compute_line_coeffs()
-
-
         num_vBlocks = 1 # ccurrently just 1 self.alt_res
 
-
-        nodes = {}
         #TODO ensure user knows the resolution must be passed in as deg lat lon
-        num_blocks_line = int(math.ceil(self.major_axis_dim / self.planar_res))
-	alt = 40
-        col_map = []
-        row_map = []
-        countVec = []
-
-
+        num_blocks_line = math.ceil(self.major_axis_dim / self.planar_res)
 
         # Allocate space for y bounds of the current x value
         bound_curr = {
@@ -171,9 +160,6 @@ class GridMapContainer:
 
         assert(bound_min_first <=180 and bound_min_first >= -180), "not possible bounds"
         assert(bound_max_first <= 180 and bound_max_first >= -180), "not possible bounds"
-	
-	print("num_vBlocks: ", num_vBlocks)
-	print("num_blocks_line: ", num_blocks_line)
 
         for i in range(0, num_vBlocks):
 
@@ -184,14 +170,12 @@ class GridMapContainer:
                 bound_curr['max_unit'] = int(math.floor(bound_curr['max'] / self.planar_res))
                 bound_curr['min_unit'] = int(math.floor(bound_curr['min']/ self.planar_res))
 
-
                 # Calculate y bounds for next x value
                 bound_next['max'], bound_next['min'] = self.get_bound_vals(x + self.major_axis_sign)
-                bound_next['max_unit'] = int(math.floor(bound_next['max'] / self.planar_res))
-                bound_next['min_unit'] = int(math.floor(bound_next['min'] / self.planar_res))
+                bound_next['max_unit'] = math.floor(bound_next['max'] / self.planar_res)
+                bound_next['min_unit'] = math.floor(bound_next['min'] / self.planar_res)
 
                 self.offsets.append(bound_curr['min_unit'] - bound_min_first_unit)
-
 
                 if (self.is_lon_major_axis):
                     # same for every val x
@@ -199,10 +183,7 @@ class GridMapContainer:
                 else:
                     lat = self.start_lat + (self.major_axis_sign) * x + self.planar_res / 2
 
-                
-
                 # We must declare and initialize the first column of nodes
-
                 for m in range(bound_curr['min_unit'], bound_curr['max_unit'] + 1):
 
                     m = m - bound_curr['min_unit']
@@ -214,7 +195,8 @@ class GridMapContainer:
                         lon = bound_curr['min_unit'] + (self.minor_axis_sign) * self.planar_res * (m - bound_curr['min_unit']) + self.planar_res / 2
 
                     if x == 0:
-                        column_curr.append(Node(lat, lon, i * self.alt_res, [i , x, m]))
+
+                        column_curr.append(Node(lat, lon, i * self.alt_res, [i,x,m]))
                         if m != 0:
 
                             column_curr[m-1].neighbors.append(column_curr[m])
@@ -223,7 +205,7 @@ class GridMapContainer:
                     else:
                         column_curr[m].lat = lat
                         column_curr[m].lon = lon
-                        column_curr[m].alt = alt
+                        column_curr[m].alt = i * self.alt_res
                         column_curr[m].coords = [i, x, m]
 
                         
@@ -234,25 +216,29 @@ class GridMapContainer:
                     column_next.append(tempNode)
 
                     if m != 0:
-
                         column_next[m - 1].neighbors.append(column_next[m])
                         column_next[m].neighbors.append(column_next[m - 1])
 
+                #populate neighbors across columns
                 for m in range(bound_curr['min_unit'], bound_curr['max_unit'] + 1):
+                    #change to index from zero
                     m = m - bound_curr['min_unit']
                     for k in range(m-1, m+2):
-                        if(k >= bound_next['min_unit'] and k <= bound_next['max_unit']):
-                            if(k >= 0 and k < bound_curr['max_unit']):
-                                column_curr[m].neighbors.append(tempNode[k])
-                                tempNode[k].neighbors.append(column_curr[m])
+                        if k+bound_curr['min_unit'] >= bound_next['min_unit'] and k + bound_curr['min_unit'] <= bound_next['max_unit']:
+                            if k >= 0 and k < bound_curr['max_unit'] - bound_curr['min_unit']:
+                                column_curr[m].neighbors.append(column_next[k])
+                                column_next[k].neighbors.append(column_curr[m])
 
-                    nodes.append(column_curr)
 
-                    column_curr = column_next
+                nodes.append(column_curr)
 
-                self.gridMap = nodes
+                column_curr = column_next
+                column_next = []
+
+        self.gridMap = nodes
+
+
         return
-
 
     def get_bound_vals(self, i):
 
