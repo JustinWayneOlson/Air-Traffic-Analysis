@@ -4,7 +4,7 @@ def three_dim_astar(grid, origin, dest, heuristic):
 
     closedNodes = list()
     openNodes = list()
-
+    print(origin, dest)
 
     currLoc = origin
     currNode = grid[origin[0]][origin[1]][origin[2]]

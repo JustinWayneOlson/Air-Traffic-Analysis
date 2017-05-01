@@ -5,7 +5,7 @@ from routerizer import *
 
 
 
-inputdict = {'Dest': 'DEN',  'Origin': 'SEA',  'gridResPlanar': '100',  'gridResVert': '1000',  'heuristic': '3dDistance',  'jobName': 'SeaDen', 'bound_tol': '1' }
+inputdict = {'Dest': 'LAX',  'Origin': 'SEA',  'gridResPlanar': '100',  'gridResVert': '1000',  'heuristic': '3dDistance',  'jobName': 'SeaDen', 'bound_tol': '1' }
 
 routingDriver(inputdict)
 
