@@ -4,11 +4,10 @@ miles_per_lon = 69
 class Node:
 
     def __init__(self, lat, lon, alt):
-
+        #A* Parameter
         self.lat = lat
         self.lon = lon
         self.alt = alt
-        self.speed = None
         self.approxCost = 0
         self.neighbors = list()
         self.noFly = False
@@ -16,6 +15,29 @@ class Node:
         self.parent = None
         self.priority = None
         self.gridMap = None
+        self.timeVisited = None
+
+	    #Aircraft Performance parameters
+    	self.aircraftType =  None
+	    self.aircraftWeight = None
+	    self.aircraftFuelWeight = None
+	    self.aircraftCargoWeight = None
+	    self.aircraftFuelUsage = None
+	    self.aircraftAirSpeed = None
+	    self.aircraftGrndSpeed = None
+
+	    #Weather parameters
+	    self.windSpeed = None
+	    self.windDirection = None
+	    self.precipitationChance = None
+	    self.precipitationType = None
+	    self.precipitationStrength = None
+	    self.airTemp = None
+	    self.humidity = None
+	    self.dewPoint = None
+
+	    #Airline parameters
+        
 
 
 class GridMapContainer:
