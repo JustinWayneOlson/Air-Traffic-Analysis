@@ -1,4 +1,5 @@
 import GridMap as gm
+import
 
 import numpy
 import json
@@ -30,16 +31,16 @@ def airportlookup(identifier):
 	LatLonAlt =[lat, lon, alt]
 
 def routingDriver(input_dict):
-  jobName = input_dict['jobName']
-	Origin = input_dict['Origin']
-	Dest = input_dict['Dest']
-	gridResPlanar = input_dict['gridResPlanar']
-	gridResVert = input_dict['gridResVert']
-	heuristic = input_dict['heuristic']
-  bound_tol = input_dict['bound_tol'] //bound tol in degree lat lon
+   jobName = input_dict['jobName']
+   Origin = input_dict['Origin']
+   Dest = input_dict['Dest']
+   gridResPlanar = input_dict['gridResPlanar']
+   gridResVert = input_dict['gridResVert']
+   heuristic = input_dict['heuristic']
+   bound_tol = input_dict['bound_tol'] //bound tol in degree lat lon
 	
-	source = airportlookup(Origin)
-	target = airportlookup(Dest)
+   source = airportlookup(Origin)
+   target = airportlookup(Dest)
   
    myGridContainer = GridMapContainer(gridResPlanar,gridResVert, origin_lon = source[1], origin_lat = source[0], dest_lat= dest[0], dest_lon = dest[1], added_pt_buffer= 2, bound_tol = bound_tol)
    myGridContainer.make_graph()
@@ -47,7 +48,7 @@ def routingDriver(input_dict):
    print(len(myGridContainer.gridMap[0]))
    print(len(myGridContainer.gridMap))
    # TODO its the order we are indexing... with alt
-   grid = Astar_3D([myGridContainer.gridMap], [origin[2], origin[1], origin[0]], [dest[2], dest[1], dest[0]])
+   grid = three_dim_astar([myGridContainer.gridMap], [source[2], source[1], source[0]], [target[2], target[1], target[0]], heuristic)
    node = grid [DestCoords[0]] [DestCoords[1]] [DestCoords[2]]
 
 
@@ -65,11 +66,11 @@ def routingDriver(input_dict):
 		#Add node class params to Node dict for front end visualization
 		
             #A* Parameter
-    NodeDict['lat'] = node.parent.lat
+    		NodeDict['lat'] = node.parent.lat
 		NodeDict['lon'] = node.parent.lon
 		NodeDict['alt'] = node.parent.alt
-    NodeDict['noFly'] = node.parent.noFly
-    NodeDict['weatherCost'] =  node.parent.weatherCost
+   		NodeDict['noFly'] = node.parent.noFly
+   		NodeDict['weatherCost'] =  node.parent.weatherCost
 		NodeDict['timeVisited'] = node.parent.timeVisited
 		NodeDict['nodeIndex'] = node.parent.nodeIndex
 		
