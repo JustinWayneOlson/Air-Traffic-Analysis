@@ -5,7 +5,6 @@ from tornado.concurrent import run_on_executor
 from concurrent.futures import ThreadPoolExecutor
 
 MAX_WORKERS = 16
-
 class TestBlockingHandler(tornado.web.RequestHandler):
    executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
 
@@ -157,14 +156,20 @@ def mean_data(flights_line, flights_bar):
    return plot_data
 
 def calc_data(flights, typeData):
+    line_plot_data = {}
     indp_var = []
     delay_time = []
     plot_data = {}
-    line_plot_data = {}
     bar_plot_data = {}
+    print("Type of flights")
+    print(type(flights))
+    print("flights")
+    print(flights)
+    print("Type of typeData")
+    print(type(typeData))
+    print("typeData")
+    print(typeData)
     for index, row in flights.iterrows():
-       print(type(row))
-       print row
        if(typeData == "date"):
          indp_var.append(row.FlightDate)
        if(typeData == "origin"):
@@ -189,16 +194,16 @@ def calc_data(flights, typeData):
         mean_day.append(np.round(np.mean(delay_time[start_day_index:index])))
 
     indp_axis.append(indp_var[index])
-    '''Plot data: { 'bar':{
-                        'labels': [distinct airports],
-                        'series': [values]
-                        },
-                  'line':{
-                        'labels': [distinct dates],
-                        'series': [daily sums]
-                     }
-                 }
-    '''
+   # Plot data: { 'bar':{
+   #                     'labels': [distinct airports],
+   #                     'series': [values]
+   #                     },
+   #               'line':{
+   #                     'labels': [distinct dates],
+   #                     'series': [daily sums]
+   #                  }
+   #              }
+
 
     line_plot_data['labels'] = indp_axis
     line_plot_data['series'] = mean_day

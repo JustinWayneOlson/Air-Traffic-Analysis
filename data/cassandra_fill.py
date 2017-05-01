@@ -39,11 +39,12 @@ def main(argv):
                if value:
                   value_string += '{},'.format(value)
                else:
-                  value_string += 'null,'
+                  value_string += '0,'
             elif datatypes[index] == 'text':
                value_string += "'{}',".format(value)
             elif datatypes[index] == 'timestamp':
                value_string += "'{}',".format(value)
+         print value_string
          start_string = "INSERT INTO AirportTrafficAnalytics.Transtats({}) VALUES ({});".format(column_labels, value_string[:-1])
          session.execute("USE AirportTrafficAnalytics")
          start_string = start_string.replace('\n', '')
