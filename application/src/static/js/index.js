@@ -342,10 +342,17 @@ $("#plot-airports").click(function(event) {
 
         success: function(data) {
             console.log(data);
-            var chart_data = {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            var line_chart_data = {
+                labels: data['plot_data']['line']['labels'],
                 series: [
-                    [5, 2, 4, 2, 0]
+                  data['plot_data']['line']['series']
+                ]
+            };
+
+            var bar_chart_data = {
+                labels: data['plot_data']['bar']['labels'],
+                series: [
+                  data['plot_data']['bar']['series']
                 ]
             };
 

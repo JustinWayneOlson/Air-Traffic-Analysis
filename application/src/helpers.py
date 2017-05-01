@@ -14,6 +14,7 @@ import os
 import pprint as pp
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
+import copy
 
 def cql_query(query_string, cols):
   print query_string
