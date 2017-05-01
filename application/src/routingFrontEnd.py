@@ -1,9 +1,13 @@
 import json
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
-from routingDriver import *
+from routerizer import *
 
-routingDriver("Job03", "LAX", "SEA", 100, 1000, "3dDistance" )
+
+
+inputdict = {'Dest': 'DEN',  'Origin': 'SEA',  'gridResPlanar': '100',  'gridResVert': '1000',  'heuristic': '3dDistance',  'jobName': 'SeaDen', 'bound_tol': '1' }
+
+routingDriver(inputdict)
 
 
 # returns list of jobs

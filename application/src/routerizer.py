@@ -31,25 +31,26 @@ def airportlookup(identifier):
 	LatLonAlt =[lat, lon, alt]
 
 def routingDriver(input_dict):
-   jobName = input_dict['jobName']
-   Origin = input_dict['Origin']
-   Dest = input_dict['Dest']
-   gridResPlanar = input_dict['gridResPlanar']
-   gridResVert = input_dict['gridResVert']
-   heuristic = input_dict['heuristic']
-   bound_tol = input_dict['bound_tol'] //bound tol in degree lat lon
-	
-   source = airportlookup(Origin)
-   target = airportlookup(Dest)
+	jobName = input_dict['jobName']
+	Origin = input_dict['Origin']
+	Dest = input_dict['Dest']
+	gridResPlanar = input_dict['gridResPlanar']
+	gridResVert = input_dict['gridResVert']
+	heuristic = input_dict['heuristic']
+	boundTol = input_dict['bound_tol'] #bound tol in degree lat lon
+
+	source = airportlookup(Origin)
+	target = airportlookup(Dest)
   
-   myGridContainer = GridMapContainer(gridResPlanar,gridResVert, origin_lon = source[1], origin_lat = source[0], dest_lat= dest[0], dest_lon = dest[1], added_pt_buffer= 2, bound_tol = bound_tol)
-   myGridContainer.make_graph()
-   print("dims:")
-   print(len(myGridContainer.gridMap[0]))
-   print(len(myGridContainer.gridMap))
-   # TODO its the order we are indexing... with alt
-   grid = three_dim_astar([myGridContainer.gridMap], [source[2], source[1], source[0]], [target[2], target[1], target[0]], heuristic)
-   node = grid [DestCoords[0]] [DestCoords[1]] [DestCoords[2]]
+	myGridContainer = gm.GridMapContainer(gridResPlanar,gridResVert, origin_lon = source[1], origin_lat = source[0], dest_lat= dest[0], dest_lon = dest[1], added_pt_buffer= 2, bound_tol = boundTol)
+   
+	myGridContainer.make_graph()
+   	print("dims:")
+   	print(len(myGridContainer.gridMap[0]))
+   	print(len(myGridContainer.gridMap))
+   	# TODO its the order we are indexing... with alt
+   	grid = three_dim_astar([myGridContainer.gridMap], [source[2], source[1], source[0]], [target[2], target[1], target[0]], heuristic)
+  	node = grid [DestCoords[0]] [DestCoords[1]] [DestCoords[2]]
 
 
 	#routeLines to store route for database
