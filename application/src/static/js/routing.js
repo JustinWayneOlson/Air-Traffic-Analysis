@@ -83,13 +83,30 @@ $(document).ready(function() {
             url: "/routing-compute",
             type: "POST",
             data: JSON.stringify(post_object),
-            success: function(data) {
-                console.log(data);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+            success: function(new_data) {
+                $.ajax({
+                    type: "GET",
+                    url: "/computed-routes",
+                    success: function(data) {
+                        var menu_data = $.map(data['response'], function(value, index) {
+                            return value['jobName'];
+                        });
+                        menu_data.push(new_data['response'])
+                        console.log(menu_data);
+                        $('#routes').select2({
+                            data: menu_data,
+                            placeholder: "Select an already computed route."
+                        }).trigger('change');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                   });
+               },
+               error: function(error) {
+                   console.log(error);
+               }
+           });
     });
 
     $("#plot").on('click', function() {

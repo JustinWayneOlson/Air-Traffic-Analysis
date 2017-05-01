@@ -1,5 +1,24 @@
 from helpers import *
 from routingDriver import *
+from tornado import gen
+from tornado.concurrent import run_on_executor
+from concurrent.futures import ThreadPoolExecutor
+
+MAX_WORKERS = 16
+
+class TestBlockingHandler(tornado.web.RequestHandler):
+   executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
+
+   @run_on_executor
+   def testing(self):
+      while(True):
+         continue
+      self.write({'response': 'hello'})
+
+   @tornado.gen.coroutine
+   def get(self):
+      res = yield self.testing()
+      self.write(str(res))
 
 #Handler for main (index) page
 class MainHandler(tornado.web.RequestHandler):
@@ -21,13 +40,20 @@ class RoutingHandler(tornado.web.RequestHandler):
 
 #Handler to populate dropdown menus with options from database
 class DropdownFillHandler(tornado.web.RequestHandler):
-   def get(self, column):
+   executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
+   @run_on_executor
+   def handlerBody(self, column):
       POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
       engine = create_engine(POSTGRES_URL)
       query  = 'SELECT DISTINCT "{}" FROM flights LIMIT 100000'.format(column)
       dataframe = pd.read_sql_query(query, con = engine)
       response = {'response':[j for i in dataframe.values.tolist() for j in i]}
-      self.write(response)
+      return response
+
+   @tornado.gen.coroutine
+   def get(self, column):
+      res = yield self.handlerBody(column)
+      self.write(res)
 
 #Handler to display airports (nodes) and flights (links)
 class DisplayAirportsHandler(tornado.web.RequestHandler):
@@ -60,7 +86,10 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
             self.write(return_data)
 
 class RoutingComputeHandler(tornado.web.RequestHandler):
-   def post(self):
+   executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
+
+   @run_on_executor
+   def handlerBody(self):
       received_query = json_decode(self.request.body)
       return_data = {}
       #recieved_qurey has name, origin, dest, grid_res_planar, grid_res_vert, heruistic
@@ -68,17 +97,30 @@ class RoutingComputeHandler(tornado.web.RequestHandler):
       #return_data['response'] = "Error could not handle request at this time."
       #kick off compute job, write to cassandra
       #response on success
-      self.write(return_data)
+      return return_data
+
+   @tornado.gen.coroutine
+   def post(self):
+      res = yield self.handlerBody()
+      self.write(res)
 
 class ComputedRoutesHandler(tornado.web.RequestHandler):
-   def get(self):
-      #query cassandra for all already computed routes
-      #return list of unique route names
+   executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
 
+   @run_on_executor
+   def handlerBody(self):
       query = """SELECT "jobName" from Routing """
       rows = cql_query_dict(query)
       return_data = {'response': list(rows)}
-      self.write(return_data)
+      return return_data
+
+   @tornado.gen.coroutine
+   def get(self):
+      #query cassandra for all already computed routes
+      #return list of unique route names
+      res = yield self.handlerBody()
+      self.write(res)
+
 
 class DisplayRouteHandler(tornado.web.RequestHandler):
    def get(self, route_name):
@@ -174,6 +216,7 @@ def make_app():
         (r"/routing", RoutingHandler),
         (r"/computed-routes", ComputedRoutesHandler),
         (r"/routing-compute", RoutingComputeHandler),
+        (r"/blocking", TestBlockingHandler),
         (r"/display-route/(.*)", DisplayRouteHandler),
         (r"/delete-route/(.*)", DeleteRouteHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
