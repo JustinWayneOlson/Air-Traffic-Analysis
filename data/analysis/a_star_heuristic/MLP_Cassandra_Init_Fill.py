@@ -3,7 +3,7 @@
 #Script that trains some usually accurate models and stores the data in Cassandra
 import MLP_Class, time
 
-if __main__ == "__main__":
+if __name__ == "__main__":
 	#Number of rows to read in from csv files
 	row_num = 50000#0
 	#Configurations that have worked well generally. (0.005 | 500,100), (0.1 | 500,100), (0.005 | 2000), (0.01 | 500), (0.01 | 2000)
@@ -62,9 +62,11 @@ if __main__ == "__main__":
 						print("Loading:", test_mlp.load())
 						print("New accuracy:", test_mlp.test_accuracy())
 						'''
+					else:
+						print("Not saved to Cassandra, accuracy too low")
 					
 					print("Trained in", time.time()-start_time, "seconds")
-					print("Month:", month, "| Config:", config)
+					print("Month:", month, "| Config:", config, "| Accuracy:", test_mlp.get_accuracy())
 					
 
 				else:
@@ -75,4 +77,3 @@ if __main__ == "__main__":
 				print("----Problem training----")
 				print("Month:", month, "| Config:", config)
 				
-			print("--------")
