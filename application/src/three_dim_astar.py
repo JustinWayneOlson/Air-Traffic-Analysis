@@ -1,4 +1,4 @@
-def three_dim_astar(grid, origin, dest, grid_res_planar, grid_res_vert, heuristic):
+def three_dim_astar(grid, origin, dest, heuristic):
 
     heuristicModule = __import__(heuristic)
 
