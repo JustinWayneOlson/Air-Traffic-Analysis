@@ -1,3 +1,22 @@
+import numpy
+
+def getDist(current, dest):
+    dist = numpy.sqrt(numpy.square(current.lat - dest.lat) + numpy.square(current.lon - dest.lon) + numpy.square(current.alt - dest.alt))
+    return dist
+def find_lowest_rank(openNodes):
+
+    l_openNodes = len(openNodes)
+
+    min_ranking = openNodes[0].priority
+    min_index = 0
+
+    for i in range(1,l_openNodes):
+        if openNodes[i].priority < min_ranking:
+            min_ranking = openNodes[i].priority
+            min_index = i
+
+    return min_index
+
 def three_dim_astar(grid, origin, dest, heuristic):
 
     heuristicModule = __import__(heuristic)

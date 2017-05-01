@@ -71,57 +71,58 @@ class GridMapContainer:
         self.lat_dim = None
         self.lon_dim = None
 
-              if origin_lat > dest_lat:
-            # coord nums in lat lon but 2 in miles _ NEED TO CHANGE THIS IF WE
-            self.start_lat = origin_lat + self.added_pt_buffer
-            self.end_lat = dest_lat - self.added_pt_buffer
-            if (self.start_lat > 180):
-                self.start_lat = -180 + self.start_lat % 180
-            if (self.end_lat < -180):
-                self.end_lat = 180 - ((-self.end_lat) % 180)
+	if origin_lat > dest_lat:
+        	# coord nums in lat lon but 2 in miles _ NEED TO CHANGE THIS IF WE
+        	self.start_lat = origin_lat + self.added_pt_buffer
+        	self.end_lat = dest_lat - self.added_pt_buffer
+        	if (self.start_lat > 180):
+			self.start_lat = -180 + self.start_lat % 180
+        	if (self.end_lat < -180):
+                	self.end_lat = 180 - ((-self.end_lat) % 180)
         else:
-            self.start_lat = origin_lat - self.added_pt_buffer
-            self.end_lat = dest_lat + self.added_pt_buffer
-            if (self.start_lat < -180):
-                self.end_lat = 180 - ((-self.end_lat) % 180)
+		self.start_lat = origin_lat - self.added_pt_buffer
+        	self.end_lat = dest_lat + self.added_pt_buffer
+        	if (self.start_lat < -180):
+			self.end_lat = 180 - ((-self.end_lat) % 180)
 
-            if (self.end_lat > 180):
-                self.start_lat = -180 + self.start_lat % 180
+            	if (self.end_lat > 180):
+                	self.start_lat = -180 + self.start_lat % 180
 
         if (origin_lon > dest_lon):
-            # coord nums in lat lon but 2 in miles _ NEED TO CHANGE THIS IF WE
-            self.start_lon = origin_lon + self.added_pt_buffer
-            self.end_lon = dest_lon - self.added_pt_buffer
-            if (self.start_lon > 180):
-                self.start_lon = -180 + self.start_lon % 180
-            if (self.end_lon < -180):
-                self.end_lon = 180 - ((-self.end_lon) % 180)
+        	# coord nums in lat lon but 2 in miles _ NEED TO CHANGE THIS IF WE
+        	self.start_lon = origin_lon + self.added_pt_buffer
+        	self.end_lon = dest_lon - self.added_pt_buffer
+        	if (self.start_lon > 180):
+        	        self.start_lon = -180 + self.start_lon % 180
+        	if (self.end_lon < -180):
+        	        self.end_lon = 180 - ((-self.end_lon) % 180)
         else:
-            self.start_lon = origin_lon - self.added_pt_buffer
-            self.end_lon = dest_lon + self.added_pt_buffer
-            if (self.start_lon < -180):
-                self.end_lon = 180 - ((-self.end_lon) % 180)
+        	self.start_lon = origin_lon - self.added_pt_buffer
+        	self.end_lon = dest_lon + self.added_pt_buffer
+        	if (self.start_lon < -180):
+                	self.end_lon = 180 - ((-self.end_lon) % 180)
 
-            if (self.end_lon > 180):
-                self.start_lon = -180 + self.start_lon % 180
+            	if (self.end_lon > 180):
+                	self.start_lon = -180 + self.start_lon % 180
 
         # check if lat dim or lon dim is longer to form the box
-        self.lat_dim = abs(round(self.start_lat - self.end_lat,8))
-        self.lon_dim = abs(round(self.start_lon - self.end_lon, 8))
+	
+        self.lat_dim = abs(round(self.start_lat - (self.end_lat/abs(self.end_lat)) * self.end_lat,8))
+        self.lon_dim = abs(round(self.start_lon - (self.end_lon/abs(self.end_lon)) * self.end_lon, 8))
 
         # if lat dim is greater than lon dim
         if self.lat_dim < self.lon_dim:
-            self.is_lon_major_axis = True
-            self.major_axis_dim = self.lat_dim
-            self.major_axis_sign = (self.end_lat - self.start_lat) / abs(self.start_lat - self.end_lat)
-            self.minor_axis_sign = (self.end_lon - self.start_lon) / abs(self.start_lon - self.end_lon)
+        	self.is_lon_major_axis = True
+        	self.major_axis_dim = self.lat_dim
+        	self.major_axis_sign = (self.end_lat - self.start_lat) / abs(self.start_lat - self.end_lat)
+        	self.minor_axis_sign = (self.end_lon - self.start_lon) / abs(self.start_lon - self.end_lon)
 
         # if lon dim is greater LOOK INTO THIS LINE
         else:
-            self.is_lon_major_axis = False
-            self.major_axis_dim = self.lon_dim
-            self.minor_axis_sign = round((self.end_lat - self.start_lat) / abs(self.start_lat - self.end_lat))
-            self.major_axis_sign = round((self.end_lon - self.start_lon) / abs(self.start_lon - self.end_lon))
+            	self.is_lon_major_axis = False
+            	self.major_axis_dim = self.lon_dim
+            	self.minor_axis_sign = round((self.end_lat - self.start_lat) / abs(self.start_lat - self.end_lat))
+            	self.major_axis_sign = round((self.end_lon - self.start_lon) / abs(self.start_lon - self.end_lon))
 
 
 
@@ -130,10 +131,17 @@ class GridMapContainer:
     def make_graph(self):
         self.compute_line_coeffs()
         num_vBlocks = 1 # ccurrently just 1 self.alt_res
+	
+	print("\n major axis dimension:")
+	print(self.major_axis_dim)
 
+	print("\n planar resolution:")
+	print(self.planar_res)
         #TODO ensure user knows the resolution must be passed in as deg lat lon
-        num_blocks_line = math.ceil(self.major_axis_dim / self.planar_res)
-
+        num_blocks_line = int(math.ceil(self.major_axis_dim / self.planar_res))
+	assert(num_blocks_line > 1), "grid resolution must be smaller than major axis dimension"
+	print("\n num blocks line")
+	print(num_blocks_line)
         # Allocate space for y bounds of the current x value
         bound_curr = {
             'min': None,
@@ -172,8 +180,8 @@ class GridMapContainer:
 
                 # Calculate y bounds for next x value
                 bound_next['max'], bound_next['min'] = self.get_bound_vals(x + self.major_axis_sign)
-                bound_next['max_unit'] = math.floor(bound_next['max'] / self.planar_res)
-                bound_next['min_unit'] = math.floor(bound_next['min'] / self.planar_res)
+                bound_next['max_unit'] = int(math.floor(bound_next['max'] / self.planar_res))
+                bound_next['min_unit'] = int(math.floor(bound_next['min'] / self.planar_res))
 
                 self.offsets.append(bound_curr['min_unit'] - bound_min_first_unit)
 
@@ -236,7 +244,9 @@ class GridMapContainer:
                 column_next = []
 
         self.gridMap = nodes
-
+	print("printing nodes")
+	print(len(nodes))
+	print(len(nodes[0]))	
 
         return
 

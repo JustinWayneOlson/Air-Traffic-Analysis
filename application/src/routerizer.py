@@ -39,19 +39,21 @@ def routingDriver(input_dict):
 	gridResVert = int( input_dict['gridResVert'])
 	heuristic = input_dict['heuristic']
 	boundTol = float(input_dict['bound_tol']) #bound tol in degree lat lon
+	# TODO make these not static
+	gridResPlanar = .5
+	gridResVert = 100000
 
 	source = airportlookup(Origin)
 	target = airportlookup(Dest)
 	print(source)
-	print(target) 
+	print(target)
 
 	myGridContainer = gm.GridMapContainer(gridResPlanar,gridResVert, origin_lat = source[0], origin_lon = source[1], dest_lat= target[0], dest_lon = target[1], added_pt_buffer= 2, bound_tol = boundTol)
-   
 	myGridContainer.make_graph()
   	
-	print("\n MMMMMMMMMMMM") 
-	print(myGridContainer.gridMap)
-	print(myGridContainer.gridMap[0])
+	print("\n MMMMMMMMMMMM")
+	print(len(myGridContainer.gridMap))
+	print(len(myGridContainer.gridMap[0]))
 	
 	destination_point_row = len(myGridContainer.gridMap) - myGridContainer.added_pt_buffer - 1
 	destination_point_col = len(myGridContainer.gridMap[0]) - myGridContainer.added_pt_buffer - 1
@@ -59,8 +61,10 @@ def routingDriver(input_dict):
 	# cols will be major axis
 
 	# TODO its the order we are indexing... with alt
+	print([0, destination_point_row, destination_point_col])
 	grid = three_dim_astar([myGridContainer.gridMap], [ 0, 0 + myGridContainer.added_pt_buffer, 0 + myGridContainer.added_pt_buffer], [0,destination_point_row, destination_point_col], heuristic)
-	node = myGridContainer.gridMap
+
+	node = grid[0][destination_point_row][destination_point_col]
 
 	#routeLines to store route for database
 	routeLines = {'links':[], 'nodes':[]}
