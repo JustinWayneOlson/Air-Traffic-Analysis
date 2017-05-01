@@ -11,7 +11,7 @@ class Node:
         self.approxCost = 0
         self.neighbors = list()
         self.noFly = False
-        self.weather_level = 0
+        self.weatherCost = 0
         self.parent = None
         self.priority = None
         self.gridMap = None
@@ -19,22 +19,22 @@ class Node:
 
 	    #Aircraft Performance parameters
     	self.aircraftType =  None
-	    self.aircraftWeight = None
-	    self.aircraftFuelWeight = None
-	    self.aircraftCargoWeight = None
-	    self.aircraftFuelUsage = None
-	    self.aircraftAirSpeed = None
-	    self.aircraftGrndSpeed = None
+	self.aircraftWeight = None
+	self.aircraftFuelWeight = None
+	self.aircraftCargoWeight = None
+	self.aircraftFuelUsage = None
+	self.aircraftAirSpeed = None
+	self.aircraftGrndSpeed = None
 
 	    #Weather parameters
-	    self.windSpeed = None
-	    self.windDirection = None
-	    self.precipitationChance = None
-	    self.precipitationType = None
-	    self.precipitationStrength = None
-	    self.airTemp = None
-	    self.humidity = None
-	    self.dewPoint = None
+	self.windSpeed = None
+	self.windDirection = None
+	self.precipitationChance = None
+	self.precipitationType = None
+	self.precipitationStrength = None
+	self.airTemp = None
+	self.humidity = None
+	self.dewPoint = None
 
 	    #Airline parameters
         
