@@ -1,11 +1,11 @@
-def three_dim_astar(origin, dest, grid_res_planar, grid_res_vert, heuristic):
+def three_dim_astar(grid, origin, dest, grid_res_planar, grid_res_vert, heuristic):
 
     heuristicModule = __import__(heuristic)
 
     closedNodes = list()
     openNodes = list()
 
-    grid = create_graph(grid_res_planar, grid_res_vert) // ammend with new grid method
+
     currLoc = origin
     currNode = grid[origin[0]][origin[1]][origin[2]]
     currNode.priority = 0
