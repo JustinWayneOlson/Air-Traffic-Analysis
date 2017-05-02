@@ -56,12 +56,15 @@ class DropdownFillHandler(tornado.web.RequestHandler):
 
 #Handler to display airports (nodes) and flights (links)
 class DisplayAirportsHandler(tornado.web.RequestHandler):
-    def post(self):
+    executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
+
+    @run_on_executor
+    def handlerBody(self):
         received_query = json_decode(self.request.body)
         received_query2 = copy.deepcopy(received_query)
         flights, verbose_toggle, paths_toggle = flights_df(received_query)
         flights_bar, verbose_toggle, paths_toggle = flights_df(received_query2)
-        #plot_data = mean_data(flights, flights_bar)
+        plot_data = mean_data(flights, flights_bar)
         return_data = {}
         if(verbose_toggle):
            return_data['verbose'] = "This is eventually going to be more information!"
@@ -73,16 +76,22 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
             links = make_links(nodes, flights, node_lookup)
             return_data['nodes'] = nodes
             return_data['links'] = links
-            #return_data['plot_data'] = plot_data
+            return_data['plot_data'] = plot_data
             nodes = color(nodes)
-            self.write(return_data)
+            return return_data
         else:
             airports = airports_dict("data/airport_locs.csv")
             nodes, node_lookup = create_nodes(flights, airports)
             return_data['nodes'] = nodes
-            #return_data['plot_data'] = plot_data
+            return_data['table_data'] = table_data(nodes)
+            return_data['plot_data'] = plot_data
             nodes = color(nodes)
-            self.write(return_data)
+            return return_data
+
+    @tornado.gen.coroutine
+    def post(self):
+        res = yield self.handlerBody()
+        self.write(res)
 
 class RoutingComputeHandler(tornado.web.RequestHandler):
    executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
@@ -137,7 +146,7 @@ class DeleteRouteHandler(tornado.web.RequestHandler):
       cql_query_dict(query)
       return_data = {'response': "Attempted to delete: {}".format(route_name)}
       self.write(return_data)
-'''
+
 def mean_data(flights_line, flights_bar):
    plot_data = {}
    line_plot_data = {}
@@ -210,7 +219,6 @@ def calc_data(flights, typeData):
     #plot_data['line'] = line_plot_data
     #plot_data['bar'] = line_plot_data
     return line_plot_data
-    '''
 
 
 #URL of endpoint, mapped to which class it correlates to

@@ -82,11 +82,9 @@ $("#plot-airports").click(function(event) {
       var observe_element = document.getElementById(tab_id);
       var observer = new MutationObserver(function(mutations){
            mutations.forEach(function(mutation){
-           /*
            $('.ct-chart').each(function(i, e) {
                e.__chartist__.update();
            });
-           */
            $('.map').each(function(i, e) {
                google.maps.event.trigger(map, 'resize');
            });
@@ -344,7 +342,7 @@ $("#plot-airports").click(function(event) {
 
         success: function(data) {
             console.log(data);
-            /*var line_chart_data = {
+            var line_chart_data = {
                 labels: data['plot_data']['line']['labels'],
                 series: [
                   data['plot_data']['line']['series']
@@ -371,45 +369,10 @@ $("#plot-airports").click(function(event) {
             };
 
             new Chartist.Pie('#ct-chart-pie-' + tab_num, chart_data, options);
-            */
-            var table_data = [];
-            $.each(data['nodes'], function(index, value) {
-                var temp = [
-                    value["Name"],
-                    "test",
-                    "test1",
-                    "test2",
-                    "test3",
-                    "test4",
-                    "test5",
-                ];
-                table_data.push(temp);
-            });
 
             $('#table-' + tab_num).DataTable({
-                data: table_data,
-                columns: [{
-                        title: "Airport Code"
-                    },
-                    {
-                        title: "Total Flights"
-                    },
-                    {
-                        title: "Carrier Delay %"
-                    },
-                    {
-                        title: "Late Aircraft Delay %"
-                    },
-                    {
-                        title: "NAS Delay %"
-                    },
-                    {
-                        title: "Security Delay %"
-                    },
-                    {
-                        title: "Weather Delay %"
-                    },
-                ]
+                data: data['table_data']['table_data'],
+                columns: data['table_data']['headers']
             });
 
             //If the user requests verbose output, append output to verbose-contained in html
@@ -617,15 +580,20 @@ $("#plot-airports").click(function(event) {
                         function someinfo() {
                             d3.select(this).transition()
                                 .duration(1000)
-                                .attr("r", 75);
+                                .attr("r", 10);
                         }
 
-                        var table_data = []
 
                         function moreinfo() {
                             $('.odd').remove();
                             var delay_data = $(this)[0].__data__;
-                            $('tbody').append('<tr><td>' + delay_data.Name + '</td><td>' + delay_data.TotalFlights + '</td><td>' + delay_data.NASDelayTot + '</td><td>' + delay_data.NASDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.NASDelay + '</td><td>' + delay_data.CarrierDelayTot + '</td><td>' + delay_data.CarrierDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.CarrierDelay + '</td><td>' + delay_data.WeatherDelayTot + '</td><td>' + delay_data.WeatherDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.WeatherDelay + '</td><td>' + delay_data.SecurityDelayTot + '</td><td>' + delay_data.SecurityDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.SecurityDelay + '</th><th>' + delay_data.LateAircraftDelayTot + '</td><td>' + delay_data.LateAircraftDelayTot / delay_data.TotalDelayedFlights + '</td><td>' + delay_data.LateAircraftDelay + '</td></tr>');
+                            console.log(tab_id);
+                            if($('#' + tab_id).find($('#my-modal')))
+                            {
+                              $('#' + tab_id).find($('#my-modal')).remove();
+                            }
+                            $('#' +tab_id).append('<div id="my-modal" class="bs-example-modal-sm fade modal"role=dialog aria-labelledby=mySmallModalLabel tabindex=-1><div class="modal-dialog modal-sm"role=document><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</span></button><h4 class="modal-tittle">Additional Data</h4><span aria-hidden="true"></div><div class="modal-body"> <pre>' +  JSON.stringify($(this)[0].__data__, undefined, 2) + '</pre></div></div></div></div>');
+                            $('#my-modal').modal();
                         }
 
                         function transform(d) {
@@ -665,7 +633,8 @@ $("#plot-airports").click(function(event) {
                             .data(data.nodes)
                             .enter().append("g")
                             .each(transform)
-                            .attr("class", "node");
+                            .attr("class", "node")
+                            .on('click', moreinfo);
 
                         var link = svg.selectAll(".link")
                             .data(data.links)
@@ -675,7 +644,9 @@ $("#plot-airports").click(function(event) {
 
                         node.append("circle")
                             .attr("r", 4.5)
-                            .style("fill", "white");
+                            .style("fill", "white")
+                            .on('mouseover', someinfo)
+                            .on('mouseout', mouseoutofinfo);
 
                         node.append("text")
                             .attr("x", 7)
@@ -711,6 +682,32 @@ $("#plot-airports").click(function(event) {
                             return d3.select(this)
                                 .attr("transform", "translate(" + p.x + "," + p.y + ")");
                         }
+
+                        function mouseoutofinfo() {
+                            d3.select(this).transition()
+                                .duration(100)
+                                .attr("r", 4.5);
+                        }
+
+                        function someinfo() {
+                            d3.select(this).transition()
+                                .duration(1000)
+                                .attr("r", 10);
+                        }
+
+
+                        function moreinfo() {
+                            $('.odd').remove();
+                            var delay_data = $(this)[0].__data__;
+                            console.log(tab_id);
+                            if($('#' + tab_id).find($('#my-modal')))
+                            {
+                              $('#' + tab_id).find($('#my-modal')).remove();
+                            }
+                            $('#' +tab_id).append('<div id="my-modal" class="bs-example-modal-sm fade modal"role=dialog aria-labelledby=mySmallModalLabel tabindex=-1><div class="modal-dialog modal-sm"role=document><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</span></button><h4 class="modal-tittle">Additional Data</h4><span aria-hidden="true"></div><div class="modal-body"> <pre>' +  JSON.stringify($(this)[0].__data__, undefined, 2) + '</pre></div></div></div></div>');
+                            $('#my-modal').modal();
+                        }
+
 
                         //Driver function to draw links between set of 3 points
                         function drawlink(d) {

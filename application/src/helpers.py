@@ -52,11 +52,12 @@ def cql_query_dict(query):
    rows = session.execute(request)
    return rows
 
-
-#Method to create Pandas dataframe with flight information
 def flights_df(query):
+  #Connect to the PostgreSQL database
+  POSTGRES_URL = "postgresql://postgres:postgres@localhost:5432/airports"
+  engine = create_engine(POSTGRES_URL)
 
-  #Construct the database query based upon user-input
+  #Construct the PostgreSQL query based upon user-input
   where_string = ""
   start_date = False
   end_date = False
@@ -86,13 +87,13 @@ def flights_df(query):
       where_string += date_start
   if(end_date):
     where_string += date_end
-  limit_string = " LIMIT 100000 ALLOW FILTERING;"
-  query_string = 'SELECT "FlightDateString", "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM AirportTrafficAnalytics.Transtats {} {}'.format(where_string, limit_string)
+  limit_string = " LIMIT 100000;"
+  query_string = 'SELECT DISTINCT "FlightDate", "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM "flights" {} {}'.format(where_string, limit_string)
   print query_string
 
+
   #Create and return dataframe
-  cols = ['FlightDateString', 'Origin', 'Dest', 'CarrierDelay', 'WeatherDelay', 'NASDelay', 'SecurityDelay', 'LateAircraftDelay']
-  dataframe = cql_query(query_string, cols)
+  dataframe = pd.read_sql_query(query_string, con = engine)
   dataframe.fillna(0, inplace=True)
   return dataframe, verbose_toggle, paths_toggle
 
@@ -247,3 +248,26 @@ def make_links(nodes, flights, node_lookup):
     print links
 
     return links
+
+
+def table_data(nodes):
+   first = True
+   table_headers  = [{"title":'Airport Code'}, {"title":'Total Flights'}, {"title":'Carrier Delay %'}, {"title":'Late Aircraft Delay %'}, {"title":'NAS Delay %'}, {"title":'Security Delay %'}, {"title":'Weather Delay %'}]
+   table_data = []
+   for node in nodes:
+      if(first):
+         first = False
+         temp_table_data = ["Source" for x in range(0,len(table_headers))]
+      else:
+         temp_table_data = [
+            node['Name'],
+            node['TotalFlights'],
+            float(node['CarrierDelayTot'])/float(node['TotalFlights']),
+            float(node['LateAircraftDelayTot'])/float(node['TotalFlights']),
+            float(node['NASDelayTot'])/float(node['TotalFlights']),
+            float(node['SecurityDelayTot'])/float(node['TotalFlights']),
+            float(node['WeatherDelayTot'])/float(node['TotalFlights'])
+         ]
+         table_data.append(temp_table_data)
+   return {'headers': table_headers, 'table_data': table_data }
+
