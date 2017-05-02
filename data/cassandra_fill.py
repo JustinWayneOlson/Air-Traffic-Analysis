@@ -35,6 +35,10 @@ def main(argv):
             continue
          value_string = ""
          for index,value in enumerate(insert_column):
+            if(columns[index] == 'FlightDate'):
+               print("FlightDate")
+               columns.append('FlightDateString')
+               datatypes.append(value)
             if datatypes[index] == 'bigint' or datatypes[index] == 'double':
                if value:
                   value_string += '{},'.format(value)
@@ -44,11 +48,11 @@ def main(argv):
                value_string += "'{}',".format(value)
             elif datatypes[index] == 'timestamp':
                value_string += "'{}',".format(value)
-         print value_string
          start_string = "INSERT INTO AirportTrafficAnalytics.Transtats({}) VALUES ({});".format(column_labels, value_string[:-1])
          session.execute("USE AirportTrafficAnalytics")
          start_string = start_string.replace('\n', '')
          try:
+            print(start_string)
             session.execute(start_string)
          except:
             print "Invalid CSV Format"
