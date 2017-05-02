@@ -86,11 +86,11 @@ def flights_df(query):
   if(end_date):
     where_string += date_end
   limit_string = " LIMIT 100000 ALLOW FILTERING;"
-  query_string = 'SELECT "FlightDate", "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM AirportTrafficAnalytics.Transtats {} {}'.format(where_string, limit_string)
+  query_string = 'SELECT "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM AirportTrafficAnalytics.Transtats {} {}'.format(where_string, limit_string)
   print query_string
 
   #Create and return dataframe
-  cols = ['FlightDate', 'Origin', 'Dest', 'CarrierDelay', 'WeatherDelay', 'NASDelay', 'SecurityDelay', 'LateAircraftDelay']
+  cols = ['Origin', 'Dest', 'CarrierDelay', 'WeatherDelay', 'NASDelay', 'SecurityDelay', 'LateAircraftDelay']
   dataframe = cql_query(query_string, cols)
   dataframe.fillna(0, inplace=True)
   return dataframe, verbose_toggle, paths_toggle

@@ -82,9 +82,11 @@ $("#plot-airports").click(function(event) {
       var observe_element = document.getElementById(tab_id);
       var observer = new MutationObserver(function(mutations){
            mutations.forEach(function(mutation){
+           /*
            $('.ct-chart').each(function(i, e) {
                e.__chartist__.update();
            });
+           */
            $('.map').each(function(i, e) {
                google.maps.event.trigger(map, 'resize');
            });
@@ -342,7 +344,7 @@ $("#plot-airports").click(function(event) {
 
         success: function(data) {
             console.log(data);
-            var line_chart_data = {
+            /*var line_chart_data = {
                 labels: data['plot_data']['line']['labels'],
                 series: [
                   data['plot_data']['line']['series']
@@ -369,6 +371,7 @@ $("#plot-airports").click(function(event) {
             };
 
             new Chartist.Pie('#ct-chart-pie-' + tab_num, chart_data, options);
+            */
             var table_data = [];
             $.each(data['nodes'], function(index, value) {
                 var temp = [
