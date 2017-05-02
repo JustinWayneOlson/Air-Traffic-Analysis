@@ -22,6 +22,7 @@ def cql_query(query_string, cols):
   cluster = Cluster(["localhost"])
   session = cluster.connect()
   session.execute("USE AirportTrafficAnalytics")
+  print query_string
   rows = session.execute(query_string)
   #Initialize Dataframe
   df = pd.DataFrame(columns=cols)
@@ -86,11 +87,11 @@ def flights_df(query):
   if(end_date):
     where_string += date_end
   limit_string = " LIMIT 100000 ALLOW FILTERING;"
-  query_string = 'SELECT "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM AirportTrafficAnalytics.Transtats {} {}'.format(where_string, limit_string)
+  query_string = 'SELECT "FlightDateString", "Origin", "Dest", "CarrierDelay", "WeatherDelay", "NASDelay", "SecurityDelay", "LateAircraftDelay" FROM AirportTrafficAnalytics.Transtats {} {}'.format(where_string, limit_string)
   print query_string
 
   #Create and return dataframe
-  cols = ['Origin', 'Dest', 'CarrierDelay', 'WeatherDelay', 'NASDelay', 'SecurityDelay', 'LateAircraftDelay']
+  cols = ['FlightDateString', 'Origin', 'Dest', 'CarrierDelay', 'WeatherDelay', 'NASDelay', 'SecurityDelay', 'LateAircraftDelay']
   dataframe = cql_query(query_string, cols)
   dataframe.fillna(0, inplace=True)
   return dataframe, verbose_toggle, paths_toggle

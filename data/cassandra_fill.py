@@ -21,12 +21,13 @@ def main(argv):
          else:
             columns.append(match.group(1))
             datatypes.append(match.group(2))
+      columns.append('FlightDateString')
+      datatypes.append('text')
 
    csv_file = argv[1]
    cluster = Cluster(["localhost"])
    session = cluster.connect()
    first = True
-   column_labels = str(columns).replace("'", '"')[1:-1]
    with open(csv_file) as csvfile:
       csvdata = csv.reader(csvfile)
       for insert_column in csvdata:
@@ -34,11 +35,12 @@ def main(argv):
             first = False
             continue
          value_string = ""
+         FlightDate = ""
          for index,value in enumerate(insert_column):
             if(columns[index] == 'FlightDate'):
                print("FlightDate")
-               columns.append('FlightDateString')
-               datatypes.append(value)
+               column_labels = str(columns).replace("'", '"')[1:-1]
+               FlightDate = value
             if datatypes[index] == 'bigint' or datatypes[index] == 'double':
                if value:
                   value_string += '{},'.format(value)
@@ -48,6 +50,7 @@ def main(argv):
                value_string += "'{}',".format(value)
             elif datatypes[index] == 'timestamp':
                value_string += "'{}',".format(value)
+         value_string += "'{}',".format(str(FlightDate))
          start_string = "INSERT INTO AirportTrafficAnalytics.Transtats({}) VALUES ({});".format(column_labels, value_string[:-1])
          session.execute("USE AirportTrafficAnalytics")
          start_string = start_string.replace('\n', '')
