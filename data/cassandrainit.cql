@@ -22,6 +22,7 @@ CREATE TABLE Transtats (
 "Month" bigint,
 "DayofMonth" bigint,
 "DayOfWeek" bigint,
+"FlightDateString" text,
 "FlightDate" timestamp, //formerly text 
 "UniqueCarrier" text,
 "AirlineID" bigint,
