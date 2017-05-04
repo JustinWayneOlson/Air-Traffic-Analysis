@@ -15,16 +15,17 @@ Air Traffic Analysis is a full stack application, capable of ingesting and stori
  * [PostgreSQL](https://www.postgresql.org/)
  * [Cassandra](http://cassandra.apache.org/)
  
-# Python2 Libraries
+## Python2 Libraries
  * [Python Tornado](http://www.tornadoweb.org/en/stable/)
  * [Python Psycopg2](http://initd.org/psycopg/docs/) 
  
-# Python3 Libraries
+## Python3 Libraries
  * [Numpy](http://www.numpy.org/)
  * [Scipy](https://www.scipy.org/)
  * [Scikit-Learn](http://scikit-learn.org/stable/)
  * [Cassandra-Driver](https://github.com/datastax/python-driver)
 
+Full installation, setup, and running instructions can be found in the provided [White Paper](documentation/White_Paper.pdf)
 
 ## File structure
 ```
