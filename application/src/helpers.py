@@ -219,11 +219,11 @@ def color(nodes):
       avg = node['TotalDelay'] / node['TotalFlights']
       print avg
       #If average >90% --> red
-      if avg > 75:
+      if avg > 30:
           node['Color'] = "red"
 
       #Elif average <90% and >80% --> yellow
-      elif avg >= 50 and avg < 75:
+      elif avg >= 15 and avg < 30:
           node['Color'] = "yellow"
 
       #Else --> green
@@ -255,6 +255,7 @@ def table_data(nodes):
    table_headers  = [{"title":'Airport Code'}, {"title":'Total Flights'}, {"title":'Carrier Delay %'}, {"title":'Late Aircraft Delay %'}, {"title":'NAS Delay %'}, {"title":'Security Delay %'}, {"title":'Weather Delay %'}]
    table_data = []
    for node in nodes:
+      pp.pprint(node)
       if(first):
          first = False
          temp_table_data = ["Source" for x in range(0,len(table_headers))]
@@ -269,5 +270,6 @@ def table_data(nodes):
             float(node['WeatherDelayTot'])/float(node['TotalFlights'])
          ]
          table_data.append(temp_table_data)
+   pp.pprint(table_data)
    return {'headers': table_headers, 'table_data': table_data }
 

@@ -61,6 +61,7 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
     @run_on_executor
     def handlerBody(self):
         received_query = json_decode(self.request.body)
+        pp.pprint(received_query)
         received_query2 = copy.deepcopy(received_query)
         flights, verbose_toggle, paths_toggle = flights_df(received_query)
         flights_bar, verbose_toggle, paths_toggle = flights_df(received_query2)
@@ -76,6 +77,7 @@ class DisplayAirportsHandler(tornado.web.RequestHandler):
             links = make_links(nodes, flights, node_lookup)
             return_data['nodes'] = nodes
             return_data['links'] = links
+            return_data['table_data'] = table_data(nodes)
             return_data['plot_data'] = plot_data
             nodes = color(nodes)
             return return_data
@@ -114,7 +116,6 @@ class RoutingComputeHandler(tornado.web.RequestHandler):
 
 class ComputedRoutesHandler(tornado.web.RequestHandler):
    executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
-
    @run_on_executor
    def handlerBody(self):
       query = """SELECT "jobName" from Routing """
@@ -131,21 +132,36 @@ class ComputedRoutesHandler(tornado.web.RequestHandler):
 
 
 class DisplayRouteHandler(tornado.web.RequestHandler):
-   def get(self, route_name):
+   executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
+   @run_on_executor
+   def handlerBody(self, route_name):
       #query with route name get route information
       #return nodes and links
       query = """SELECT * from Routing WHERE "jobName" = '%s' """ % (route_name)
       rows = cql_query_dict(query)
       return_data = {'response': list(rows)[0]}
-      self.write(return_data)
+      return return_data
+
+   @tornado.gen.coroutine
+   def get(self, route_name):
+      res = yield self.handlerBody(route_name)
+      self.write(res)
 
 class DeleteRouteHandler(tornado.web.RequestHandler):
-   def get(self, route_name):
-      #CQL DELETE with route name
+   executor = ThreadPoolExecutor(max_workers = MAX_WORKERS)
+   @run_on_executor
+   def handlerBody(self, route_name):
+   #CQL DELETE with route name
       query = """DELETE FROM Routing WHERE "jobName" = '%s'  """ %(route_name)
       cql_query_dict(query)
       return_data = {'response': "Attempted to delete: {}".format(route_name)}
-      self.write(return_data)
+      return return_data
+
+   @tornado.gen.coroutine
+   def get(self, route_name):
+      res = yield self.handlerBody(rotue_name)
+      self.write(res)
+
 
 def mean_data(flights_line, flights_bar):
    plot_data = {}
@@ -170,14 +186,6 @@ def calc_data(flights, typeData):
     delay_time = []
     plot_data = {}
     bar_plot_data = {}
-    print("Type of flights")
-    print(type(flights))
-    print("flights")
-    print(flights)
-    print("Type of typeData")
-    print(type(typeData))
-    print("typeData")
-    print(typeData)
     for index, row in flights.iterrows():
        if(typeData == "date"):
          indp_var.append(row.FlightDate)
@@ -214,8 +222,8 @@ def calc_data(flights, typeData):
    #              }
 
 
-    line_plot_data['labels'] = indp_axis
-    line_plot_data['series'] = mean_day
+    line_plot_data['labels'] = indp_axis[:100]
+    line_plot_data['series'] = mean_day[:100]
     #plot_data['line'] = line_plot_data
     #plot_data['bar'] = line_plot_data
     return line_plot_data

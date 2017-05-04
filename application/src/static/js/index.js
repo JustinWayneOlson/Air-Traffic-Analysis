@@ -79,6 +79,15 @@ $("#plot-airports").click(function(event) {
     $('#' + tab_id).append('<div class="row"><div class="col-xs-4 line-plot-container"><div id="ct-chart-line-' + tab_num + '" class="ct-chart"></div></div><div class="col-xs-4 pie-plot-container"><div id="ct-chart-pie-' + tab_num + '" class="ct-chart"></div></div><div class="col-xs-4 bar-plot-container"><div id="ct-chart-bar-' + tab_num + '" class="ct-chart"></div></div></div>');
     $('#tabs').tabs("refresh");
 
+      $('.ui-tabs-anchor').on('click', function(){
+           $('.ct-chart').each(function(i, e) {
+               e.__chartist__.update();
+           });
+           $('.map').each(function(i, e) {
+               google.maps.event.trigger(map, 'resize');
+           });
+
+      });
       var observe_element = document.getElementById(tab_id);
       var observer = new MutationObserver(function(mutations){
            mutations.forEach(function(mutation){
@@ -342,38 +351,36 @@ $("#plot-airports").click(function(event) {
 
         success: function(data) {
             console.log(data);
-            var line_chart_data = {
-                labels: data['plot_data']['line']['labels'],
-                series: [
-                  data['plot_data']['line']['series']
-                ]
-            };
-
-            var bar_chart_data = {
-                labels: data['plot_data']['bar']['labels'],
-                series: [
-                  data['plot_data']['bar']['series']
-                ]
-            };
-
-            new Chartist.Line('#ct-chart-line-' + tab_num, chart_data);
-            new Chartist.Bar('#ct-chart-bar-' + tab_num, chart_data);
-            var chart_data = {
-                series: [20, 15, 40]
-            };
-
-            var options = {
-                labelInterpolationFnc: function(value) {
-                    return value[0]
-                }
-            };
-
-            new Chartist.Pie('#ct-chart-pie-' + tab_num, chart_data, options);
-
             $('#table-' + tab_num).DataTable({
                 data: data['table_data']['table_data'],
                 columns: data['table_data']['headers']
             });
+               var line_chart_data = {
+                   labels: data['plot_data']['line']['labels'],
+                   series:[data['plot_data']['line']['series']]
+
+               };
+               console.log(line_chart_data);
+
+               var bar_chart_data = {
+                   labels: data['plot_data']['bar']['labels'],
+                   series: [data['plot_data']['bar']['series']]
+               };
+               console.log(bar_chart_data);
+
+               new Chartist.Line('#ct-chart-line-' + tab_num, line_chart_data);
+               new Chartist.Bar('#ct-chart-bar-' + tab_num, bar_chart_data);
+               var chart_data = {
+                   series: [20, 15, 40]
+               };
+
+               var options = {
+                   labelInterpolationFnc: function(value) {
+                       return value[0]
+                   }
+               };
+
+               new Chartist.Pie('#ct-chart-pie-' + tab_num, chart_data, options);
 
             //If the user requests verbose output, append output to verbose-contained in html
             if (data['verbose']) {
@@ -587,7 +594,7 @@ $("#plot-airports").click(function(event) {
                         function moreinfo() {
                             $('.odd').remove();
                             var delay_data = $(this)[0].__data__;
-                            console.log(tab_id);
+                            console.log(delay_data);
                             if($('#' + tab_id).find($('#my-modal')))
                             {
                               $('#' + tab_id).find($('#my-modal')).remove();

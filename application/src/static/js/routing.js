@@ -120,8 +120,8 @@ $(document).ready(function() {
 
 
                         var map = new google.maps.Map(d3.select("#map").node(), {
-                            zoom: 4,
-                            center: new google.maps.LatLng(52, -133),
+                            zoom: 5,
+                            center: new google.maps.LatLng(38, -100),
                             mapTypeId: google.maps.MapTypeId.TERRAIN,
                             styles: [{
                                     "elementType": "geometry",
