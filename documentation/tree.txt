@@ -1,0 +1,98 @@
+.
+├── airportTableFill.py
+├── application
+│   └── src
+│       ├── 3dDistance.py
+│       ├── app.py
+│       ├── cassandratest.py
+│       ├── data
+│       │   └── airport_locs.csv
+│       ├── GraphAnalysis.py
+│       ├── helpers.py
+│       ├── html
+│       │   ├── about.html
+│       │   ├── index.html
+│       │   └── routing.html
+│       ├── img
+│       │   └── temp.jpg
+│       ├── routingDriver.py
+│       ├── routingFrontEnd.py
+│       ├── RoutingOO.py
+│       ├── Routing.py
+│       └── static
+│           ├── css
+│           │   ├── jquery.datetimepicker.min.css
+│           │   ├── leaflet-openweathermap.css
+│           │   └── style.css
+│           ├── img
+│           │   ├── cu.png
+│           │   ├── loading.gif
+│           │   └── ng.png
+│           └── js
+│               ├── index.js
+│               ├── jquery.datetimepicker.full.min.js
+│               ├── leaflet.js
+│               ├── leaflet-openweathermap.js
+│               ├── routing.js
+│               ├── select2-4.0.3
+├── data
+│   ├── analysis
+│   │   ├── a_star_heuristic
+│   │   │   ├── 1-1 MLP_99_combos_2_iters.csv
+│   │   │   ├── 1-2 MLP_99_combos_2_iters.csv
+│   │   │   ├── 2-1 MLP_7_alphas_6_layers_42_combos_2_iters.csv
+│   │   │   ├── 2-2 MLP_7_alphas_6_layers_42_combos_2_iters.csv
+│   │   │   ├── 3-1 MLP_7_alphas_5_layers_35_combos_2_iters.csv
+│   │   │   ├── cassandra_ml_init.py
+│   │   │   ├── Flight Time DTreeClassifier.py
+│   │   │   ├── Flight Time MLPClassifier.py
+│   │   │   ├── Flight Time RandomGuess.py
+│   │   │   ├── MLP Auto Tester.py
+│   │   │   ├── MLP_Class.py
+│   │   │   ├── MLP Multi Month Tester.py
+│   │   │   ├── Multi Pickler.py
+│   │   │   └── README.md
+│   │   └── delay_prediction
+│   │       ├── 1585_combos_3_iters_range_1-6_200000_data.csv
+│   │       ├── 2510_combos_3_iters_range_6-13_200000_data.csv
+│   │       ├── average_tester.py
+│   │       ├── classifier_comp.py
+│   │       ├── Flight Time DTreeClassifier.py
+│   │       ├── Flight Time MLPClassifier.py
+│   │       ├── Flight Time RandomGuess.py
+│   │       ├── k_neigh_auto.py
+│   │       ├── MLP_99_combos_2_iters.csv
+│   │       ├── MLP Auto Tester.py
+│   │       ├── MLPClassifier.py
+│   │       ├── README.md
+│   │       ├── test_learn.py
+│   │       └── thread_feature_finder.py
+│   ├── cassandra_fill.py
+│   ├── cassandrainit.cql
+│   ├── cassandra_init.py
+│   ├── data
+│   │   ├── airport_location_gen.py
+│   │   ├── airport_locations.csv
+│   │   ├── airport_locations.dat
+│   │   ├── airport_locations_out.csv
+│   │   ├── data_downloader.py
+│   │   ├── data_downloader_threaded.py
+│   │   └── readme.html
+│   ├── data_extraction.py
+│   ├── data_source.py
+│   ├── db_init.py
+│   ├── insertTranstats.cql
+│   ├── postgres_populate.py
+│   ├── schema.psql
+│   ├── scrape_transtats.sh
+│   ├── transtats_fill.sh
+│   └── vis
+│       └── plotly_vis_test.py
+├── documentation
+│   └── source_code.md
+├── notes.txt
+├── README.md
+├── testing
+│   └── UnitTestSuite.py
+
+71 directories, 542 files
