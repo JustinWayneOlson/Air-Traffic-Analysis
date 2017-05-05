@@ -39,38 +39,42 @@ if __name__ == "__main__":
 				start_time = time.time()
 				#Create object
 				test_mlp = MLP_Class.MLP(y,month,row_num,feature_list,label,round_base,alpha,layer)
-				
-				#Read in data
-				if use_cassandra:
-					#Read in data from Cassandra
-					test_mlp.read_database()
+				#Test if the model is already in the database
+				if test_mlp.check_database():
+					print("Model already in Cassandra")
+				#Otherwise train and save a model
 				else:
-					#Read in data from csv file
-					test_mlp.read_csv()
-				#Train classifier, continue if training successful
-				#print("Training")
-				if test_mlp.train():
-					#Write model to Cassandra if accuracy is over 50%
-					if test_mlp.get_accuracy() > 50.0:
-						if test_mlp.save():
-							print("Saved to Cassandra")
-						else:
-							print("Error Saving to Cassandra")
-						'''
-						print("CHECKING DB")
-						print(test_mlp.check_database())
-						print("Loading:", test_mlp.load())
-						print("New accuracy:", test_mlp.test_accuracy())
-						'''
+					#Read in data
+					if use_cassandra:
+						#Read in data from Cassandra
+						test_mlp.read_database()
 					else:
-						print("Not saved to Cassandra, accuracy too low")
-					
-					print("Trained in", time.time()-start_time, "seconds")
-					print("Month:", month, "| Config:", config, "| Accuracy:", test_mlp.get_accuracy())
-					
+						#Read in data from csv file
+						test_mlp.read_csv()
+					#Train classifier, continue if training successful
+					#print("Training")
+					if test_mlp.train():
+						#Write model to Cassandra if accuracy is over 50%
+						if test_mlp.get_accuracy() > 50.0:
+							if test_mlp.save():
+								print("Saved to Cassandra")
+							else:
+								print("Error Saving to Cassandra")
+							'''
+							print("CHECKING DB")
+							print(test_mlp.check_database())
+							print("Loading:", test_mlp.load())
+							print("New accuracy:", test_mlp.test_accuracy())
+							'''
+						else:
+							print("Not saved to Cassandra, accuracy too low")
+						
+						print("Trained in", time.time()-start_time, "seconds")
+						print("Month:", month, "| Config:", config, "| Accuracy:", test_mlp.get_accuracy())
+						
 
-				else:
-					print("Failed to train")
+					else:
+						print("Failed to train")
 
 
 			except:
