@@ -1,4 +1,4 @@
-
+# Referenced http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html for this implementation
 
 import numpy
 import sys
