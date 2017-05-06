@@ -27,6 +27,7 @@ LAT_DIM = TOP_LAT - BOT_LAT
 LON_DIM = LEFT_LON - RIGHT_LON
 ALT_DIM = 60000 # alt in ft
 
+#Objects used as grid squares to comprise the routing grid
 class Node:
 	#add params like speed weather fuel etc
     def __init__(self, coords, lat, lon, alt):
@@ -127,7 +128,7 @@ def create_graph(grid_res_planar, grid_res_vert):
 
     return grid
 
-
+#Helper function for A star to find the lowest ranked node in open nodes
 def find_lowest_rank(openNodes):
 
     l_openNodes = len(openNodes)
