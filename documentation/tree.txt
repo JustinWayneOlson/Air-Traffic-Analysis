@@ -1,98 +1,64 @@
-.
-├── airportTableFill.py
-├── application
-│   └── src
-│       ├── 3dDistance.py
-│       ├── app.py
-│       ├── cassandratest.py
-│       ├── data
-│       │   └── airport_locs.csv
-│       ├── GraphAnalysis.py
-│       ├── helpers.py
-│       ├── html
-│       │   ├── about.html
-│       │   ├── index.html
-│       │   └── routing.html
-│       ├── img
-│       │   └── temp.jpg
-│       ├── routingDriver.py
-│       ├── routingFrontEnd.py
-│       ├── RoutingOO.py
-│       ├── Routing.py
-│       └── static
-│           ├── css
-│           │   ├── jquery.datetimepicker.min.css
-│           │   ├── leaflet-openweathermap.css
-│           │   └── style.css
-│           ├── img
-│           │   ├── cu.png
-│           │   ├── loading.gif
-│           │   └── ng.png
-│           └── js
-│               ├── index.js
-│               ├── jquery.datetimepicker.full.min.js
-│               ├── leaflet.js
-│               ├── leaflet-openweathermap.js
-│               ├── routing.js
-│               ├── select2-4.0.3
-├── data
-│   ├── analysis
-│   │   ├── a_star_heuristic
-│   │   │   ├── 1-1 MLP_99_combos_2_iters.csv
-│   │   │   ├── 1-2 MLP_99_combos_2_iters.csv
-│   │   │   ├── 2-1 MLP_7_alphas_6_layers_42_combos_2_iters.csv
-│   │   │   ├── 2-2 MLP_7_alphas_6_layers_42_combos_2_iters.csv
-│   │   │   ├── 3-1 MLP_7_alphas_5_layers_35_combos_2_iters.csv
-│   │   │   ├── cassandra_ml_init.py
-│   │   │   ├── Flight Time DTreeClassifier.py
-│   │   │   ├── Flight Time MLPClassifier.py
-│   │   │   ├── Flight Time RandomGuess.py
-│   │   │   ├── MLP Auto Tester.py
-│   │   │   ├── MLP_Class.py
-│   │   │   ├── MLP Multi Month Tester.py
-│   │   │   ├── Multi Pickler.py
-│   │   │   └── README.md
-│   │   └── delay_prediction
-│   │       ├── 1585_combos_3_iters_range_1-6_200000_data.csv
-│   │       ├── 2510_combos_3_iters_range_6-13_200000_data.csv
-│   │       ├── average_tester.py
-│   │       ├── classifier_comp.py
-│   │       ├── Flight Time DTreeClassifier.py
-│   │       ├── Flight Time MLPClassifier.py
-│   │       ├── Flight Time RandomGuess.py
-│   │       ├── k_neigh_auto.py
-│   │       ├── MLP_99_combos_2_iters.csv
-│   │       ├── MLP Auto Tester.py
-│   │       ├── MLPClassifier.py
-│   │       ├── README.md
-│   │       ├── test_learn.py
-│   │       └── thread_feature_finder.py
-│   ├── cassandra_fill.py
-│   ├── cassandrainit.cql
-│   ├── cassandra_init.py
-│   ├── data
-│   │   ├── airport_location_gen.py
-│   │   ├── airport_locations.csv
-│   │   ├── airport_locations.dat
-│   │   ├── airport_locations_out.csv
-│   │   ├── data_downloader.py
-│   │   ├── data_downloader_threaded.py
-│   │   └── readme.html
-│   ├── data_extraction.py
-│   ├── data_source.py
-│   ├── db_init.py
-│   ├── insertTranstats.cql
-│   ├── postgres_populate.py
-│   ├── schema.psql
-│   ├── scrape_transtats.sh
-│   ├── transtats_fill.sh
-│   └── vis
-│       └── plotly_vis_test.py
-├── documentation
-│   └── source_code.md
-├── notes.txt
-├── README.md
-├── testing
-│   └── UnitTestSuite.py
-
-71 directories, 542 files
+﻿	├── airportTableFill.py: Imports airports.dat file into cassandra 
+	├── application 
+	│   └── src
+	│       ├── 3dDistance.py: Default Routing Heuristic
+	│       ├── app.py: Python Tornado Server file. 
+	│       ├── cassandratest.py: Test script for a distinct query
+	│       ├── data
+	│       │   └── airport_locs.csv: Lat/lon airport data
+	│       ├── GraphAnalysis.py: Test script for generating graph data
+	│       ├── helpers.py: External functions used in app.py
+	│       ├── html
+	│       │   ├── about.html: About page’s HTML source
+	│       │   ├── index.html: Main Page’s HTML source
+	│       │   └── routing.html: Routing Page’s HTML source
+	│       ├── routingDriver.py: Hosts routing related code
+	│       ├── routingFrontEnd.py: Runs the routing scripts including routingDriver.py
+	│       └── static
+	│           ├── css
+	│           │   └── style.css: Global CSS definitions
+	│           ├── img
+	│           │   ├── cu.png: CU logo for Navbar
+	│           │   ├── loading.gif: Loading spinner during map refresh
+	│           │   └── ng.png: Northrop Grumman logo for Navbar
+	│           └── js
+	│               ├── index.js: Javascript code for main page
+	│               ├── routing.js: Javascript code for routing page
+	├── data
+	│   ├── analysis
+	│   │   ├── a_star_heuristic
+	│   │   │   ├── cassandra_ml_init.py: Casandra table init script
+	│   │   │   ├── Flight Time MLPClassifier.py: File for testing MLP
+	│   │   │   ├── Flight Time RandomGuess.py: Tests accuracy of random guesses for airtime
+	│   │   │   ├── MLP Auto Tester.py: Automatically tests MLP over multiple months
+    │   │   ├── MLP_Cassandra_Init_Fill.py: Fills Cassandra with common MLP models
+	│   │   │   ├── MLP_Class.py: Class constructor for implementing MLP Classifier
+	│   │   │   ├── MLP Multi Month Tester.py: Tests MLP configs over multiple months
+	│   │   └── delay_prediction
+	│   │       ├── average_tester.py: Tests accuracy of classifier many times
+	│   │       ├── Flight Time DTreeClassifier.py: DTree for estimating flight time
+	│   │       ├── Flight Time MLPClassifier.py: MLP for estimating flight time
+	│   │       ├── k_neigh_auto.py: Automatically tests many K Neighbor configs
+	│   │       └── thread_feature_finder.py: Tests sets of features for MLP model
+	│   ├── cassandra_fill.py: Fills cassandra with transtats csv data
+	│   ├── cassandrainit.cql: Table Schema and DB Config
+	│   ├── data
+	│   │   ├── airport_location_gen.py: Extracts airport locations from .dat file to csv
+	│   │   ├── airport_locations.dat: .dat file of airport locations
+	│   │   ├── airport_locations_out.csv: Generated CSV of airport locations
+	│   │   ├── data_downloader.py: Out of date transtats scraper
+	│   │   ├── data_downloader_threaded.py: Multithreaded out of date scraper
+	│   ├── data_extraction.py: Sets up PostgreSQL db from one transtats csv
+	│   ├── db_init.py: Sample Postgres Driver script
+	│   ├── insertTranstats.cql: Insert statement for one row of transtats data
+	│   ├── postgres_populate.py: Fill PostgreSQL database with transtats data
+	│   ├── schema.psql: PostgreSQL table schema to be read by populate script
+	│   ├── scrape_transtats.sh: Out of date transtats scraper
+	│   ├── transtats_fill.sh: Fills postgres quicker with postgres_populate.py
+	│   └── vis
+	│       └── plotly_vis_test.py: Plotly experimental plot script
+	├── documentation
+	│   └── source_code.md: Description of files and file structure
+	├── README.md: Repository and project description
+	├── testing
+	│   └── UnitTestSuite.py: Sample unit test file
