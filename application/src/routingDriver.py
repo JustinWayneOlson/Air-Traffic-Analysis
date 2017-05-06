@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Referenced http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html for Astar algorithm implementation
 import numpy
 import json
 import collections
