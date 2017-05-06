@@ -1,3 +1,5 @@
+# Referenced http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html for A* implementation
+
 import numpy
 
 # Lat lon of Portal ND 48.9959° N, 102.5496° W
