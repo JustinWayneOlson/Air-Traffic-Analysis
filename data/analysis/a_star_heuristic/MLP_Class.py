@@ -215,15 +215,15 @@ if __name__ == "__main__":
 	layer = (500,100)
 	#Granulatity to round to
 	round_base = 20 #Will be off by round_base/2 at most. Ex. With round_base=20, 11 rounds to 20, 10 rounds to 0
-	#Create object
-	test_mlp = MLP(y,m,row_num,feature_list,label,round_base,alpha,layer)
-
+	
 	use_cassandra = True
 	if use_cassandra:
 		#List of the cassandra columns to use as features
 		feature_list = ['Month', 'DayOfWeek', 'CRSDepTime', 'Distance']
 		#Index of the column to use as a label
 		label = 'AirTime'
+		#Create object
+		test_mlp = MLP(y,m,row_num,feature_list,label,round_base,alpha,layer)
 		#Read in data
 		print("Reading in data from Cassandra")
 		print(test_mlp.read_database())
@@ -233,6 +233,8 @@ if __name__ == "__main__":
 		#Index of the column to use as a label
 		label = 54#54 #53 for total time of the flight, 54 for only time in the air
 		#Read in data
+		#Create object
+		test_mlp = MLP(y,m,row_num,feature_list,label,round_base,alpha,layer)
 		print("Reading in data from csv")
 		print(test_mlp.read_csv())
 	
