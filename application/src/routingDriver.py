@@ -89,7 +89,7 @@ def get_num_blocks(grid_res_planar, grid_res_vert):
     return num_rows, num_cols, num_vBlocks
 
 
-
+# Creates the graph for the routing algorithm to use
 def create_graph(grid_res_planar, grid_res_vert):
     num_rows, num_cols, num_vBlocks = get_num_blocks(grid_res_planar, grid_res_vert)
 
