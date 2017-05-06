@@ -8,7 +8,7 @@ import numpy as np
 '''documentation for unittest HERE: https://docs.python.org/2/library/unittest.html
 
     Notes:
-    Just add this to a project, include proper files you want to tests, and create tests accordingly.
+    Just add this to a project, include proper files you want to test, and create tests accordingly.
     Obviously no need to change anything about your code (the code will still run like normal except have extra test report at end)
     The test output is listed by test function alphabetically.
     If one test fails, the rest will still execute.
